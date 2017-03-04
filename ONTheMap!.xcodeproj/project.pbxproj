@@ -15,6 +15,7 @@
 		20EA731B1E6A43E400C18090 /* ONTheMap_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA731A1E6A43E400C18090 /* ONTheMap_Tests.swift */; };
 		20EA73261E6A43E400C18090 /* ONTheMap_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73251E6A43E400C18090 /* ONTheMap_UITests.swift */; };
 		20EA73341E6A45F600C18090 /* Global Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73331E6A45F600C18090 /* Global Constants.swift */; };
+		20EA73361E6A49B100C18090 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73351E6A49B100C18090 /* ParseClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		20EA73251E6A43E400C18090 /* ONTheMap_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ONTheMap_UITests.swift; sourceTree = "<group>"; };
 		20EA73271E6A43E400C18090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20EA73331E6A45F600C18090 /* Global Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Global Constants.swift"; sourceTree = "<group>"; };
+		20EA73351E6A49B100C18090 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				20EA73051E6A43E400C18090 /* AppDelegate.swift */,
 				20EA73071E6A43E400C18090 /* ViewController.swift */,
 				20EA73331E6A45F600C18090 /* Global Constants.swift */,
+				20EA73351E6A49B100C18090 /* ParseClient.swift */,
 				20EA73091E6A43E400C18090 /* Main.storyboard */,
 				20EA730C1E6A43E400C18090 /* Assets.xcassets */,
 				20EA730E1E6A43E400C18090 /* LaunchScreen.storyboard */,
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20EA73081E6A43E400C18090 /* ViewController.swift in Sources */,
+				20EA73361E6A49B100C18090 /* ParseClient.swift in Sources */,
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,
 				20EA73341E6A45F600C18090 /* Global Constants.swift in Sources */,
 			);
