@@ -31,11 +31,13 @@ struct ParseCnst {
     static let methdStudentLocation = "/StudentLocation"
     //For Update Student Location, the HTTP request type would be PUT.
     static let methdUpdateStudentLocation = "/StudentLocation/{ObjectID}"
+    //Keys Stated within the Udacity/Parse Documentation.
+    static let studentLocKeys = ["objectId","uniqueKey","firstName","lastName","mapString", "mediaURL", "latitude", "longitude"]
 }
 
 struct UdacityCnst{
     //The Udacity API Base URL
-    static let apiHostURL = "www.udacity.com/api"
+    static let apiHostURL = "www.udacity.com"
     static let apiPath = "/api"
     //Udacity API Method:
     //To Authenticate set HTTP Request to POST, to logOut set to DELETE.
@@ -47,24 +49,34 @@ struct PostHeader {
     static let appAndCharSetValue = "application/json;charset=utf-8"
 }
 
-class NetCnst {
-    
-    class func parseURLFrom(_ searchQuery: [String : Any]? = nil, _ apiMethod: String? = nil) -> URL {
+class URLCnst {
+    //parseURL produces a Websafe String to be used as a URL
+    //The search query parameter is expects a single key value pair for searching for students by that criteria
+    //The Object ID is for use with the PUT type request when updating a students location
+    //Both parameters are optional and default to nil, so that they can be ommited if not needed
+    class func fromParse(_ searchQuery: [String : Any]? = nil, _ objectID: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = ParseCnst.apiHostURL
-        components.path = ParseCnst.apiPath + (apiMethod ?? "")
+        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID ?? "")
         if let searchQuery = searchQuery{
             components.queryItems = [URLQueryItem]()
             for (key, value) in searchQuery {
-                let queryItem = URLQueryItem(name: "where", value: "{\"\(key)\":\"\(value)\"}")//Double Check This Syntax!!!!!!
+                let queryItem = URLQueryItem(name: "where", value: "{\"\(key)\":\"\(value)\"}")
                 components.queryItems!.append(queryItem)
             }
         }
         return components.url!
     }
     
-    
+    //The Udacity URL is much more uniform, having only one URL needed in this app.
+    class func fromUdacity() -> URL{
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = UdacityCnst.apiHostURL
+        components.path = UdacityCnst.apiPath + UdacityCnst.methdSessionID
+        return components.url!
+    }
 }
 
 

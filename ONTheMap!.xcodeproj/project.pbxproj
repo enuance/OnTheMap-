@@ -520,6 +520,7 @@
 				20EA732C1E6A43E400C18090 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		20EA732D1E6A43E400C18090 /* Build configuration list for PBXNativeTarget "ONTheMap!Tests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +529,7 @@
 				20EA732F1E6A43E400C18090 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		20EA73301E6A43E400C18090 /* Build configuration list for PBXNativeTarget "ONTheMap!UITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +538,7 @@
 				20EA73321E6A43E400C18090 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
