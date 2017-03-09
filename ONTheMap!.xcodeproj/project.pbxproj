@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203B28851E70D6CD00577D67 /* Authentication Clients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B28841E70D6CD00577D67 /* Authentication Clients.swift */; };
 		20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73051E6A43E400C18090 /* AppDelegate.swift */; };
 		20EA73081E6A43E400C18090 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73071E6A43E400C18090 /* ViewController.swift */; };
 		20EA730B1E6A43E400C18090 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20EA73091E6A43E400C18090 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		203B28841E70D6CD00577D67 /* Authentication Clients.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Authentication Clients.swift"; path = "../Authentication Clients.swift"; sourceTree = "<group>"; };
 		20EA73021E6A43E400C18090 /* ONTheMap!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ONTheMap!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20EA73051E6A43E400C18090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20EA73071E6A43E400C18090 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,12 +80,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		203B28861E70D6DB00577D67 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				20EA73331E6A45F600C18090 /* Global Constants.swift */,
+				20EA73351E6A49B100C18090 /* ParseClient.swift */,
+				203B28841E70D6CD00577D67 /* Authentication Clients.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		203B28871E70D72A00577D67 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				20EA73071E6A43E400C18090 /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		203B28881E70D77300577D67 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				20EA73241E6A43E400C18090 /* ONTheMap!UITests */,
+				20EA73191E6A43E400C18090 /* ONTheMap!Tests */,
+			);
+			name = Tests;
+			path = "ONTheMap!";
+			sourceTree = "<group>";
+		};
+		203B28891E70D7C800577D67 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				20EA73111E6A43E400C18090 /* Info.plist */,
+				20EA730E1E6A43E400C18090 /* LaunchScreen.storyboard */,
+				20EA730C1E6A43E400C18090 /* Assets.xcassets */,
+				20EA73091E6A43E400C18090 /* Main.storyboard */,
+			);
+			name = Supporting;
+			sourceTree = "<group>";
+		};
 		20EA72F91E6A43E300C18090 = {
 			isa = PBXGroup;
 			children = (
 				20EA73041E6A43E400C18090 /* ONTheMap! */,
-				20EA73191E6A43E400C18090 /* ONTheMap!Tests */,
-				20EA73241E6A43E400C18090 /* ONTheMap!UITests */,
+				203B28881E70D77300577D67 /* Tests */,
 				20EA73031E6A43E400C18090 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,14 +141,10 @@
 		20EA73041E6A43E400C18090 /* ONTheMap! */ = {
 			isa = PBXGroup;
 			children = (
+				203B28861E70D6DB00577D67 /* Model */,
+				203B28871E70D72A00577D67 /* Controller */,
+				203B28891E70D7C800577D67 /* Supporting */,
 				20EA73051E6A43E400C18090 /* AppDelegate.swift */,
-				20EA73071E6A43E400C18090 /* ViewController.swift */,
-				20EA73331E6A45F600C18090 /* Global Constants.swift */,
-				20EA73351E6A49B100C18090 /* ParseClient.swift */,
-				20EA73091E6A43E400C18090 /* Main.storyboard */,
-				20EA730C1E6A43E400C18090 /* Assets.xcassets */,
-				20EA730E1E6A43E400C18090 /* LaunchScreen.storyboard */,
-				20EA73111E6A43E400C18090 /* Info.plist */,
 			);
 			path = "ONTheMap!";
 			sourceTree = "<group>";
@@ -120,7 +156,7 @@
 				20EA731C1E6A43E400C18090 /* Info.plist */,
 			);
 			path = "ONTheMap!Tests";
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		20EA73241E6A43E400C18090 /* ONTheMap!UITests */ = {
 			isa = PBXGroup;
@@ -129,7 +165,7 @@
 				20EA73271E6A43E400C18090 /* Info.plist */,
 			);
 			path = "ONTheMap!UITests";
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -270,6 +306,7 @@
 			files = (
 				20EA73081E6A43E400C18090 /* ViewController.swift in Sources */,
 				20EA73361E6A49B100C18090 /* ParseClient.swift in Sources */,
+				203B28851E70D6CD00577D67 /* Authentication Clients.swift in Sources */,
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,
 				20EA73341E6A45F600C18090 /* Global Constants.swift in Sources */,
 			);

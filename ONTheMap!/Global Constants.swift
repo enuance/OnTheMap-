@@ -13,7 +13,7 @@ Constant).
 
 
 import Foundation
-import UIKit
+//import UIKit
 
 //These Parse API Values are publically used by other Udacity Student and thus can be overwritten at any time.
 struct ParseCnst {
@@ -49,12 +49,12 @@ struct PostHeader {
     static let appAndCharSetValue = "application/json;charset=utf-8"
 }
 
-class URLCnst {
+struct URLCnst {
     //parseURL produces a Websafe String to be used as a URL
     //The search query parameter is expects a single key value pair for searching for students by that criteria
     //The Object ID is for use with the PUT type request when updating a students location
     //Both parameters are optional and default to nil, so that they can be ommited if not needed
-    class func fromParse(_ searchQuery: [String : Any]? = nil, _ objectID: String? = nil) -> URL {
+    static func fromParse(_ searchQuery: [String : Any]? = nil, _ objectID: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = ParseCnst.apiHostURL
@@ -69,8 +69,24 @@ class URLCnst {
         return components.url!
     }
     
+    //......................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ///MARK: TO DO
+    static func fromParseWith(_ parameters: [String : Any]) -> URL{ //THIS METHOD NEEDS TO BE TESTED!!!!!!!!
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = ParseCnst.apiHostURL
+        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation
+        components.queryItems = [URLQueryItem]()
+        
+        for (key, value) in parameters{
+            let queryItem = URLQueryItem(name: "\(key)", value: "\(value)")
+            components.queryItems!.append(queryItem)
+        }
+        return components.url!
+    }
+    
     //The Udacity URL is much more uniform, having only one URL needed in this app.
-    class func fromUdacity() -> URL{
+    static func fromUdacity() -> URL{
         var components = URLComponents()
         components.scheme = "https"
         components.host = UdacityCnst.apiHostURL
@@ -80,7 +96,24 @@ class URLCnst {
 }
 
 
-
+///MARK: TO DO
+struct ConvertObject{
+    //Use This Method when sending Data to a server
+    static func toJSON(with object: AnyObject) -> (JSONObject: Data?, error: String?){
+        //PlaceHolder Variable for JSONObject
+        var wouldBeJSON: Data? = nil
+        //Converting object parameter into JSONObject so that it could be sent and understood by the server.
+        do{ wouldBeJSON = try JSONSerialization.data(withJSONObject: object, options: .prettyPrinted)}
+        catch{
+            //Conversion failed, return nil with error string.
+            return (wouldBeJSON,"Error with converting object passed in parameter to JSONObject, check values!")
+        }
+        //Conversion Succeeded, return JSONObject with no error string
+        return (wouldBeJSON, nil)
+    }
+    
+    
+}
 
 
 

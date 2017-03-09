@@ -83,7 +83,10 @@ class StudentLocation{
 }
 
 
-func getStudentLocation(){
+class ParseMethod{
+
+class func getStudentLocation(){
     
+    }
 }
 
