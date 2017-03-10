@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+///MARK: TO DO/ Test Auth Method before moving on!!!!!!!!!!!!!!!!!!!!!!!!!!
 class udaClient{
     class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ registered: Bool?, _ sessionID: String?) -> Void){
         
@@ -23,10 +25,28 @@ class udaClient{
         request.httpBody = httpJSONBody
         
         let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
-            //TO DO: Implement the data task!
+            guard (error == nil) else{print("udaClient.authenticate(:_) returned Data Task Error: \(error)") ;return}
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else{print("HTTP Status Code is non 2XX");return}
+            guard let data = data else{print("udaClient.authenticate(:_) returned no data"); return}
+            let range = Range(uncheckedBounds: (5, data.count - 5))
+            let authData = data.subdata(in: range)
+            let authObject = ConvertObject.toSwift(with: authData)
+            guard let swiftAuthObj = authObject.swiftObject else {print(authObject.error!); return}
+            guard let authDictionary = swiftAuthObj as? [String : AnyObject] else{print("Unexpected Object Structure") ;return}
+            
+            guard let accntInfo = authDictionary[UdacityCnst.accntDictName] as? [String : AnyObject],
+                let registration = accntInfo[UdacityCnst.accntRegisteredKey] as? Bool else {print("Unexpected Object Structure"); return}
+            
+            guard let sessionInfo = authDictionary[UdacityCnst.sessionDictName] as? [String : AnyObject],
+                let sessionNumber = sessionInfo[UdacityCnst.sessionIDKey] as? String else{print("Unexpected Object Structure"); return}
+            
+            //Dispatch onto the main queue incase registration and SessionID is used directly with UI elements
+            DispatchQueue.main.async {
+                return completionHandler(registration, sessionNumber)
+            }
         }
+        task.resume()
     }
-    
 }
 
 class fbClient{

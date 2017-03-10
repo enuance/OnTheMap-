@@ -42,6 +42,11 @@ struct UdacityCnst{
     //Udacity API Method:
     //To Authenticate set HTTP Request to POST, to logOut set to DELETE.
     static let methdSessionID = "/session"
+    //Returned JSONObject Keys
+    static let accntDictName = "account"
+    static let accntRegisteredKey = "registered"
+    static let sessionDictName = "session"
+    static let sessionIDKey = "id"
 }
 
 struct PostHeader {
@@ -112,6 +117,19 @@ struct ConvertObject{
         return (wouldBeJSON, nil)
     }
     
+    //Use this Method when recieving Data from a server
+    static func toSwift(with JSON: Data) -> (swiftObject: AnyObject?, error: String?){
+        //PlaceHolder Variable for JSONObject
+        var wouldBeSwift: AnyObject? = nil
+        //Converting JSON parameter into Swift Object so that it could be parsed by our app.
+        do{ wouldBeSwift = try JSONSerialization.jsonObject(with: JSON, options: .allowFragments) as AnyObject}
+        catch{
+            //Conversion failed, return nil with error string.
+            return (wouldBeSwift, "Error with converting JSON passed in parameter to Swift Object, check values!")
+        }
+        //Conversion Succeeded, return Swift Object with no error string
+        return (wouldBeSwift, nil)
+    }
     
 }
 
