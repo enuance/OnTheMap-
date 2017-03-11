@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-
-///MARK: TO DO/ Test Auth Method before moving on!!!!!!!!!!!!!!!!!!!!!!!!!!
 class udaClient{
+    
+    //Tested and passed!
     class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ registered: Bool?, _ sessionID: String?) -> Void){
         
         let request = NSMutableURLRequest(url: URLCnst.fromUdacity())
@@ -26,12 +26,20 @@ class udaClient{
         
         let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
             guard (error == nil) else{print("udaClient.authenticate(:_) returned Data Task Error: \(error)") ;return}
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else{print("HTTP Status Code is non 2XX");return}
+            //Allow only OK or forbidden Status' to continue
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 || statusCode == 403 else{print("HTTP Status Code is non 2XX");return}
+            //Capture the forbidden Status and return false to the completion handler.
+            guard (statusCode != 403) else {DispatchQueue.main.async {return completionHandler(false, nil)}; return}
+            //Exit method if no data is present.
             guard let data = data else{print("udaClient.authenticate(:_) returned no data"); return}
-            let range = Range(uncheckedBounds: (5, data.count - 5))
+            //Remove first 5 character count from Udacity Data response (security protocol)
+            let range = Range(uncheckedBounds: (5, data.count))
             let authData = data.subdata(in: range)
+            //Convert the data into Swift's AnyObject Type
             let authObject = ConvertObject.toSwift(with: authData)
+            //Exit the method if the conversion returns an error string
             guard let swiftAuthObj = authObject.swiftObject else {print(authObject.error!); return}
+            //Otherwise navigate through the object and extract data through the completion handler
             guard let authDictionary = swiftAuthObj as? [String : AnyObject] else{print("Unexpected Object Structure") ;return}
             
             guard let accntInfo = authDictionary[UdacityCnst.accntDictName] as? [String : AnyObject],
@@ -41,13 +49,12 @@ class udaClient{
                 let sessionNumber = sessionInfo[UdacityCnst.sessionIDKey] as? String else{print("Unexpected Object Structure"); return}
             
             //Dispatch onto the main queue incase registration and SessionID is used directly with UI elements
-            DispatchQueue.main.async {
-                return completionHandler(registration, sessionNumber)
-            }
+            DispatchQueue.main.async {return completionHandler(registration, sessionNumber)}
         }
         task.resume()
     }
 }
+
 
 class fbClient{
     
