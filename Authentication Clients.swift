@@ -11,7 +11,6 @@ import UIKit
 
 class udaClient{
     
-    //Tested and passed!
     class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ registered: Bool?, _ sessionID: String?) -> Void){
         
         let request = NSMutableURLRequest(url: URLCnst.fromUdacity())
@@ -53,6 +52,43 @@ class udaClient{
         }
         task.resume()
     }
+    
+    class func logout(completionHandler: @escaping (_ success: Bool?, _ logoutID: String?) -> Void){
+        
+        let request = NSMutableURLRequest(url: URLCnst.fromUdacity())
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        //Search through all Stored Cookies to see if one named "XSRF-TOKEN" can be found.
+        for cookie in sharedCookieStorage.cookies!{if cookie.name == "XSRF-TOKEN"{ xsrfCookie = cookie; print("XSRF-TOKEN!")}}
+        //If one is found then set the HTTP Header with the Cookie to be deleted
+        if let xsrfCookie = xsrfCookie{request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")}
+        
+        let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
+            guard (error == nil) else{print("udaClient.logout(:_) returned Data Task Error: \(error)") ;return}
+            //Allow only OK status to continue
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else{print("HTTP Status Code is non 2XX");return}
+            //Exit method if no data is present.
+            guard let data = data else{print("udaClient.logout(:_) returned no data"); return}
+            //Remove first 5 character count from Udacity Data response (security protocol)
+            let range = Range(uncheckedBounds: (5, data.count))
+            let logoutData = data.subdata(in: range)
+            //Convert the data into Swift's AnyObject Type
+            let logoutObject = ConvertObject.toSwift(with: logoutData)
+            //Exit the method if the conversion returns an error string
+            guard let swiftLogObj = logoutObject.swiftObject else {print(logoutObject.error!); return}
+            //Otherwise navigate through the object and extract data through the completion handler
+            guard let logoutDictionary = swiftLogObj as? [String : AnyObject] else{print("Unexpected Object Structure") ;return}
+            
+            guard let logoutInfo = logoutDictionary[UdacityCnst.sessionDictName] as? [String : AnyObject],
+                let logoutNumber = logoutInfo[UdacityCnst.sessionIDKey] as? String else{print("Unexpected Object Structure"); return}
+            
+            //Dispatch onto the main queue incase registration and SessionID is used directly with UI elements
+            DispatchQueue.main.async {return completionHandler(true, logoutNumber)}
+        }
+        task.resume()
+    }
+    
 }
 
 
