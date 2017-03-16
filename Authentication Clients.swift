@@ -11,7 +11,7 @@ import UIKit
 
 class udaClient{
     
-    class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ registered: Bool?, _ sessionID: String?) -> Void){
+    class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ registered: Bool?, _ userAcctID: String?, _ sessionID: String?) -> Void){
         
         let request = NSMutableURLRequest(url: URLCnst.fromUdacity())
         let httpHeader = [PostHeader.ContentTypeKey : PostHeader.appAndCharSetValue]
@@ -28,7 +28,7 @@ class udaClient{
             //Allow only OK or forbidden Status' to continue
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 || statusCode == 403 else{print("HTTP Status Code is non 2XX");return}
             //Capture the forbidden Status and return false to the completion handler.
-            guard (statusCode != 403) else {DispatchQueue.main.async {return completionHandler(false, nil)}; return}
+            guard (statusCode != 403) else {DispatchQueue.main.async {return completionHandler(false, nil, nil)}; return}
             //Exit method if no data is present.
             guard let data = data else{print("udaClient.authenticate(:_) returned no data"); return}
             //Remove first 5 character count from Udacity Data response (security protocol)
@@ -42,13 +42,44 @@ class udaClient{
             guard let authDictionary = swiftAuthObj as? [String : AnyObject] else{print("Unexpected Object Structure") ;return}
             
             guard let accntInfo = authDictionary[UdacityCnst.accntDictName] as? [String : AnyObject],
-                let registration = accntInfo[UdacityCnst.accntRegisteredKey] as? Bool else {print("Unexpected Object Structure"); return}
+                let registration = accntInfo[UdacityCnst.accntRegisteredKey] as? Bool,
+                let userID = accntInfo["key"] as? String else {print("Unexpected Object Structure"); return}
             
             guard let sessionInfo = authDictionary[UdacityCnst.sessionDictName] as? [String : AnyObject],
                 let sessionNumber = sessionInfo[UdacityCnst.sessionIDKey] as? String else{print("Unexpected Object Structure"); return}
             
             //Dispatch onto the main queue incase registration and SessionID is used directly with UI elements
-            DispatchQueue.main.async {return completionHandler(registration, sessionNumber)}
+            DispatchQueue.main.async {return completionHandler(registration, userID, sessionNumber)}
+        }
+        task.resume()
+    }
+    
+    class func getPublicUserInfo(userAcctID: String, completionHandler: @escaping (_ firstName: String?, _ lastName: String?) -> Void){
+        
+        let request = NSMutableURLRequest(url: URLCnst.fromUdacity(userAcctID))
+        request.httpMethod = "GET"
+        let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
+            guard (error == nil) else{print("udaClient.getPublicUserInfo(:_) returned Data Task Error: \(error)") ;return}
+            //Allow only OK status to continue
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else{print("HTTP Status Code is non 2XX");return}
+            //Exit method if no data is present.
+            guard let data = data else{print("udaClient.getPublicUserInfo(:_) returned no data"); return}
+            //Remove first 5 character count from Udacity Data response (security protocol)
+            let range = Range(uncheckedBounds: (5, data.count))
+            let userData = data.subdata(in: range)
+            //Convert the data into Swift's AnyObject Type
+            let userObject = ConvertObject.toSwift(with: userData)
+            //Exit the method if the conversion returns an error string
+            guard let swiftUserObj = userObject.swiftObject else {print(userObject.error!); return}
+            //Otherwise navigate through the object and extract data through the completion handler
+            guard let userDictionary = swiftUserObj as? [String : AnyObject] else{print("Unexpected Object Structure") ;return}
+            
+            guard let userInfo = userDictionary[UdacityCnst.user] as? [String : AnyObject],
+                let userFirstName = userInfo[UdacityCnst.firstName] as? String,
+                let userLastName = userInfo[UdacityCnst.lastName] as? String else{print("Unexpected Object Structure"); return}
+            
+            //Dispatch onto the main queue incase registration and SessionID is used directly with UI elements
+            DispatchQueue.main.async {return completionHandler(userFirstName, userLastName)}
         }
         task.resume()
     }

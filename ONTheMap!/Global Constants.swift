@@ -42,11 +42,16 @@ struct UdacityCnst{
     //Udacity API Method:
     //To Authenticate set HTTP Request to POST, to logOut set to DELETE.
     static let methdSessionID = "/session"
+    static let methdGetUserInfo = "/users/"//extend with user ID Here
     //Returned JSONObject Keys
     static let accntDictName = "account"
     static let accntRegisteredKey = "registered"
     static let sessionDictName = "session"
     static let sessionIDKey = "id"
+    //Returned JSONObject Keys for Public Data
+    static let user = "user"
+    static let lastName = "last_name"
+    static let firstName = "first_name"
 }
 
 struct PostHeader {
@@ -91,11 +96,11 @@ struct URLCnst {
     }
     
     //The Udacity URL is much more uniform, having only one URL needed in this app.
-    static func fromUdacity() -> URL{
+    static func fromUdacity(_ withUserID: String? = nil) -> URL{
         var components = URLComponents()
         components.scheme = "https"
         components.host = UdacityCnst.apiHostURL
-        components.path = UdacityCnst.apiPath + UdacityCnst.methdSessionID
+        components.path = UdacityCnst.apiPath + ( withUserID != nil ? (UdacityCnst.methdGetUserInfo + withUserID!) : UdacityCnst.methdSessionID)
         return components.url!
     }
 }
