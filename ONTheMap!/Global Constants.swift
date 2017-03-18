@@ -11,9 +11,7 @@ access and referencing as well as to avoid Magic Numbers. All Structs and Object
 Constant).
 */
 
-
 import Foundation
-//import UIKit
 
 //These Parse API Values are publically used by other Udacity Student and thus can be overwritten at any time.
 struct ParseCnst {
@@ -31,8 +29,6 @@ struct ParseCnst {
     static let methdStudentLocation = "/StudentLocation"
     //For Update Student Location, the HTTP request type would be PUT.
     static let methdUpdateStudentLocation = "/StudentLocation/{ObjectID}"
-    //Keys Stated within the Udacity/Parse Documentation.
-    static let studentLocKeys = ["objectId","uniqueKey","firstName","lastName","mapString", "mediaURL", "latitude", "longitude"]
 }
 
 struct UdacityCnst{
@@ -46,12 +42,23 @@ struct UdacityCnst{
     //Returned JSONObject Keys
     static let accntDictName = "account"
     static let accntRegisteredKey = "registered"
+    static let accntIDKey = "key"
     static let sessionDictName = "session"
     static let sessionIDKey = "id"
     //Returned JSONObject Keys for Public Data
     static let user = "user"
     static let lastName = "last_name"
     static let firstName = "first_name"
+    //Ending a Session
+    static let cookieName = "XSRF-TOKEN"
+    static let cookieHeaderField = "X-XSRF-TOKEN"
+}
+
+struct MethodType {
+    static let post = "POST"
+    static let get = "GET"
+    static let delete = "DELETE"
+    static let put = "PUT"
 }
 
 struct PostHeader {
@@ -105,8 +112,6 @@ struct URLCnst {
     }
 }
 
-
-///MARK: TO DO
 struct ConvertObject{
     //Use This Method when sending Data to a server
     static func toJSON(with object: AnyObject) -> (JSONObject: Data?, error: String?){
@@ -134,6 +139,13 @@ struct ConvertObject{
         }
         //Conversion Succeeded, return Swift Object with no error string
         return (wouldBeSwift, nil)
+    }
+    
+    static func toUdacitySecured(_ data: Data) -> Data?{
+        guard (data.count > 5) else{print("Data does not meet Udacity's security protocol!");return nil}
+        let range = Range(uncheckedBounds: (5, data.count))
+        let securedData = data.subdata(in: range)
+        return securedData
     }
     
 }
