@@ -27,13 +27,12 @@ class Student{
     private(set) var longitude: Float!
     
     //property that checks if the Student is valid or usable
-    var isValid: Bool{ get{
+    var isValid: Bool{
         if objectId != nil && firstName != nil && lastName != nil &&
             mapString != nil && mediaURL != nil && latitude != nil && longitude != nil{
             if uniqueKey == nil{print("The optional property \"uniqueKey\" has not been set")}
             return true}
         else{return false}
-        }
     }
     
     private enum propertyName: String{
@@ -47,17 +46,17 @@ class Student{
         case longitude = "longitude"
     }
     
+    
+    
     func setPropertyBy(_ key: String, with value: Any){
         guard (value as? String != nil) || (value as? Float != nil) || (value as? Int != nil) || (value as? Double != nil) else {
             print("Student property setter could not use invalid type of \(value)")
             return
         }
-        
         guard propertyName(rawValue: key) != nil else{
             print("The \(key) key is not a valid Student property")
             return
         }
-        
         switch key {
         case propertyName.objectId.rawValue:
             objectId = value as? String

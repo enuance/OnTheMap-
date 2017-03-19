@@ -8,6 +8,11 @@
 
 import Foundation
 
+
+///MARK: Refactor this file to propogate the NetworkError Type!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Don't mark these as Throws, but rather set the completion handlers to pass the error as on of it's parameters!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 class udaClient{
     
     class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ registered: Bool?, _ userAcctID: String?, _ sessionID: String?) -> Void){

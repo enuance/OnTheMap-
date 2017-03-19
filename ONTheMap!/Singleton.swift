@@ -10,8 +10,7 @@ import Foundation
 
 class OnTheMap{
     
-    //Posible Setting for Global usage.
-    //let user = StudentLocation()
+    let user = Student()
     
     //Shared URL Session for the App.
     let session = URLSession.shared
@@ -20,3 +19,4 @@ class OnTheMap{
     static let shared = OnTheMap()
     private init(){}
 }
+

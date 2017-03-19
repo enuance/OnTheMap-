@@ -11,6 +11,7 @@
 		203B288B1E70EBE500577D67 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B288A1E70EBE500577D67 /* Singleton.swift */; };
 		205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B5BA21E7C61FA003EF1CC /* Student.swift */; };
 		2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */; };
+		2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069A32F1E7E23BE001B10C7 /* Error Handling.swift */; };
 		20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73051E6A43E400C18090 /* AppDelegate.swift */; };
 		20EA73081E6A43E400C18090 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73071E6A43E400C18090 /* ViewController.swift */; };
 		20EA730B1E6A43E400C18090 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20EA73091E6A43E400C18090 /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 		203B288A1E70EBE500577D67 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		205B5BA21E7C61FA003EF1CC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Parse Client.swift"; sourceTree = "<group>"; };
+		2069A32F1E7E23BE001B10C7 /* Error Handling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error Handling.swift"; sourceTree = "<group>"; };
 		20EA73021E6A43E400C18090 /* ONTheMap!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ONTheMap!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20EA73051E6A43E400C18090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20EA73071E6A43E400C18090 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		203B28861E70D6DB00577D67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2069A32F1E7E23BE001B10C7 /* Error Handling.swift */,
 				203B288A1E70EBE500577D67 /* Singleton.swift */,
 				205B5BA21E7C61FA003EF1CC /* Student.swift */,
 				20EA73331E6A45F600C18090 /* Global Constants.swift */,
@@ -316,6 +319,7 @@
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,
 				2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */,
 				205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */,
+				2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */,
 				20EA73341E6A45F600C18090 /* Global Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

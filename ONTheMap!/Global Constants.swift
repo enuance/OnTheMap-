@@ -31,6 +31,7 @@ struct ParseCnst {
     static let methdUpdateStudentLocation = "/StudentLocation/{ObjectID}"
 }
 
+
 struct UdacityCnst{
     //The Udacity API Base URL
     static let apiHostURL = "www.udacity.com"
@@ -112,6 +113,10 @@ struct URLCnst {
     }
 }
 
+
+///MARK: refactor the convert Obj Struct to implement the Network Error Type!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+///MARK: refactor the convert Obj Struct to implement the Network Error Type!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+///MARK: refactor the convert Obj Struct to implement the Network Error Type!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 struct ConvertObject{
     //Use This Method when sending Data to a server
     static func toJSON(with object: AnyObject) -> (JSONObject: Data?, error: String?){
@@ -149,10 +154,6 @@ struct ConvertObject{
     }
     
 }
-
-
-
-
 
 
 
