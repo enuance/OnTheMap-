@@ -8,7 +8,8 @@
 
 import Foundation
 
-enum NetworkError: Error, LocalizedError{
+enum NetworkError: LocalizedError{
+    case general
     case invalidLogIn
     case JSONToData
     case DataToJSON
@@ -18,26 +19,20 @@ enum NetworkError: Error, LocalizedError{
     
     var localizedDescription: String{
         switch self{
+        case .general:
+            return "NetWork Error: The task could not be completed due to a Network Request Error"
         case .invalidLogIn:
-            return "Invalid Password/Username Combination"
+            return "NetWork Error: Invalid Password/Username Combination"
         case .JSONToData:
-            return "Error with converting Swift Object to JSON Object (DATA), check values!"
+            return "NetWork Error: Error with converting Swift Object to JSON Object (DATA), check values!"
         case .DataToJSON:
-            return "Error with converting JSON Object (DATA) to Swift Object, check values!"
+            return "NetWork Error: Error with converting JSON Object (DATA) to Swift Object, check values!"
         case .nonOKHTTP(status: let statusNumber):
-            return "A Non 2XX (OK) HTTP Status code of \(statusNumber) was given"
+            return "NetWork Error: A Non 2XX (OK) HTTP Status code of \(statusNumber) was given"
         case .noDataReturned(domain: let method):
-            return "No data was returned from \(method)"
+            return "NetWork Error: No data was returned from \(method)"
         case .invalidAPIPath(domain: let method):
-            return "The API Structure Does not match the expected path traversed in \(method)"
+            return "NetWork Error: The API Structure Does not match the expected path traversed in \(method)"
         }
     }
-}
-
-
-
-//Testing function to test the calling of the NewtorkError Type. Delete when done!
-func ijsdfbnvoajdfbv(){
-    let monkeyWrench: Error = NetworkError.invalidAPIPath(domain: "theSpecialFunc")
-    print(monkeyWrench.localizedDescription)
 }
