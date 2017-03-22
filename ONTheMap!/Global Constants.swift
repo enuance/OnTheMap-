@@ -27,8 +27,15 @@ struct ParseCnst {
     //Parse API Methods: 
     //For Student Location, the HTTP request type would be either GET or POST.
     static let methdStudentLocation = "/StudentLocation"
-    //For Update Student Location, the HTTP request type would be PUT.
-    static let methdUpdateStudentLocation = "/StudentLocation/{ObjectID}"
+    static let parameterSkip = "skip"
+    static let parameterLimit = "limit"
+    static let parameterOrder = "order"
+    static let parameterWhere = "where"
+
+    static let parameterOrderValue = "-updatedAt"
+    
+    //Maximum amount of locations to fill the locations array in the OnTheMapSingleton
+    static let maxLocations = 100
 }
 
 struct UdacityCnst{
@@ -74,7 +81,7 @@ struct URLCnst {
         var components = URLComponents()
         components.scheme = "https"
         components.host = ParseCnst.apiHostURL
-        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID ?? "")
+        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID != nil ? "/\(objectID!)":"")
         if let searchQuery = searchQuery{
             components.queryItems = [URLQueryItem]()
             for (key, value) in searchQuery {
