@@ -27,7 +27,6 @@ class Student{
     private(set) var longitude: Float!
     
     //property that checks if the Student is valid or usable
-    //property that checks if the Student is valid or usable
     var isValid: Bool{
         if objectId != nil && firstName != nil && !firstName.isEmpty && lastName != nil &&
             !lastName.isEmpty && mapString != nil && mediaURL != nil && latitude != nil && longitude != nil{
@@ -48,6 +47,7 @@ class Student{
     }
     
     
+    ///MARK: TO DO: Eventually you'll need to validate the mapString and mediaURL properties in the setPropBy Method!!!
     
     func setPropertyBy(_ key: String, with value: Any){
         guard (value as? String != nil) || (value as? Float != nil) || (value as? Int != nil) || (value as? Double != nil) else {

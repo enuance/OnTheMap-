@@ -12,13 +12,10 @@ class ParseClient{
     //A recursive method to refresh the OnTheMap Locations property.
     class func locationsRefresh(_ max: Int = ParseCnst.maxLocations, _ skipOver: Int = 0, completionHandler: @escaping(_ locationsCount: Int?, _ error: NetworkError?)->Void){
         let domain = "locationsRefresh(:_)"
-        
         ParseClient.getStudents(limit: max, skip: skipOver){stdntList, error in
             guard (error == nil)else{return completionHandler(nil, error)}
             guard let studentList = stdntList else{return completionHandler(nil, NetworkError.noDataReturned(domain: domain))}
-            
-            
-            for students in studentList{OnTheMap.shared.locations.append(students);print("appended: \(students.firstName!)")}
+            for students in studentList{OnTheMap.shared.locations.append(students)}
             if !OnTheMap.shared.isFull{
                 let newSkip = skipOver + max
                 let newMax = max - studentList.count
@@ -44,18 +41,23 @@ class ParseClient{
         
         let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
             guard (error == nil) else{ return completionHandler(nil, NetworkError.general)}
-            //Allow only OK or forbidden Status' to continue
+            //Allow only OK status to continue
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299
                 else{ return completionHandler(nil, NetworkError.nonOKHTTP(status: (response as! HTTPURLResponse).statusCode))}
+            //Exit method if no data is present.
             guard let data = data else{return completionHandler(nil, NetworkError.noDataReturned(domain: domainName))}
+            //Convert the data into Swift's AnyObject Type
             let results = ConvertObject.toSwift(with: data)
+            //Exit the method if the conversion returns a conversion error
             guard let resultsObject = results.swiftObject else {return completionHandler(nil, results.error)}
-            guard let studentsList = resultsObject[ParseCnst.returnedResults] as? [[String:Any]] else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
+            //Validate the expected object to be recieved as an array of dictionaries
+            guard let studentsList = resultsObject[ParseCnst.returnedResults] as? [[String:Any]]
+                else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
+            //Validate that the array that has been recieved actually contains something
             guard studentsList.isEmpty == false else{return completionHandler(nil, NetworkError.emptyObject(domain: domainName))}
             
-            //start navigating results object!!!!
+            //Start inputing valid student info into local array and extract through the completion handler
             var validatedList = [Student]()
-            
             for students in studentsList{
                 let aStudent = Student()
                 for (key, value) in students{ aStudent.setPropertyBy(key, with: value)}

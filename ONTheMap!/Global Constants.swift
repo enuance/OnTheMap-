@@ -35,7 +35,6 @@ struct ParseCnst {
     
     //JSON Object Returned from Student Location Method
     static let returnedResults = "results"
-    
     //Maximum amount of locations to fill the locations array in the OnTheMapSingleton
     static let maxLocations = 100
 }

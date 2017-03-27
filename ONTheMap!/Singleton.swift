@@ -9,20 +9,15 @@
 import Foundation
 
 class OnTheMap{
-    
     let user = Student()
-    
     var locations = [Student]()
     
-    //Make sure to test this computed property
-    var isFull: Bool{
-        return (locations.count >= ParseCnst.maxLocations)
-    }
-    
-    
+    //Checks if locations is full up to the max amount.
+    var isFull: Bool{return (locations.count >= ParseCnst.maxLocations)}
+    //Emptys out the locations list.
+    class func clearLocations(){shared.locations = [Student]()}
     //Shared URL Session for the App.
     let session = URLSession.shared
-    
     //Singleton instance for the OnTheMap Class
     static let shared = OnTheMap()
     private init(){}
