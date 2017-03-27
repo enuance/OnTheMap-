@@ -31,8 +31,10 @@ struct ParseCnst {
     static let parameterLimit = "limit"
     static let parameterOrder = "order"
     static let parameterWhere = "where"
-
     static let parameterOrderValue = "-updatedAt"
+    
+    //JSON Object Returned from Student Location Method
+    static let returnedResults = "results"
     
     //Maximum amount of locations to fill the locations array in the OnTheMapSingleton
     static let maxLocations = 100
@@ -74,14 +76,15 @@ struct PostHeader {
 }
 
 struct URLCnst {
-    //parseURL produces a Websafe String to be used as a URL. The search query parameter is expects a single key value pair 
-    //for searching for students by that criteria. The Object ID is for use with the PUT type request when updating a 
-    //students location. Both parameters are optional and default to nil, so that they can be ommited if not needed
+    //parseURL produces a Websafe String to be used as a URL
+    //The search query parameter is expects a single key value pair for searching for students by that criteria
+    //The Object ID is for use with the PUT type request when updating a students location
+    //Both parameters are optional and default to nil, so that they can be ommited if not needed
     static func fromParse(_ searchQuery: [String : Any]? = nil, _ objectID: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = ParseCnst.apiHostURL
-        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID != nil ? "/\(objectID!)":"")
+        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID ?? "")
         if let searchQuery = searchQuery{
             components.queryItems = [URLQueryItem]()
             for (key, value) in searchQuery {
@@ -92,7 +95,6 @@ struct URLCnst {
         return components.url!
     }
     
-    ///MARK: TO DO: THIS METHOD NEEDS TO BE TESTED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     static func fromParseWith(_ parameters: [String : Any]) -> URL{
         var components = URLComponents()
         components.scheme = "https"

@@ -27,9 +27,10 @@ class Student{
     private(set) var longitude: Float!
     
     //property that checks if the Student is valid or usable
+    //property that checks if the Student is valid or usable
     var isValid: Bool{
-        if objectId != nil && firstName != nil && lastName != nil &&
-            mapString != nil && mediaURL != nil && latitude != nil && longitude != nil{
+        if objectId != nil && firstName != nil && !firstName.isEmpty && lastName != nil &&
+            !lastName.isEmpty && mapString != nil && mediaURL != nil && latitude != nil && longitude != nil{
             if uniqueKey == nil{print("The optional property \"uniqueKey\" has not been set")}
             return true}
         else{return false}

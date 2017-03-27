@@ -13,6 +13,7 @@ enum NetworkError: LocalizedError{
     case invalidLogIn
     case JSONToData
     case DataToJSON
+    case emptyObject(domain: String)
     case nonOKHTTP(status: Int)
     case noDataReturned(domain: String)
     case invalidAPIPath(domain: String)
@@ -27,6 +28,8 @@ enum NetworkError: LocalizedError{
             return "NetWork Error: Error with converting Swift Object to JSON Object (DATA), check values!"
         case .DataToJSON:
             return "NetWork Error: Error with converting JSON Object (DATA) to Swift Object, check values!"
+        case .emptyObject(domain: let method):
+            return "An empty object/No content was returned by \(method)"
         case .nonOKHTTP(status: let statusNumber):
             return "NetWork Error: A Non 2XX (OK) HTTP Status code of \(statusNumber) was given"
         case .noDataReturned(domain: let method):

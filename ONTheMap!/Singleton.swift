@@ -12,13 +12,13 @@ class OnTheMap{
     
     let user = Student()
     
-    var locations: [Student]!
+    var locations = [Student]()
     
     //Make sure to test this computed property
     var isFull: Bool{
-        guard let locations = locations else{return false}
         return (locations.count >= ParseCnst.maxLocations)
     }
+    
     
     //Shared URL Session for the App.
     let session = URLSession.shared
