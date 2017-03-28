@@ -39,6 +39,17 @@ struct ParseCnst {
     static let maxLocations = 100
 }
 
+struct StudentCnst{
+    static let objectId = "objectId"
+    static let uniqueKey = "uniqueKey"
+    static let firstName = "firstName"
+    static let lastName = "lastName"
+    static let mapString = "mapString"
+    static let  mediaURL = "mediaURL"
+    static let latitude = "latitude"
+    static let longitude = "longitude"
+}
+
 struct UdacityCnst{
     //The Udacity API Base URL
     static let apiHostURL = "www.udacity.com"

@@ -17,6 +17,7 @@ enum NetworkError: LocalizedError{
     case nonOKHTTP(status: Int)
     case noDataReturned(domain: String)
     case invalidAPIPath(domain: String)
+    case invalidPostingData(domain: String, data: String)
     
     var localizedDescription: String{
         switch self{
@@ -29,13 +30,15 @@ enum NetworkError: LocalizedError{
         case .DataToJSON:
             return "NetWork Error: Error with converting JSON Object (DATA) to Swift Object, check values!"
         case .emptyObject(domain: let method):
-            return "An empty object/No content was returned by \(method)"
+            return "NetWork Error: An empty object/No content was returned by \(method)"
         case .nonOKHTTP(status: let statusNumber):
             return "NetWork Error: A Non 2XX (OK) HTTP Status code of \(statusNumber) was given"
         case .noDataReturned(domain: let method):
             return "NetWork Error: No data was returned from \(method)"
         case .invalidAPIPath(domain: let method):
             return "NetWork Error: The API Structure Does not match the expected path traversed in \(method)"
+        case .invalidPostingData(domain: let method, data: let description):
+            return "NetWork Error: The invalid data: \(description) was rejected from \(method)"
         }
     }
 }

@@ -28,11 +28,20 @@ class Student{
     
     //property that checks if the Student is valid or usable
     var isValid: Bool{
-        if objectId != nil && firstName != nil && !firstName.isEmpty && lastName != nil &&
-            !lastName.isEmpty && mapString != nil && mediaURL != nil && latitude != nil && longitude != nil{
+        if objectId != nil && !objectId.isEmpty && firstName != nil && !firstName.isEmpty &&
+            lastName != nil && !lastName.isEmpty && mapString != nil && !mapString.isEmpty &&
+            mediaURL != nil && !mediaURL.isEmpty && latitude != nil && longitude != nil{
             if uniqueKey == nil{print("The optional property \"uniqueKey\" has not been set")}
             return true}
         else{return false}
+    }
+    
+    
+    ///MARK: FINISH IMPLEMENTING THIS!!!
+    //property that checks if a user (type of Student) is postable
+    var isPostable: Bool{
+        //will not have object ID by this point, but everything else should be set and valid
+        return false
     }
     
     private enum propertyName: String{
