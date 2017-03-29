@@ -36,12 +36,30 @@ class Student{
         else{return false}
     }
     
-    
     ///MARK: FINISH IMPLEMENTING THIS!!!
     //property that checks if a user (type of Student) is postable
     var isPostable: Bool{
         //will not have object ID by this point, but everything else should be set and valid
         return false
+    }
+    
+    //Provides an easy way to print student info to consol.
+    var description: String{
+        var lat: String? = nil
+        var lon: String? = nil
+        if let latitude = latitude{lat = "\(latitude)"}
+        if let longitude = longitude{lon = "\(longitude)"}
+        let descriptionList = [
+            "First Name: \((firstName ?? "firstName is not set!"))",
+            "Last Name: \((lastName ?? "lastName is not set!"))",
+            "Object ID: \((objectId ?? "objectID is not set!"))",
+            "Unique Key: \((uniqueKey ?? "uniqueKey is not set!"))",
+            "Map String: \((mapString ?? "mapString is not set!"))",
+            "Media URL: \((mediaURL ?? "mediaURL is not set!"))",
+            "Latitude: \((lat ?? "latitude is not set!"))",
+            "Longitude: \((lon ?? "longitude is not set!"))"
+        ]
+        return descriptionList.joined(separator: "\n")
     }
     
     private enum propertyName: String{
