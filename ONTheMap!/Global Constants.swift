@@ -32,7 +32,7 @@ struct ParseCnst {
     static let parameterOrder = "order"
     static let parameterWhere = "where"
     static let parameterOrderValue = "-updatedAt"
-    
+    static let updated = "updatedAt"
     //JSON Object Returned from Student Location Method
     static let returnedResults = "results"
     //Maximum amount of locations to fill the locations array in the OnTheMapSingleton
@@ -45,9 +45,23 @@ struct StudentCnst{
     static let firstName = "firstName"
     static let lastName = "lastName"
     static let mapString = "mapString"
-    static let  mediaURL = "mediaURL"
+    static let mediaURL = "mediaURL"
     static let latitude = "latitude"
     static let longitude = "longitude"
+    
+    static func check(property: String) -> Bool{
+        switch property{
+        case StudentCnst.objectId: return true
+        case StudentCnst.uniqueKey: return true
+        case StudentCnst.firstName: return true
+        case StudentCnst.lastName: return true
+        case StudentCnst.mapString: return true
+        case StudentCnst.mediaURL: return true
+        case StudentCnst.latitude: return true
+        case StudentCnst.longitude: return true
+        default: return false
+        }
+    }
 }
 
 struct UdacityCnst{
@@ -159,7 +173,11 @@ struct ConvertObject{
     }
 }
 
-
+extension String{
+    var isBlank: Bool{
+        return trimmingCharacters(in: .whitespaces).isEmpty
+    }
+}
 
 
 

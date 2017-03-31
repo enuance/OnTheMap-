@@ -68,24 +68,22 @@ class ParseClient{
         task.resume()
     }
     
-    
-    ///MARK: This Method needs to be tested!!!!!!!!!!!!!
-    class func postUserLocation(completionHandler: @escaping (_ objectID: String?, _ error: NetworkError?)-> Void){
+    class func postUserLocation(user: Student, completionHandler: @escaping (_ objectID: String?, _ error: NetworkError?)-> Void){
         let domainName = "postUserLocation(:_)"
-        guard OnTheMap.shared.user.isPostable else{return completionHandler( nil, NetworkError.invalidPostingData(domain: domainName, data: "User Info"))}
+        guard user.isPostable else{return completionHandler( nil, NetworkError.invalidPostingData(domain: domainName, data: "User Info"))}
         let request = NSMutableURLRequest(url: URLCnst.fromParse())
         let httpHeader = [
             ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
             ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue,
             PostHeader.ContentTypeKey : PostHeader.appAndCharSetValue]
         let httpBody: [String : Any] = [
-            StudentCnst.uniqueKey : OnTheMap.shared.user.uniqueKey!,
-            StudentCnst.firstName: OnTheMap.shared.user.firstName,
-            StudentCnst.lastName: OnTheMap.shared.user.lastName,
-            StudentCnst.mediaURL : OnTheMap.shared.user.mediaURL,
-            StudentCnst.mapString : OnTheMap.shared.user.mapString,
-            StudentCnst.longitude : OnTheMap.shared.user.longitude,
-            StudentCnst.latitude : OnTheMap.shared.user.latitude]
+            StudentCnst.uniqueKey : user.uniqueKey!,
+            StudentCnst.firstName: user.firstName,
+            StudentCnst.lastName: user.lastName,
+            StudentCnst.mediaURL : user.mediaURL,
+            StudentCnst.mapString : user.mapString,
+            StudentCnst.longitude : user.longitude,
+            StudentCnst.latitude : user.latitude]
         let httpBodyData = ConvertObject.toJSON(with: httpBody as AnyObject)
          guard let httpJSONBody = httpBodyData.JSONObject else {return completionHandler(nil, httpBodyData.error!)}
         
@@ -109,28 +107,100 @@ class ParseClient{
             guard let responseDictionary = resultsObject as? [String:Any],
             let objectId = responseDictionary[StudentCnst.objectId] as? String
                 else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
-
+            
+            //Extract the objectID through the completion handler.
             return completionHandler(objectId, nil)
-
         }
         task.resume()
     }
     
+    ///MARK: Method Needs Testing!!!!.....................................................................................
+    class func updateUserLocation(user: Student, completionHandler: @escaping(_ updated: Bool?, _ error: NetworkError?)-> Void ){
+        let domainName = "updateUserLocation(:_)"
+        guard user.isPostable && user.isValid
+            else{return completionHandler( nil, NetworkError.invalidPutData(domain: domainName, data: "User Info"))}
+        let request = NSMutableURLRequest(url: URLCnst.fromParse(nil, user.objectId))
+        let httpHeader = [
+            ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
+            ParseCnst.headerAppIDKey : ParseCnst.headerAppIDValue,
+            PostHeader.ContentTypeKey : PostHeader.appAndCharSetValue]
+        let httpBody: [String : Any] = [
+            StudentCnst.uniqueKey : user.uniqueKey!,
+            StudentCnst.firstName: user.firstName,
+            StudentCnst.lastName: user.lastName,
+            StudentCnst.mediaURL : user.mediaURL,
+            StudentCnst.mapString : user.mapString,
+            StudentCnst.longitude : user.longitude,
+            StudentCnst.latitude : user.latitude]
+        let httpBodyData = ConvertObject.toJSON(with: httpBody as AnyObject)
+        guard let httpJSONBody = httpBodyData.JSONObject else {return completionHandler(nil, httpBodyData.error!)}
+        
+        request.httpMethod = MethodType.put
+        request.allHTTPHeaderFields = httpHeader
+        request.httpBody = httpJSONBody
+        
+        let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
+            guard (error == nil) else{ return completionHandler(nil, NetworkError.general)}
+            //Allow only OK Status to continue
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299
+                else{ return completionHandler(nil, NetworkError.nonOKHTTP(status: (response as! HTTPURLResponse).statusCode))}
+            //Exit method if no data is present.
+            guard let data = data else{return completionHandler(nil, NetworkError.noDataReturned(domain: domainName))}
+            //Convert the data into Swift's AnyObject Type
+            let results = ConvertObject.toSwift(with: data)
+            //Exit the method if the conversion returns a conversion error
+            guard let resultsObject = results.swiftObject else {return completionHandler(nil, results.error)}
+            
+            //Validate the expected object to be recieved as a dictionary and that it contains an objectID String
+            guard let updatedResponse = resultsObject as? [String:Any],
+                let updateDate = updatedResponse[ParseCnst.updated] as? String
+                else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
+            let updateSuccess = !updateDate.isBlank
+            
+            //Extract the objectID through the completion handler.
+            return completionHandler(updateSuccess, nil)
+        }
+        task.resume()
+    }
     
+    ///MARK: Method Needs Testing!!!!.....................................................................................
+    class func deleteUserLocation(user: Student, completionHandler: @escaping(_ deleted: Bool?, _ error: NetworkError?)-> Void ){
+        let domainName = "deleteUserLocation(:_)"
+        guard user.isPostable && user.isValid
+            else{return completionHandler( nil, NetworkError.invalidDeleteData(domain: domainName, data: "User Info"))}
+        let request = NSMutableURLRequest(url: URLCnst.fromParse(nil, user.objectId))
+        let httpHeader = [
+            ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
+            ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue]
+        request.httpMethod = MethodType.delete
+        request.allHTTPHeaderFields = httpHeader
+        
+        let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
+            guard (error == nil) else{ return completionHandler(nil, NetworkError.general)}
+            //Allow only OK Status to continue
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299
+                else{ return completionHandler(nil, NetworkError.nonOKHTTP(status: (response as! HTTPURLResponse).statusCode))}
+            //No data is returned from this method. Making it this far means successful deletion.
+            return completionHandler(true, nil)
+        }
+        task.resume()
+    }
     
-    
-    class func updateUserLocation(){
+    ///MARK: Method Needs Testing!!!!.....................................................................................
+    class func checkExistingUserLocation(user: Student, completionHandler: @escaping(_ existing: Bool?, _ existingUser: Student?, _ error: NetworkError?)-> Void){
+        let domainName = "checkExistingUserLocation(:_)"
+        guard user.isPostable
+            else{return completionHandler( nil, nil, NetworkError.invalidDeleteData(domain: domainName, data: "User Info"))}
         
     }
     
-    //optional - same as update User Locations but with method set to Delete
-    class func deleteUserLocation(){
-        
-    }
     
-    class func checkExistingUserLocation(){
-        
-    }
+    
+    
+    
+    
+
+    
     
     
     

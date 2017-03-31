@@ -25,24 +25,24 @@ class Student{
     private(set) var latitude: Float!
     //longitude: the longitude of the student location (ranges from -180 to 180)
     private(set) var longitude: Float!
-    
-    //property that checks if the Student is valid or usable
+    //Property that checks if a Student is usable in our locations list.
     var isValid: Bool{
-        if objectId != nil && !objectId.isEmpty && firstName != nil && !firstName.isEmpty &&
-            lastName != nil && !lastName.isEmpty && mapString != nil && !mapString.isEmpty &&
-            mediaURL != nil && !mediaURL.isEmpty && latitude != nil && longitude != nil{
+        if objectId != nil && !objectId.isBlank && firstName != nil && !firstName.isBlank &&
+            lastName != nil && !lastName.isBlank && mapString != nil && !mapString.isBlank &&
+            mediaURL != nil && !mediaURL.isBlank && latitude != nil && longitude != nil{
             if uniqueKey == nil{print("The optional property \"uniqueKey\" has not been set")}
             return true}
         else{return false}
     }
-    
-    ///MARK: FINISH IMPLEMENTING THIS!!!
-    //property that checks if a user (type of Student) is postable
+    //Property that checks if a user (Student) is postable onto the map.
     var isPostable: Bool{
-        //will not have object ID by this point, but everything else should be set and valid
-        return false
+        if firstName != nil && !firstName.isBlank && lastName != nil && !lastName.isBlank &&
+            mapString != nil && !mapString.isBlank && mediaURL != nil && !mediaURL.isBlank &&
+            latitude != nil && longitude != nil{
+            guard let  uniqueKey = uniqueKey else{return false}
+            guard (!uniqueKey.isBlank) else {return false}
+            return true}else{return false}
     }
-    
     //Provides an easy way to print student info to consol.
     var description: String{
         var lat: String? = nil
@@ -50,6 +50,8 @@ class Student{
         if let latitude = latitude{lat = "\(latitude)"}
         if let longitude = longitude{lon = "\(longitude)"}
         let descriptionList = [
+            "Valid: This Student \((isValid ? "is" : "is NOT")) valid for use on the Map",
+            "Postable: This Student \((isPostable ? "is":"is NOT")) able to be posted",
             "First Name: \((firstName ?? "firstName is not set!"))",
             "Last Name: \((lastName ?? "lastName is not set!"))",
             "Object ID: \((objectId ?? "objectID is not set!"))",
@@ -62,80 +64,46 @@ class Student{
         return descriptionList.joined(separator: "\n")
     }
     
-    private enum propertyName: String{
-        case objectId = "objectId"
-        case uniqueKey = "uniqueKey"
-        case firstName = "firstName"
-        case lastName = "lastName"
-        case mapString = "mapString"
-        case  mediaURL = "mediaURL"
-        case latitude = "latitude"
-        case longitude = "longitude"
-    }
-    
-    
     ///MARK: TO DO: Eventually you'll need to validate the mapString and mediaURL properties in the setPropBy Method!!!
-    
     func setPropertyBy(_ key: String, with value: Any){
         guard (value as? String != nil) || (value as? Float != nil) || (value as? Int != nil) || (value as? Double != nil) else {
-            print("Student property setter could not use invalid type of \(value)")
-            return
-        }
-        guard propertyName(rawValue: key) != nil else{
-            print("The \(key) key is not a valid Student property")
-            return
-        }
+            print("Student property setter could not use invalid type of \(value)"); return}
+        guard StudentCnst.check(property: key) else{
+            print("The \(key) key is not a valid Student property"); return}
         switch key {
-        case propertyName.objectId.rawValue:
-            objectId = value as? String
-        case propertyName.uniqueKey.rawValue:
-            uniqueKey = value as? String
-        case propertyName.firstName.rawValue:
-            firstName = value as? String
-        case propertyName.lastName.rawValue:
-            lastName = value as? String
-        case propertyName.mapString.rawValue:
-            mapString = value as? String
-        case propertyName.mediaURL.rawValue:
-            mediaURL = value as? String
-        case propertyName.latitude.rawValue:
+        case StudentCnst.objectId: objectId = value as? String
+        case StudentCnst.uniqueKey: uniqueKey = value as? String
+        case StudentCnst.firstName: firstName = value as? String
+        case StudentCnst.lastName: lastName = value as? String
+        case StudentCnst.mapString: mapString = value as? String
+        case StudentCnst.mediaURL: mediaURL = value as? String
+        case StudentCnst.latitude:
             let floatValue: Float
             switch value{
-            case let someNum as Int:
-                floatValue = Float(someNum)
-            case let someNum as Double:
-                floatValue = Float(someNum)
-            case let someNum as String:
-                guard let number = Float(someNum)
+            case let someNum as Int: floatValue = Float(someNum)
+            case let someNum as Double: floatValue = Float(someNum)
+            case let someNum as String: guard let number = Float(someNum)
                     else{print("\(value) is not convertable to the proper Latitude Type");return}
                 floatValue = number
-            case let someNum as Float:
-                floatValue = someNum
-            default:
-                print("\(value) is not convertable to the proper Latitude Type")
-                return
+            case let someNum as Float: floatValue = someNum
+            default: print("\(value) is not convertable to the proper Latitude Type"); return
             }
             guard (floatValue >= -90 && floatValue <= 90)
                 else{print("Latitude Must be within range -90 to 90");return}
             latitude = floatValue
-        case propertyName.longitude.rawValue:
+        case StudentCnst.longitude:
             let floatValue: Float
             switch value{
-            case let someNum as Int:
-                floatValue = Float(someNum)
-            case let someNum as Double:
-                floatValue = Float(someNum)
-            case let someNum as String:
-                guard let number = Float(someNum)
+            case let someNum as Int: floatValue = Float(someNum)
+            case let someNum as Double: floatValue = Float(someNum)
+            case let someNum as String: guard let number = Float(someNum)
                     else{print("\(value) is not convertable to the proper Longitude Type");return}
                 floatValue = number
-            case let someNum as Float:
-                floatValue = someNum
-            default:
-                print("\(value) is not convertable to the proper Longitude Type")
-                return
+            case let someNum as Float: floatValue = someNum
+            default: print("\(value) is not convertable to the proper Longitude Type"); return
             }
-            guard (floatValue >= -180 && floatValue <= 180) else{print("Longitude Must be within range -180 to 180");return}
+            guard (floatValue >= -180 && floatValue <= 180)
+                else{print("Longitude Must be within range -180 to 180");return}
             longitude = floatValue
         default:
             break
@@ -143,4 +111,3 @@ class Student{
     }
     
 }
-

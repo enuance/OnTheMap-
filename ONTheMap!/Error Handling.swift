@@ -18,6 +18,8 @@ enum NetworkError: LocalizedError{
     case noDataReturned(domain: String)
     case invalidAPIPath(domain: String)
     case invalidPostingData(domain: String, data: String)
+    case invalidPutData(domain: String, data: String)
+    case invalidDeleteData(domain: String, data: String)
     
     var localizedDescription: String{
         switch self{
@@ -39,6 +41,9 @@ enum NetworkError: LocalizedError{
             return "NetWork Error: The API Structure Does not match the expected path traversed in \(method)"
         case .invalidPostingData(domain: let method, data: let description):
             return "NetWork Error: The invalid data: \(description) was rejected from \(method)"
-        }
+        case .invalidPutData(domain: let method, data: let description):
+            return "NetWork Error: The invalid data: \(description) was rejected from \(method)"
+        case .invalidDeleteData(domain: let method, data: let description):
+            return "NetWork Error: The invalid data: \(description) was rejected from \(method)"        }
     }
 }
