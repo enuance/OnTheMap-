@@ -108,7 +108,7 @@ struct URLCnst {
         var components = URLComponents()
         components.scheme = "https"
         components.host = ParseCnst.apiHostURL
-        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID ?? "")
+        components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation + (objectID != nil ? "/\(objectID!)":"")
         if let searchQuery = searchQuery{
             components.queryItems = [URLQueryItem]()
             for (key, value) in searchQuery {

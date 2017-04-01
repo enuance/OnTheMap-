@@ -163,9 +163,9 @@ class ParseClient{
         task.resume()
     }
     
-    ///MARK: Method Needs Testing!!!!.....................................................................................
     class func deleteUserLocation(user: Student, completionHandler: @escaping(_ deleted: Bool?, _ error: NetworkError?)-> Void ){
         let domainName = "deleteUserLocation(:_)"
+        //Not absolutely necessary to check for validity/postability as all that is needed is object ID.
         guard user.isPostable && user.isValid
             else{return completionHandler( nil, NetworkError.invalidDeleteData(domain: domainName, data: "User Info"))}
         let request = NSMutableURLRequest(url: URLCnst.fromParse(nil, user.objectId))
@@ -186,22 +186,48 @@ class ParseClient{
         task.resume()
     }
     
-    ///MARK: Method Needs Testing!!!!.....................................................................................
     class func checkExistingUserLocation(user: Student, completionHandler: @escaping(_ existing: Bool?, _ existingUser: Student?, _ error: NetworkError?)-> Void){
         let domainName = "checkExistingUserLocation(:_)"
         guard user.isPostable
-            else{return completionHandler( nil, nil, NetworkError.invalidDeleteData(domain: domainName, data: "User Info"))}
+            else{return completionHandler( nil, nil, NetworkError.invalidPostingData(domain: domainName, data: "User Info"))}
+        let searchItems = [StudentCnst.uniqueKey : user.uniqueKey!]
+        let request = NSMutableURLRequest(url: URLCnst.fromParse(searchItems))
+        let httpHeader = [
+            ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
+            ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue]
+        request.httpMethod = MethodType.get
+        request.allHTTPHeaderFields = httpHeader
         
+        let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
+            guard (error == nil) else{ return completionHandler(nil, nil, NetworkError.general)}
+            //Allow only OK Status to continue
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299
+                else{ return completionHandler(nil, nil, NetworkError.nonOKHTTP(status: (response as! HTTPURLResponse).statusCode))}
+            //Exit method if no data is present.
+            guard let data = data else{return completionHandler(nil, nil, NetworkError.noDataReturned(domain: domainName))}
+            //Convert the data into Swift's AnyObject Type
+            let results = ConvertObject.toSwift(with: data)
+            //Exit the method if the conversion returns a conversion error
+            guard let resultsObject = results.swiftObject else {return completionHandler(nil, nil, results.error)}
+            //Validate the expected object to be recieved as an array of dictionaries
+            guard let studentsList = resultsObject[ParseCnst.returnedResults] as? [[String:Any]]
+                else {return completionHandler(nil, nil, NetworkError.invalidAPIPath(domain: domainName))}
+            //Validate that the array that has been recieved actually contains something
+            guard studentsList.isEmpty == false else{return completionHandler(false, nil, nil)}
+            
+            //Start inputing valid student info into local array and extract through the completion handler
+            var validatedList = [Student]()
+            for students in studentsList{
+                let aStudent = Student()
+                for (key, value) in students{ aStudent.setPropertyBy(key, with: value)}
+                if aStudent.isValid && aStudent.isPostable{validatedList.append(aStudent)}
+            }
+            
+            guard (validatedList.count >= 1) else{return completionHandler(false, nil, nil)}
+            //returns the first user that meets the unique key criteria.
+            let recentExistingUser = validatedList[0]
+            return completionHandler(true, recentExistingUser, nil)
+        }
+        task.resume()
     }
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
 }
