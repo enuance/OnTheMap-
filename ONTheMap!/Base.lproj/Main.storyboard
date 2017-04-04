@@ -1,30 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ONTheMap_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="OTMLoginController" customModule="ONTheMap_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="topRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OTM!LoginBG" translatesAutoresizingMaskIntoConstraints="NO" id="0Cz-Ev-tu4" userLabel="OTMLoginBG">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WhiteCast" translatesAutoresizingMaskIntoConstraints="NO" id="Cr9-WY-LQp">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OTM!Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Rta-8g-uYh" userLabel="OTMLogo">
+                                <rect key="frame" x="12" y="30" width="390" height="112"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OTM!Pin" translatesAutoresizingMaskIntoConstraints="NO" id="TbG-Oz-Auj">
+                                <rect key="frame" x="46" y="-112" width="34" height="112"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="1we-sh-SDy"/>
+                                    <constraint firstAttribute="height" constant="112" id="k4w-Qe-8tJ"/>
+                                </constraints>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g33-OS-QMg">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="M1B-TM-kld">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W4E-e1-1aM" userLabel="LoginTray">
+                                <rect key="frame" x="-164" y="736" width="742" height="420"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginTrayBG" translatesAutoresizingMaskIntoConstraints="NO" id="SxB-HY-BTG">
+                                        <rect key="frame" x="0.0" y="72" width="742" height="348"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-vx-SeG">
+                                        <rect key="frame" x="299" y="0.0" width="145" height="145"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="145" id="3sR-Ac-HAR"/>
+                                            <constraint firstAttribute="height" constant="145" id="PUk-1v-57E"/>
+                                        </constraints>
+                                        <state key="normal" title="LoginButton" image="LoginButton"/>
+                                        <connections>
+                                            <action selector="showUdacityLoginView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kmv-dy-0DG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="SxB-HY-BTG" firstAttribute="leading" secondItem="W4E-e1-1aM" secondAttribute="leading" id="3R5-Bn-nTO"/>
+                                    <constraint firstItem="SxB-HY-BTG" firstAttribute="top" secondItem="dYJ-vx-SeG" secondAttribute="top" constant="72" id="8Eq-8s-ZAY"/>
+                                    <constraint firstAttribute="height" constant="420" id="EJh-j3-G1e"/>
+                                    <constraint firstAttribute="trailing" secondItem="SxB-HY-BTG" secondAttribute="trailing" id="Uis-9M-4iU"/>
+                                    <constraint firstItem="dYJ-vx-SeG" firstAttribute="top" secondItem="W4E-e1-1aM" secondAttribute="top" id="Y0w-ri-ygK"/>
+                                    <constraint firstItem="dYJ-vx-SeG" firstAttribute="centerX" secondItem="W4E-e1-1aM" secondAttribute="centerX" id="bMv-Oe-MtT"/>
+                                    <constraint firstAttribute="bottom" secondItem="SxB-HY-BTG" secondAttribute="bottom" id="fox-6x-feO"/>
+                                    <constraint firstAttribute="width" constant="742" id="zNV-nE-Rjo"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="W4E-e1-1aM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottomMargin" id="0kR-Hp-mFH"/>
+                            <constraint firstItem="0Cz-Ev-tu4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4DU-EV-wBP"/>
+                            <constraint firstItem="0Cz-Ev-tu4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="59d-aT-WyP"/>
+                            <constraint firstItem="g33-OS-QMg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Io-Bz-YSU"/>
+                            <constraint firstItem="Cr9-WY-LQp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="A6n-QE-DPQ"/>
+                            <constraint firstAttribute="trailing" secondItem="Rta-8g-uYh" secondAttribute="trailing" constant="12" id="CYb-Q7-P5W"/>
+                            <constraint firstAttribute="topMargin" secondItem="TbG-Oz-Auj" secondAttribute="bottom" id="Nxq-UN-4Pj"/>
+                            <constraint firstAttribute="trailing" secondItem="Cr9-WY-LQp" secondAttribute="trailing" id="U6B-aP-XRt"/>
+                            <constraint firstItem="Cr9-WY-LQp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="UOc-Fm-Qty"/>
+                            <constraint firstAttribute="trailing" secondItem="0Cz-Ev-tu4" secondAttribute="trailing" id="VAx-qZ-uFs"/>
+                            <constraint firstItem="Rta-8g-uYh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="12" id="chb-ni-Hde"/>
+                            <constraint firstItem="W4E-e1-1aM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cm2-Vf-tRy"/>
+                            <constraint firstItem="TbG-Oz-Auj" firstAttribute="leading" secondItem="Rta-8g-uYh" secondAttribute="leading" constant="34" id="hRk-Z1-on3"/>
+                            <constraint firstItem="Rta-8g-uYh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="30" id="j1R-mR-6Tp"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Cr9-WY-LQp" secondAttribute="bottom" id="ljA-6Z-4cc"/>
+                            <constraint firstAttribute="topMargin" secondItem="g33-OS-QMg" secondAttribute="top" id="oPt-Ec-q15"/>
+                            <constraint firstItem="0Cz-Ev-tu4" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="qPl-94-mju"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="g33-OS-QMg" secondAttribute="bottom" id="rhw-p3-qz6"/>
+                            <constraint firstAttribute="trailing" secondItem="g33-OS-QMg" secondAttribute="trailing" id="xa9-tx-Nba"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="OTMLogo" destination="Rta-8g-uYh" id="aYL-tq-sBv"/>
+                        <outlet property="OTMPin" destination="TbG-Oz-Auj" id="19b-Sn-1IO"/>
+                        <outlet property="cancelDot" destination="2Cu-B2-OGZ" id="LL5-zz-Xh1"/>
+                        <outlet property="createUserAccnt" destination="Aa9-cH-XLH" id="YYZ-zr-0xY"/>
+                        <outlet property="loginButton" destination="dYJ-vx-SeG" id="hT7-kG-9V3"/>
+                        <outlet property="loginTray" destination="W4E-e1-1aM" id="cpi-iq-A0O"/>
+                        <outlet property="passwordField" destination="jfF-Ev-Tt3" id="qXP-Ha-B5i"/>
+                        <outlet property="udacityLogin" destination="SdC-6F-qkd" id="snG-rF-agN"/>
+                        <outlet property="userNameField" destination="Nus-aj-GfM" id="WKu-f9-hwi"/>
+                        <outlet property="visualEffect" destination="g33-OS-QMg" id="3mw-1c-U07"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <view alpha="0.0" contentMode="scaleAspectFit" id="SdC-6F-qkd" userLabel="UdacityLogin">
+                    <rect key="frame" x="0.0" y="0.0" width="315" height="315"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogin" translatesAutoresizingMaskIntoConstraints="NO" id="gpd-Vs-kQW">
+                            <rect key="frame" x="0.0" y="0.0" width="315" height="315"/>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Xuu-nv-UC8">
+                            <rect key="frame" x="16" y="130" width="283" height="165"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QF1-Fe-dal">
+                                    <rect key="frame" x="0.0" y="0.0" width="283" height="25"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                    <color key="textColor" red="0.22352941176470587" green="0.63529411764705879" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Nus-aj-GfM" userLabel="UserName Field">
+                                    <rect key="frame" x="0.0" y="28" width="283" height="25"/>
+                                    <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCf-vu-U9B">
+                                    <rect key="frame" x="0.0" y="56" width="283" height="25"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                    <color key="textColor" red="0.22352941176470587" green="0.63529411764705879" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jfF-Ev-Tt3" userLabel="Password Field">
+                                    <rect key="frame" x="0.0" y="84" width="283" height="25"/>
+                                    <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9K-oC-Z95" userLabel="Spacer">
+                                    <rect key="frame" x="0.0" y="112" width="283" height="25"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aa9-cH-XLH">
+                                    <rect key="frame" x="0.0" y="140" width="283" height="25"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                                    <state key="normal" title="Create New Udacity Account">
+                                        <color key="titleColor" red="0.22352941176470587" green="0.63529411764705879" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Cu-B2-OGZ" userLabel="CancelDot">
+                            <rect key="frame" x="274" y="20" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="vff-ry-Bw5"/>
+                                <constraint firstAttribute="width" constant="25" id="zE1-A9-ABp"/>
+                            </constraints>
+                            <state key="normal" image="CancelDot"/>
+                            <connections>
+                                <action selector="removeUdacityLoginView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="n37-e9-P2s"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Xuu-nv-UC8" secondAttribute="bottom" constant="20" id="0SC-iI-788"/>
+                        <constraint firstItem="gpd-Vs-kQW" firstAttribute="leading" secondItem="SdC-6F-qkd" secondAttribute="leading" id="62N-tw-Q8B"/>
+                        <constraint firstItem="Xuu-nv-UC8" firstAttribute="centerX" secondItem="SdC-6F-qkd" secondAttribute="centerX" id="73P-KB-uxQ"/>
+                        <constraint firstAttribute="trailing" secondItem="Xuu-nv-UC8" secondAttribute="trailing" constant="16" id="8Eb-bY-GG9"/>
+                        <constraint firstAttribute="bottom" secondItem="gpd-Vs-kQW" secondAttribute="bottom" id="LyV-dY-YKO"/>
+                        <constraint firstItem="2Cu-B2-OGZ" firstAttribute="leading" secondItem="gpd-Vs-kQW" secondAttribute="trailing" constant="-41" id="VU7-GQ-awP"/>
+                        <constraint firstItem="gpd-Vs-kQW" firstAttribute="top" secondItem="SdC-6F-qkd" secondAttribute="top" id="VXl-yq-wYu"/>
+                        <constraint firstItem="gpd-Vs-kQW" firstAttribute="top" secondItem="2Cu-B2-OGZ" secondAttribute="bottom" constant="-45" id="cYp-aS-BxU"/>
+                        <constraint firstItem="Xuu-nv-UC8" firstAttribute="top" secondItem="SdC-6F-qkd" secondAttribute="top" constant="130" id="nqY-VP-dyI"/>
+                        <constraint firstItem="Xuu-nv-UC8" firstAttribute="leading" secondItem="SdC-6F-qkd" secondAttribute="leading" constant="16" id="sA5-jf-7mw"/>
+                        <constraint firstAttribute="trailing" secondItem="gpd-Vs-kQW" secondAttribute="trailing" id="wBm-36-Zfq"/>
+                    </constraints>
+                </view>
             </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="136.14130434782609"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="CancelDot" width="25" height="25"/>
+        <image name="LoginButton" width="151" height="151"/>
+        <image name="LoginTrayBG" width="742" height="351"/>
+        <image name="OTM!LoginBG" width="736" height="736"/>
+        <image name="OTM!Logo" width="390" height="112"/>
+        <image name="OTM!Pin" width="36" height="114"/>
+        <image name="UdacityLogin" width="320" height="320"/>
+        <image name="WhiteCast" width="414" height="487"/>
+    </resources>
 </document>

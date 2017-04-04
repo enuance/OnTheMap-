@@ -43,7 +43,7 @@ class Student{
             guard (!uniqueKey.isBlank) else {return false}
             return true}else{return false}
     }
-    //Provides an easy way to print student info to consol.
+    //Provides an easy way to print student info to Stnd Output.
     var description: String{
         var lat: String? = nil
         var lon: String? = nil

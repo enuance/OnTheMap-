@@ -12,6 +12,7 @@ for Constant).
 */
 
 import Foundation
+import CoreGraphics
 
 //These Parse API Values are publically used by other Udacity Student and thus can be overwritten at any time.
 struct ParseCnst {
@@ -171,6 +172,12 @@ struct ConvertObject{
         let securedData = data.subdata(in: range)
         return securedData
     }
+    
+    //For easy conversion of degrees to radians represented by a CGFloat.
+    static func toRadians(_ withDegrees: Double) -> CGFloat{
+        return CGFloat(withDegrees * .pi / withDegrees)
+    }
+    
 }
 
 extension String{
