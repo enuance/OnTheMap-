@@ -142,6 +142,9 @@ struct URLCnst {
         components.path = UdacityCnst.apiPath + ( withUserID != nil ? (UdacityCnst.methdGetUserInfo + withUserID!) : UdacityCnst.methdSessionID)
         return components.url!
     }
+    
+    // The Udacity URL for creating a student account.
+    static let createAccntURL = "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated"
 }
 
 

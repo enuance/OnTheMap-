@@ -20,8 +20,6 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
     @IBOutlet var udacityLogin: UIView!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var createUserAccnt: UIButton!
-    @IBOutlet weak var cancelDot: UIButton!
     
     @IBOutlet weak var visualEffect: UIVisualEffectView!
     
@@ -32,6 +30,7 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(true)
+        navigationController?.navigationBar.isHidden = true
         subscribeToKeyboardNotifications()
     }
     
@@ -82,8 +81,14 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    
+    @IBAction func createAccount(_ sender: UIButton) {
+        udacityLogin.alpha = 0
+        udacityLogin.removeFromSuperview()
+        visualEffect.effect = nil
+        let accountCreationController = self.storyboard!.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
+        accountCreationController.urlString = URLCnst.createAccntURL
+        self.navigationController!.pushViewController(accountCreationController, animated: true)
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if userNameField.text == nil || userNameField.text!.isBlank{userNameField.becomeFirstResponder() ;return false}

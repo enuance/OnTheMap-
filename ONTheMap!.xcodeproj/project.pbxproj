@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203423391E9841B50083512F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203423381E9841B50083512F /* WebViewController.swift */; };
 		203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B28841E70D6CD00577D67 /* Authentication Client.swift */; };
 		203B288B1E70EBE500577D67 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B288A1E70EBE500577D67 /* Singleton.swift */; };
 		205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B5BA21E7C61FA003EF1CC /* Student.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		203423381E9841B50083512F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		203B28841E70D6CD00577D67 /* Authentication Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Authentication Client.swift"; path = "../Authentication Client.swift"; sourceTree = "<group>"; };
 		203B288A1E70EBE500577D67 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		205B5BA21E7C61FA003EF1CC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		203B28871E70D72A00577D67 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				203423381E9841B50083512F /* WebViewController.swift */,
 				20EA73071E6A43E400C18090 /* OTM Login Controller.swift */,
 			);
 			name = Controller;
@@ -314,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */,
+				203423391E9841B50083512F /* WebViewController.swift in Sources */,
 				203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */,
 				203B288B1E70EBE500577D67 /* Singleton.swift in Sources */,
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fX4-Jn-4dd">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="41y-Sv-Y0u">
+            <objects>
+                <navigationController id="fX4-Jn-4dd" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="T7H-jh-GUj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Lrn-nS-1KP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zG1-5H-ZAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-765" y="136"/>
+        </scene>
         <!--Login Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -110,11 +127,10 @@
                             <constraint firstAttribute="trailing" secondItem="g33-OS-QMg" secondAttribute="trailing" id="xa9-tx-Nba"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Xf6-fQ-YvR"/>
                     <connections>
                         <outlet property="OTMLogo" destination="Rta-8g-uYh" id="aYL-tq-sBv"/>
                         <outlet property="OTMPin" destination="TbG-Oz-Auj" id="19b-Sn-1IO"/>
-                        <outlet property="cancelDot" destination="2Cu-B2-OGZ" id="LL5-zz-Xh1"/>
-                        <outlet property="createUserAccnt" destination="Aa9-cH-XLH" id="YYZ-zr-0xY"/>
                         <outlet property="loginButton" destination="dYJ-vx-SeG" id="hT7-kG-9V3"/>
                         <outlet property="loginTray" destination="W4E-e1-1aM" id="cpi-iq-A0O"/>
                         <outlet property="passwordField" destination="jfF-Ev-Tt3" id="qXP-Ha-B5i"/>
@@ -173,6 +189,9 @@
                                     <state key="normal" title="Create New Udacity Account">
                                         <color key="titleColor" red="0.22352941176470587" green="0.63529411764705879" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="createAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="061-rr-SCk"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -205,15 +224,88 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="136.14130434782609"/>
         </scene>
+        <!--Web View Controller-->
+        <scene sceneID="gjl-Ps-seq">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" id="tUv-f4-JRN" customClass="WebViewController" customModule="ONTheMap_" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sAI-04-P5l"/>
+                        <viewControllerLayoutGuide type="bottom" id="IgM-tQ-8I4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wpr-9l-zHY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzj-9U-IvO">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WebButtonTray" translatesAutoresizingMaskIntoConstraints="NO" id="q8p-4a-Nww">
+                                <rect key="frame" x="0.0" y="613" width="414" height="124"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="124" id="QE8-Le-dfI"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7W2-kz-iTh" userLabel="BackButton">
+                                <rect key="frame" x="0.0" y="677" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="pPW-EE-SX5"/>
+                                    <constraint firstAttribute="height" constant="60" id="w9T-O9-E6o"/>
+                                </constraints>
+                                <state key="normal" image="BackWebButton"/>
+                                <connections>
+                                    <action selector="goBack:" destination="tUv-f4-JRN" eventType="touchUpInside" id="Fc9-2Q-AzH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8s-Hc-PAc" userLabel="ForwardButton">
+                                <rect key="frame" x="354" y="677" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Pk9-6b-yev"/>
+                                    <constraint firstAttribute="width" constant="60" id="o42-8l-sUJ"/>
+                                </constraints>
+                                <state key="normal" image="ForwardWebButton"/>
+                                <connections>
+                                    <action selector="goForward:" destination="tUv-f4-JRN" eventType="touchUpInside" id="1Uf-Hr-vKV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kzj-9U-IvO" firstAttribute="leading" secondItem="wpr-9l-zHY" secondAttribute="leading" id="2cP-he-vg3"/>
+                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="centerY" secondItem="7W2-kz-iTh" secondAttribute="centerY" id="7VD-2L-l9R"/>
+                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" id="FOh-KI-I2X"/>
+                            <constraint firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" constant="-1" id="GdM-BN-ksF"/>
+                            <constraint firstItem="q8p-4a-Nww" firstAttribute="centerX" secondItem="wpr-9l-zHY" secondAttribute="centerX" id="M87-Dr-DSD"/>
+                            <constraint firstAttribute="trailing" secondItem="q8p-4a-Nww" secondAttribute="trailing" id="Ty7-jm-whQ"/>
+                            <constraint firstAttribute="trailing" secondItem="kzj-9U-IvO" secondAttribute="trailing" id="Vvx-hH-SOU"/>
+                            <constraint firstItem="7W2-kz-iTh" firstAttribute="leading" secondItem="q8p-4a-Nww" secondAttribute="leading" id="YJc-W5-jSN"/>
+                            <constraint firstItem="q8p-4a-Nww" firstAttribute="leading" secondItem="wpr-9l-zHY" secondAttribute="leading" id="crt-1f-drV"/>
+                            <constraint firstItem="kzj-9U-IvO" firstAttribute="top" secondItem="wpr-9l-zHY" secondAttribute="top" id="exE-Lo-fhD"/>
+                            <constraint firstItem="7W2-kz-iTh" firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" id="rRZ-LM-hb5"/>
+                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="trailing" secondItem="q8p-4a-Nww" secondAttribute="trailing" id="vY3-Lv-eNd"/>
+                            <constraint firstItem="kzj-9U-IvO" firstAttribute="bottom" secondItem="IgM-tQ-8I4" secondAttribute="top" id="wq1-Zp-vr3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="OTMWebView" destination="kzj-9U-IvO" id="Y5v-ta-iGd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a67-wL-k5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1095.6521739130435" y="136.14130434782609"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="BackWebButton" width="60" height="60"/>
         <image name="CancelDot" width="25" height="25"/>
+        <image name="ForwardWebButton" width="60" height="60"/>
         <image name="LoginButton" width="151" height="151"/>
         <image name="LoginTrayBG" width="742" height="351"/>
         <image name="OTM!LoginBG" width="736" height="736"/>
         <image name="OTM!Logo" width="390" height="112"/>
         <image name="OTM!Pin" width="36" height="114"/>
         <image name="UdacityLogin" width="320" height="320"/>
+        <image name="WebButtonTray" width="420" height="125"/>
         <image name="WhiteCast" width="414" height="487"/>
     </resources>
 </document>
