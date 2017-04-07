@@ -12,6 +12,7 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var OTMPin: UIImageView!
     @IBOutlet weak var OTMLogo: UIImageView!
+    @IBOutlet weak var redSpinner: UIActivityIndicatorView!
     
     @IBOutlet weak var loginTray: UIView!
     @IBOutlet weak var loginButton: UIButton!
@@ -30,7 +31,7 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {super.viewWillAppear(true)
+    override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(true)
         subscribeToKeyboardNotifications()
     }
     
@@ -68,10 +69,30 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func loginToOTM(){
+        udaClient.authenticate(userName: (OnTheMap.shared.userName ?? ""), passWord: (OnTheMap.shared.userPassword ?? "")){ accountID, sessionID, error in
+            DispatchQueue.main.async {self.redSpinner.stopAnimating();print("Here 1")
+            guard (error == nil) else {print(error!.localizedDescription); self.animateLoginScreen();print("Here 2");return}
+            guard let accountID = accountID else{print("The account ID is nil");self.animateLoginScreen();print("Here 3"); return}
+            guard let sessionID = sessionID else{print("The session ID is nil");self.animateLoginScreen();print("Here 4"); return}
+            print("Successful Login Attempt!!!")
+            print("The account ID is \(accountID)")
+            print("The session ID is \(sessionID)")
+            }
+        }
+    }
+    
+    
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if userNameField.text == nil || userNameField.text!.isBlank{userNameField.becomeFirstResponder() ;return false}
         if passwordField.text == nil || passwordField.text!.isBlank{passwordField.becomeFirstResponder() ;return false}
+        OnTheMap.shared.userName = userNameField.text!
+        OnTheMap.shared.userPassword = passwordField.text!
         textField.resignFirstResponder()
+        showPendingLoginTask()
+        //loginToOTM()
         return true
     }
     
@@ -141,5 +162,18 @@ extension OTMLoginController{
         }), completion: nil)
     }
     
+    func showPendingLoginTask(){
+        UIView.animate(withDuration: 0.8, animations: ({
+            self.udacityLogin.alpha = 0
+            self.OTMLogo.alpha = 1
+            if let visualEffect = self.visualEffect{visualEffect.effect = nil}
+        })){ successfulCompletion in
+            self.udacityLogin.removeFromSuperview()
+            self.redSpinner.startAnimating()
+            //Completion has to somehow be chained to loginToOTM(:_) with is an asyncronous method being returned to the main thread!
+            //Code may possibley need to be redesigned with that in mind.
+            self.loginToOTM()
+        }
+    }
     
 }

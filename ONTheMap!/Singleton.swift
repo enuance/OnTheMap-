@@ -12,6 +12,9 @@ class OnTheMap{
     let user = Student()
     var locations = [Student]()
     
+    var userName: String!
+    var userPassword: String!
+    
     //Checks if locations is full up to the max amount.
     var isFull: Bool{return (locations.count >= ParseCnst.maxLocations)}
     //Emptys out the locations list.

@@ -39,6 +39,14 @@
                                     <constraint firstAttribute="height" constant="112" id="k4w-Qe-8tJ"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uA7-6g-nxq" userLabel="redSpinner">
+                                <rect key="frame" x="186.66666666666666" y="347.66666666666669" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JOQ-qR-na6"/>
+                                    <constraint firstAttribute="width" constant="40" id="mAb-eE-RKm"/>
+                                </constraints>
+                                <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g33-OS-QMg">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="M1B-TM-kld">
@@ -80,6 +88,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="W4E-e1-1aM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottomMargin" id="0kR-Hp-mFH"/>
+                            <constraint firstItem="uA7-6g-nxq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerXWithinMargins" id="2P2-0W-Jah"/>
                             <constraint firstItem="0Cz-Ev-tu4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4DU-EV-wBP"/>
                             <constraint firstItem="0Cz-Ev-tu4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="59d-aT-WyP"/>
                             <constraint firstItem="g33-OS-QMg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Io-Bz-YSU"/>
@@ -96,6 +105,7 @@
                             <constraint firstAttribute="bottomMargin" secondItem="Cr9-WY-LQp" secondAttribute="bottom" id="ljA-6Z-4cc"/>
                             <constraint firstAttribute="topMargin" secondItem="g33-OS-QMg" secondAttribute="top" id="oPt-Ec-q15"/>
                             <constraint firstItem="0Cz-Ev-tu4" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="qPl-94-mju"/>
+                            <constraint firstItem="uA7-6g-nxq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerYWithinMargins" id="rAO-af-aJN"/>
                             <constraint firstAttribute="bottomMargin" secondItem="g33-OS-QMg" secondAttribute="bottom" id="rhw-p3-qz6"/>
                             <constraint firstAttribute="trailing" secondItem="g33-OS-QMg" secondAttribute="trailing" id="xa9-tx-Nba"/>
                         </constraints>
@@ -108,6 +118,7 @@
                         <outlet property="loginButton" destination="dYJ-vx-SeG" id="hT7-kG-9V3"/>
                         <outlet property="loginTray" destination="W4E-e1-1aM" id="cpi-iq-A0O"/>
                         <outlet property="passwordField" destination="jfF-Ev-Tt3" id="qXP-Ha-B5i"/>
+                        <outlet property="redSpinner" destination="uA7-6g-nxq" id="gtA-xQ-Hmv"/>
                         <outlet property="udacityLogin" destination="SdC-6F-qkd" id="snG-rF-agN"/>
                         <outlet property="userNameField" destination="Nus-aj-GfM" id="WKu-f9-hwi"/>
                         <outlet property="visualEffect" destination="g33-OS-QMg" id="3mw-1c-U07"/>
