@@ -138,6 +138,7 @@
                         <outlet property="udacityLogin" destination="SdC-6F-qkd" id="snG-rF-agN"/>
                         <outlet property="userNameField" destination="Nus-aj-GfM" id="WKu-f9-hwi"/>
                         <outlet property="visualEffect" destination="g33-OS-QMg" id="3mw-1c-U07"/>
+                        <segue destination="uGk-8I-Tfm" kind="show" identifier="showTabBarController" id="MJQ-Wu-P35"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -224,6 +225,62 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="136.14130434782609"/>
         </scene>
+        <!--Item 2-->
+        <scene sceneID="xd5-bk-tY3">
+            <objects>
+                <viewController id="Oia-qJ-98U" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nwx-PY-CtX"/>
+                        <viewControllerLayoutGuide type="bottom" id="bsA-p0-Mc8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wqz-Zj-lmq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="LGv-0L-gN3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jjT-lo-HOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2077" y="475"/>
+        </scene>
+        <!--Item 1-->
+        <scene sceneID="awb-et-zS1">
+            <objects>
+                <viewController id="MRk-g0-12O" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sVv-f8-0ym"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Xk-eV-uRk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sSy-XT-ZOm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="VF1-l7-xO7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eWt-nm-MNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2077" y="-174"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="WS2-ck-kPI">
+            <objects>
+                <tabBarController id="uGk-8I-Tfm" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="2VM-mk-pnV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="MRk-g0-12O" kind="relationship" relationship="viewControllers" id="Nnf-uu-5Rv"/>
+                        <segue destination="Oia-qJ-98U" kind="relationship" relationship="viewControllers" id="04U-Cs-rxe"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="drJ-Zj-2M4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1186" y="136"/>
+        </scene>
         <!--Web View Controller-->
         <scene sceneID="gjl-Ps-seq">
             <objects>
@@ -241,71 +298,82 @@
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WebButtonTray" translatesAutoresizingMaskIntoConstraints="NO" id="q8p-4a-Nww">
-                                <rect key="frame" x="0.0" y="613" width="414" height="124"/>
+                                <rect key="frame" x="0.0" y="691" width="414" height="46"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="124" id="QE8-Le-dfI"/>
+                                    <constraint firstAttribute="height" constant="46" id="QE8-Le-dfI"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7W2-kz-iTh" userLabel="BackButton">
-                                <rect key="frame" x="0.0" y="677" width="60" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7W2-kz-iTh" userLabel="BackButton">
+                                <rect key="frame" x="8" y="703" width="60" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="pPW-EE-SX5"/>
-                                    <constraint firstAttribute="height" constant="60" id="w9T-O9-E6o"/>
+                                    <constraint firstAttribute="height" constant="30" id="w9T-O9-E6o"/>
                                 </constraints>
-                                <state key="normal" image="BackWebButton"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="goBack:" destination="tUv-f4-JRN" eventType="touchUpInside" id="Fc9-2Q-AzH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8s-Hc-PAc" userLabel="ForwardButton">
-                                <rect key="frame" x="354" y="677" width="60" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8s-Hc-PAc" userLabel="ForwardButton">
+                                <rect key="frame" x="346" y="703" width="60" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Pk9-6b-yev"/>
+                                    <constraint firstAttribute="height" constant="30" id="Pk9-6b-yev"/>
                                     <constraint firstAttribute="width" constant="60" id="o42-8l-sUJ"/>
                                 </constraints>
-                                <state key="normal" image="ForwardWebButton"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                <state key="normal" title="Forward">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="goForward:" destination="tUv-f4-JRN" eventType="touchUpInside" id="1Uf-Hr-vKV"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="b5n-eJ-zuq">
+                                <rect key="frame" x="189" y="350" width="37" height="37"/>
+                                <color key="color" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kzj-9U-IvO" firstAttribute="leading" secondItem="wpr-9l-zHY" secondAttribute="leading" id="2cP-he-vg3"/>
                             <constraint firstItem="s8s-Hc-PAc" firstAttribute="centerY" secondItem="7W2-kz-iTh" secondAttribute="centerY" id="7VD-2L-l9R"/>
-                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" id="FOh-KI-I2X"/>
+                            <constraint firstItem="b5n-eJ-zuq" firstAttribute="centerY" secondItem="kzj-9U-IvO" secondAttribute="centerY" id="9hT-kK-4QO"/>
+                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" constant="-4" id="FOh-KI-I2X"/>
                             <constraint firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" constant="-1" id="GdM-BN-ksF"/>
                             <constraint firstItem="q8p-4a-Nww" firstAttribute="centerX" secondItem="wpr-9l-zHY" secondAttribute="centerX" id="M87-Dr-DSD"/>
                             <constraint firstAttribute="trailing" secondItem="q8p-4a-Nww" secondAttribute="trailing" id="Ty7-jm-whQ"/>
                             <constraint firstAttribute="trailing" secondItem="kzj-9U-IvO" secondAttribute="trailing" id="Vvx-hH-SOU"/>
-                            <constraint firstItem="7W2-kz-iTh" firstAttribute="leading" secondItem="q8p-4a-Nww" secondAttribute="leading" id="YJc-W5-jSN"/>
+                            <constraint firstItem="7W2-kz-iTh" firstAttribute="leading" secondItem="q8p-4a-Nww" secondAttribute="leading" constant="8" id="YJc-W5-jSN"/>
                             <constraint firstItem="q8p-4a-Nww" firstAttribute="leading" secondItem="wpr-9l-zHY" secondAttribute="leading" id="crt-1f-drV"/>
+                            <constraint firstItem="b5n-eJ-zuq" firstAttribute="centerX" secondItem="q8p-4a-Nww" secondAttribute="centerX" id="euY-7v-iCY"/>
                             <constraint firstItem="kzj-9U-IvO" firstAttribute="top" secondItem="wpr-9l-zHY" secondAttribute="top" id="exE-Lo-fhD"/>
-                            <constraint firstItem="7W2-kz-iTh" firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" id="rRZ-LM-hb5"/>
-                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="trailing" secondItem="q8p-4a-Nww" secondAttribute="trailing" id="vY3-Lv-eNd"/>
+                            <constraint firstItem="7W2-kz-iTh" firstAttribute="bottom" secondItem="q8p-4a-Nww" secondAttribute="bottom" constant="-4" id="rRZ-LM-hb5"/>
+                            <constraint firstItem="s8s-Hc-PAc" firstAttribute="trailing" secondItem="q8p-4a-Nww" secondAttribute="trailing" constant="-8" id="vY3-Lv-eNd"/>
                             <constraint firstItem="kzj-9U-IvO" firstAttribute="bottom" secondItem="IgM-tQ-8I4" secondAttribute="top" id="wq1-Zp-vr3"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="OTMWebView" destination="kzj-9U-IvO" id="Y5v-ta-iGd"/>
+                        <outlet property="redSpinner" destination="b5n-eJ-zuq" id="7RG-8q-Xvo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a67-wL-k5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1095.6521739130435" y="136.14130434782609"/>
+            <point key="canvasLocation" x="-2164" y="135"/>
         </scene>
     </scenes>
     <resources>
-        <image name="BackWebButton" width="60" height="60"/>
         <image name="CancelDot" width="25" height="25"/>
-        <image name="ForwardWebButton" width="60" height="60"/>
         <image name="LoginButton" width="151" height="151"/>
         <image name="LoginTrayBG" width="742" height="351"/>
         <image name="OTM!LoginBG" width="736" height="736"/>
         <image name="OTM!Logo" width="390" height="112"/>
         <image name="OTM!Pin" width="36" height="114"/>
         <image name="UdacityLogin" width="320" height="320"/>
-        <image name="WebButtonTray" width="420" height="125"/>
+        <image name="WebButtonTray" width="420" height="48"/>
         <image name="WhiteCast" width="414" height="487"/>
     </resources>
 </document>

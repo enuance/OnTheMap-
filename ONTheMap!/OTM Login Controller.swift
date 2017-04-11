@@ -35,150 +35,65 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(true)
-        animateLoginScreen()
+        UIApplication.shared.statusBarStyle = .default
+        animateHomeScreen()
     }
     
-    @IBAction func showUdacityLoginView(_ sender: UIButton) {
-        udacityLogin.translatesAutoresizingMaskIntoConstraints = true
-        view.addSubview(udacityLogin)
-        udacityLogin.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
-        udacityLogin.autoresizingMask = [
-            UIViewAutoresizing.flexibleLeftMargin,
-            UIViewAutoresizing.flexibleRightMargin,
-            UIViewAutoresizing.flexibleTopMargin,
-            UIViewAutoresizing.flexibleBottomMargin
-        ]
-        UIView.animate(withDuration: 0.8){
-            if let visualEffect = self.visualEffect{visualEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.light)}
-            self.udacityLogin.alpha = 1
-            self.OTMLogo.alpha = 0
-            self.loginTray.transform = CGAffineTransform.identity
-            self.loginButton.transform = CGAffineTransform.identity
-            self.OTMPin.transform = CGAffineTransform.identity
-        }
-    }
-    
-    @IBAction func removeUdacityLoginView(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.8, animations: ({
-            self.udacityLogin.alpha = 0
-            if let visualEffect = self.visualEffect{visualEffect.effect = nil}
-        })){ successfulCompletion in
-            self.udacityLogin.removeFromSuperview()
-            self.animateLoginScreen()
-        }
-    }
-    
-    func loginToOTM(){
-        udaClient.authenticate(userName: (OnTheMap.shared.userName ?? ""), passWord: (OnTheMap.shared.userPassword ?? "")){ accountID, sessionID, error in
-            DispatchQueue.main.async {self.redSpinner.stopAnimating();print("Here 1")
-            guard (error == nil) else {print(error!.localizedDescription); self.animateLoginScreen();print("Here 2");return}
-            guard let accountID = accountID else{print("The account ID is nil");self.animateLoginScreen();print("Here 3"); return}
-            guard let sessionID = sessionID else{print("The session ID is nil");self.animateLoginScreen();print("Here 4"); return}
-            print("Successful Login Attempt!!!")
-            print("The account ID is \(accountID)")
-            print("The session ID is \(sessionID)")
-            }
-        }
-    }
-    
-    @IBAction func createAccount(_ sender: UIButton) {
-        udacityLogin.alpha = 0
-        udacityLogin.removeFromSuperview()
-        visualEffect.effect = nil
-        let accountCreationController = self.storyboard!.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
-        accountCreationController.urlString = URLCnst.createAccntURL
-        self.navigationController!.pushViewController(accountCreationController, animated: true)
-    }
+    @IBAction func showUdacityLoginView(_ sender: UIButton) {animateLoginView()}
+    @IBAction func removeUdacityLoginView(_ sender: UIButton) {animateRemovingLoginView()}
+    @IBAction func createAccount(_ sender: UIButton) {animateAccountCreation()}
+
+    func loginAnimationSetUpCompleted(){loginToOTM()}
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if userNameField.text == nil || userNameField.text!.isBlank{userNameField.becomeFirstResponder() ;return false}
         if passwordField.text == nil || passwordField.text!.isBlank{passwordField.becomeFirstResponder() ;return false}
-        OnTheMap.shared.userName = userNameField.text!
-        OnTheMap.shared.userPassword = passwordField.text!
+        OnTheMap.shared.userName = userNameField.text!; OnTheMap.shared.userPassword = passwordField.text!
         textField.resignFirstResponder()
+        userNameField.text = ""; passwordField.text = ""
         showPendingLoginTask()
-        //loginToOTM()
         return true
     }
     
-    func keyboardWillShow(_ notification: Notification){
-        guard let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            else{print("Keyboard size not accesible"); return}
-        let clearanceScaler = CGFloat(userNameField.isEditing ? 2 : 1)
-        if udacityLogin.frame.intersects(keyboardFrame){
-            let moveBy = udacityLogin.frame.intersection(keyboardFrame)
-            view.frame.origin.y = 0 - (moveBy.height / clearanceScaler)
+    func loginToOTM(){
+        udaClient.authenticate(userName: (OnTheMap.shared.userName ?? ""), passWord: (OnTheMap.shared.userPassword ?? "")){ accountID, sessionID, error in
+            OnTheMap.shared.userName = nil ; OnTheMap.shared.userPassword = nil
+            DispatchQueue.main.async {self.redSpinner.stopAnimating()
+                guard (error == nil)else {
+                    SendError.toDisplay(self, errorType: String(describing: error!), errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
+                    return}
+                guard let accountID = accountID, let sessionID = sessionID else{
+                    SendError.toDisplay(self,errorType: "Network Error", errorMessage: "Unable to retrieve needed data from Udacity",assignment: ({self.animateHomeScreen()}))
+                    return}
+                print("Successful Login Attempt! The session ID is \(sessionID)")
+                OnTheMap.shared.user.setPropertyBy(StudentCnst.uniqueKey, with: accountID)
+                
+                
+                
+                //Do Segue to MapKit Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                self.performSegue(withIdentifier: "showTabBarController", sender: self)
+                print("Segue performed!")
+                //Make sure to prepare if needed
+                
+                
+                
+                //Allow the udaClient to get user info in the background.
+                udaClient.getPublicUserInfo(userAcctID: accountID){ firstName, lastName, error in
+                    guard (error == nil)else {DispatchQueue.main.async {
+                        //May not be on the login VC by the time this is called / need to access the top VC!
+                        SendError.toDisplay((self.navigationController?.topViewController)!, errorType: String(describing: error!),errorMessage: "Unable to retrieve User info due to Netwrok Error. Description: \(error!.localizedDescription)",assignment: ({self.navigationController?.popToRootViewController(animated: true)}))
+                        }//End MainQueue work | Begin background work:
+                        return}
+                    guard let firstName = firstName, let lastName = lastName else{DispatchQueue.main.async {
+                            SendError.toDisplay((self.navigationController?.topViewController)!, errorType: "Unable to retrieve User info", errorMessage: "The User's first name or last name is not set!", assignment: ({self.navigationController?.popToRootViewController(animated: true)}))
+                        }//End MainQueue work | Begin background work:
+                        return}
+                    OnTheMap.shared.user.setPropertyBy(StudentCnst.firstName, with: firstName)
+                    OnTheMap.shared.user.setPropertyBy(StudentCnst.lastName, with: lastName)
+                }//End Background work
+            }
         }
     }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if view.frame.origin.y != 0 {view.frame.origin.y = 0}
-    }
-    
-    func subscribeToKeyboardNotifications(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-extension OTMLoginController{
-    
-    func animateLoginScreen(){
-        UIView.animate(withDuration: 0.8, animations: ({
-            self.OTMLogo.alpha = 1
-            self.loginTray.transform = CGAffineTransform(translationX: 0, y: -(self.loginButton.frame.height * 1.25))
-            self.loginButton.transform = CGAffineTransform(rotationAngle: ConvertObject.toRadians(180))
-        })){ successfulCompletion in
-            self.animatePinDrop()
-        }
-    }
-    
-    func animatePinDrop(){
-        //Gives the dropped pin a springing effect once dropped.
-        UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveLinear, animations: ({
-            self.OTMPin.transform = CGAffineTransform(translationX: 0, y:(self.OTMPin.frame.height * 2.25))
-        }), completion: nil)
-    }
-    
-    func showPendingLoginTask(){
-        UIView.animate(withDuration: 0.8, animations: ({
-            self.udacityLogin.alpha = 0
-            self.OTMLogo.alpha = 1
-            if let visualEffect = self.visualEffect{visualEffect.effect = nil}
-        })){ successfulCompletion in
-            self.udacityLogin.removeFromSuperview()
-            self.redSpinner.startAnimating()
-            //Completion has to somehow be chained to loginToOTM(:_) with is an asyncronous method being returned to the main thread!
-            //Code may possibley need to be redesigned with that in mind.
-            self.loginToOTM()
-        }
-    }
-    
-}

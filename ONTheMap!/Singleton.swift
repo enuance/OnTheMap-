@@ -11,8 +11,9 @@ import Foundation
 class OnTheMap{
     let user = Student()
     var locations = [Student]()
-    
+    //Erase userName as soon as it has been used!
     var userName: String!
+    //Erase userPassword as soon as it has been used!
     var userPassword: String!
     
     //Checks if locations is full up to the max amount.

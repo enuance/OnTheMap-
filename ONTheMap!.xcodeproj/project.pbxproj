@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200A26D11E9C586400A594C4 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200A26D01E9C586400A594C4 /* Animations.swift */; };
+		200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */; };
 		203423391E9841B50083512F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203423381E9841B50083512F /* WebViewController.swift */; };
 		203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B28841E70D6CD00577D67 /* Authentication Client.swift */; };
 		203B288B1E70EBE500577D67 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B288A1E70EBE500577D67 /* Singleton.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		200A26D01E9C586400A594C4 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardManagement.swift; sourceTree = "<group>"; };
 		203423381E9841B50083512F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		203B28841E70D6CD00577D67 /* Authentication Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Authentication Client.swift"; path = "../Authentication Client.swift"; sourceTree = "<group>"; };
 		203B288A1E70EBE500577D67 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
@@ -104,8 +108,10 @@
 		203B28871E70D72A00577D67 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				203423381E9841B50083512F /* WebViewController.swift */,
 				20EA73071E6A43E400C18090 /* OTM Login Controller.swift */,
+				203423381E9841B50083512F /* WebViewController.swift */,
+				200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */,
+				200A26D01E9C586400A594C4 /* Animations.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -319,8 +325,10 @@
 				20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */,
 				203423391E9841B50083512F /* WebViewController.swift in Sources */,
 				203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */,
+				200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */,
 				203B288B1E70EBE500577D67 /* Singleton.swift in Sources */,
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,
+				200A26D11E9C586400A594C4 /* Animations.swift in Sources */,
 				2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */,
 				205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */,
 				2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */,
