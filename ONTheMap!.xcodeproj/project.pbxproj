@@ -15,6 +15,7 @@
 		205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B5BA21E7C61FA003EF1CC /* Student.swift */; };
 		2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */; };
 		2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069A32F1E7E23BE001B10C7 /* Error Handling.swift */; };
+		20D82BAC1E9D8FC5003F7A26 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D82BAB1E9D8FC5003F7A26 /* MapKit.framework */; };
 		20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73051E6A43E400C18090 /* AppDelegate.swift */; };
 		20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73071E6A43E400C18090 /* OTM Login Controller.swift */; };
 		20EA730B1E6A43E400C18090 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20EA73091E6A43E400C18090 /* Main.storyboard */; };
@@ -23,6 +24,9 @@
 		20EA731B1E6A43E400C18090 /* ONTheMap_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA731A1E6A43E400C18090 /* ONTheMap_Tests.swift */; };
 		20EA73261E6A43E400C18090 /* ONTheMap_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73251E6A43E400C18090 /* ONTheMap_UITests.swift */; };
 		20EA73341E6A45F600C18090 /* Global Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73331E6A45F600C18090 /* Global Constants.swift */; };
+		20EFBFA71E9EFDB300212548 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFBFA61E9EFDB300212548 /* MapViewController.swift */; };
+		20EFBFA91E9EFE2200212548 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFBFA81E9EFE2200212548 /* TableViewController.swift */; };
+		20EFBFAB1E9F093600212548 /* NavBarManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFBFAA1E9F093600212548 /* NavBarManagement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,7 @@
 		205B5BA21E7C61FA003EF1CC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Parse Client.swift"; sourceTree = "<group>"; };
 		2069A32F1E7E23BE001B10C7 /* Error Handling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error Handling.swift"; sourceTree = "<group>"; };
+		20D82BAB1E9D8FC5003F7A26 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		20EA73021E6A43E400C18090 /* ONTheMap!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ONTheMap!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20EA73051E6A43E400C18090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20EA73071E6A43E400C18090 /* OTM Login Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OTM Login Controller.swift"; sourceTree = "<group>"; };
@@ -65,6 +70,9 @@
 		20EA73251E6A43E400C18090 /* ONTheMap_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ONTheMap_UITests.swift; sourceTree = "<group>"; };
 		20EA73271E6A43E400C18090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20EA73331E6A45F600C18090 /* Global Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Global Constants.swift"; sourceTree = "<group>"; };
+		20EFBFA61E9EFDB300212548 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		20EFBFA81E9EFE2200212548 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		20EFBFAA1E9F093600212548 /* NavBarManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarManagement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20D82BAC1E9D8FC5003F7A26 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,10 +117,11 @@
 		203B28871E70D72A00577D67 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				20EFBFAC1E9F09B900212548 /* Managers */,
 				20EA73071E6A43E400C18090 /* OTM Login Controller.swift */,
+				20EFBFA61E9EFDB300212548 /* MapViewController.swift */,
+				20EFBFA81E9EFE2200212548 /* TableViewController.swift */,
 				203423381E9841B50083512F /* WebViewController.swift */,
-				200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */,
-				200A26D01E9C586400A594C4 /* Animations.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -137,12 +147,21 @@
 			name = Supporting;
 			sourceTree = "<group>";
 		};
+		20D82BAA1E9D8FC5003F7A26 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20D82BAB1E9D8FC5003F7A26 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		20EA72F91E6A43E300C18090 = {
 			isa = PBXGroup;
 			children = (
 				20EA73041E6A43E400C18090 /* ONTheMap! */,
 				203B28881E70D77300577D67 /* Tests */,
 				20EA73031E6A43E400C18090 /* Products */,
+				20D82BAA1E9D8FC5003F7A26 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -184,6 +203,16 @@
 			);
 			path = "ONTheMap!UITests";
 			sourceTree = SOURCE_ROOT;
+		};
+		20EFBFAC1E9F09B900212548 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				200A26D01E9C586400A594C4 /* Animations.swift */,
+				200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */,
+				20EFBFAA1E9F093600212548 /* NavBarManagement.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -255,6 +284,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = P6Y8F6EN66;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					20EA73151E6A43E400C18090 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -324,11 +358,14 @@
 			files = (
 				20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */,
 				203423391E9841B50083512F /* WebViewController.swift in Sources */,
+				20EFBFA91E9EFE2200212548 /* TableViewController.swift in Sources */,
 				203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */,
 				200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */,
 				203B288B1E70EBE500577D67 /* Singleton.swift in Sources */,
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,
 				200A26D11E9C586400A594C4 /* Animations.swift in Sources */,
+				20EFBFAB1E9F093600212548 /* NavBarManagement.swift in Sources */,
+				20EFBFA71E9EFDB300212548 /* MapViewController.swift in Sources */,
 				2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */,
 				205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */,
 				2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */,

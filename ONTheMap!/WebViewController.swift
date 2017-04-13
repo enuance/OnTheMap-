@@ -17,17 +17,7 @@ class WebViewController: UIViewController, UIWebViewDelegate{
     var navBarTitle: String!
     
     override func viewDidLoad() {super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
-        navigationItem.title = navBarTitle
-        let back = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(navigateBack))
-        navigationItem.leftBarButtonItem = back
-        let navBarStyle: [String: Any] = [
-            NSForegroundColorAttributeName: UIColor.red,
-            NSFontAttributeName: UIFont(name: "Avenir Next Medium", size: CGFloat(16))!
-        ]
-        navigationController?.navigationBar.titleTextAttributes = navBarStyle
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes(navBarStyle, for: .normal)
-        navigationController?.navigationBar.tintColor = UIColor.red
+        setUpNavBar()
         OTMWebView.delegate = self
     }
     

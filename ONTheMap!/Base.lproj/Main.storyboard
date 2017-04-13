@@ -225,10 +225,10 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="136.14130434782609"/>
         </scene>
-        <!--Item 2-->
+        <!--Table View Controller-->
         <scene sceneID="xd5-bk-tY3">
             <objects>
-                <viewController id="Oia-qJ-98U" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableViewController" id="Oia-qJ-98U" customClass="TableViewController" customModule="ONTheMap_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nwx-PY-CtX"/>
                         <viewControllerLayoutGuide type="bottom" id="bsA-p0-Mc8"/>
@@ -236,18 +236,33 @@
                     <view key="view" contentMode="scaleToFill" id="Wqz-Zj-lmq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="18d-1f-9BR">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="18d-1f-9BR" secondAttribute="trailing" id="3vD-v3-bRn"/>
+                            <constraint firstAttribute="bottom" secondItem="18d-1f-9BR" secondAttribute="bottom" id="9Rz-4N-mBE"/>
+                            <constraint firstItem="18d-1f-9BR" firstAttribute="top" secondItem="Wqz-Zj-lmq" secondAttribute="top" id="Zke-BU-VHQ"/>
+                            <constraint firstItem="18d-1f-9BR" firstAttribute="leading" secondItem="Wqz-Zj-lmq" secondAttribute="leading" id="grY-jt-Raq"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="LGv-0L-gN3"/>
+                    <tabBarItem key="tabBarItem" title="" image="listTabSymbol" id="LGv-0L-gN3">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="40" vertical="0.0"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jjT-lo-HOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2077" y="475"/>
+            <point key="canvasLocation" x="2075.36231884058" y="474.45652173913049"/>
         </scene>
-        <!--Item 1-->
+        <!--Map View Controller-->
         <scene sceneID="awb-et-zS1">
             <objects>
-                <viewController id="MRk-g0-12O" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="MRk-g0-12O" customClass="MapViewController" customModule="ONTheMap_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sVv-f8-0ym"/>
                         <viewControllerLayoutGuide type="bottom" id="2Xk-eV-uRk"/>
@@ -255,22 +270,41 @@
                     <view key="view" contentMode="scaleToFill" id="sSy-XT-ZOm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fB7-5y-atV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <connections>
+                                    <outlet property="delegate" destination="MRk-g0-12O" id="0Fc-9H-45e"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fB7-5y-atV" secondAttribute="trailing" id="25e-XX-yjH"/>
+                            <constraint firstAttribute="bottom" secondItem="fB7-5y-atV" secondAttribute="bottom" id="5oi-gY-4AF"/>
+                            <constraint firstItem="fB7-5y-atV" firstAttribute="leading" secondItem="sSy-XT-ZOm" secondAttribute="leading" id="DMS-hZ-Zcy"/>
+                            <constraint firstItem="fB7-5y-atV" firstAttribute="top" secondItem="sSy-XT-ZOm" secondAttribute="top" id="Klw-hP-4zJ"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="VF1-l7-xO7"/>
+                    <tabBarItem key="tabBarItem" title="" image="mapTabSymbol" id="VF1-l7-xO7">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-40" vertical="0.0"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eWt-nm-MNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2077" y="-174"/>
+            <point key="canvasLocation" x="2075.36231884058" y="-174.45652173913044"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="WS2-ck-kPI">
             <objects>
                 <tabBarController id="uGk-8I-Tfm" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="2VM-mk-pnV">
+                    <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" itemPositioning="centered" id="2VM-mk-pnV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="MRk-g0-12O" kind="relationship" relationship="viewControllers" id="Nnf-uu-5Rv"/>
@@ -375,5 +409,7 @@
         <image name="UdacityLogin" width="320" height="320"/>
         <image name="WebButtonTray" width="420" height="48"/>
         <image name="WhiteCast" width="414" height="487"/>
+        <image name="listTabSymbol" width="30" height="34"/>
+        <image name="mapTabSymbol" width="36" height="39"/>
     </resources>
 </document>
