@@ -43,7 +43,7 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
     @IBAction func removeUdacityLoginView(_ sender: UIButton) {animateRemovingLoginView()}
     @IBAction func createAccount(_ sender: UIButton) {animateAccountCreation()}
 
-    func loginAnimationSetUpCompleted(){loginToOTM()}
+    func loginAnimationSetUpCompleted(){loginAndPopulateOTM()}
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if userNameField.text == nil || userNameField.text!.isBlank{userNameField.becomeFirstResponder() ;return false}
@@ -55,28 +55,35 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func loginToOTM(){
+    func loginAndPopulateOTM(){
         udaClient.authenticate(userName: (OnTheMap.shared.userName ?? ""), passWord: (OnTheMap.shared.userPassword ?? "")){ accountID, sessionID, error in
             OnTheMap.shared.userName = nil ; OnTheMap.shared.userPassword = nil
-            DispatchQueue.main.async {self.redSpinner.stopAnimating()
+            DispatchQueue.main.async {
                 guard (error == nil)else {
+                    self.redSpinner.stopAnimating()
                     SendError.toDisplay(self, errorType: String(describing: error!), errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
                     return}
                 guard let accountID = accountID, let sessionID = sessionID else{
+                    self.redSpinner.stopAnimating()
                     SendError.toDisplay(self,errorType: "Network Error", errorMessage: "Unable to retrieve needed data from Udacity",assignment: ({self.animateHomeScreen()}))
                     return}
                 print("Successful Login Attempt! The session ID is \(sessionID)")
                 OnTheMap.shared.user.setPropertyBy(StudentCnst.uniqueKey, with: accountID)
                 
-                
-                
-                //Do Segue to MapKit Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                self.performSegue(withIdentifier: "showTabBarController", sender: self)
-                print("Segue performed!")
-                //Make sure to prepare if needed
-                
-                
-                
+                //Start populating the students location and pins list.
+                ParseClient.populateLocations(){ locationsCount, error in
+                    DispatchQueue.main.async {
+                        guard (error == nil) else{
+                            self.redSpinner.stopAnimating()
+                            SendError.toDisplay(self, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
+                            return
+                            }
+                        OnTheMap.pinTheLocations()
+                        self.redSpinner.stopAnimating()
+                        //No prepare needed. Using shared data from singleton
+                        self.performSegue(withIdentifier: "showTabBarController", sender: self)
+                    }
+                }
                 //Allow the udaClient to get user info in the background.
                 udaClient.getPublicUserInfo(userAcctID: accountID){ firstName, lastName, error in
                     guard (error == nil)else {DispatchQueue.main.async {

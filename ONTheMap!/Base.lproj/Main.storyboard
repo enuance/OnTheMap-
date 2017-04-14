@@ -223,7 +223,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="136.14130434782609"/>
+            <point key="canvasLocation" x="172" y="-174"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="xd5-bk-tY3">
@@ -240,6 +240,36 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="18d-1f-9BR">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="simpleCell" textLabel="LEZ-zJ-8N4" detailTextLabel="J9X-5o-792" style="IBUITableViewCellStyleSubtitle" id="Crg-Su-46Z">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Crg-Su-46Z" id="fhE-8h-G7k">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LEZ-zJ-8N4">
+                                                    <rect key="frame" x="15" y="5" width="33.333333333333336" height="20.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J9X-5o-792">
+                                                    <rect key="frame" x="15" y="25.333333333333332" width="32.666666666666664" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Oia-qJ-98U" id="FYb-Yy-f7x"/>
+                                    <outlet property="delegate" destination="Oia-qJ-98U" id="OUN-Lz-hZ9"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -252,7 +282,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="listTabSymbol" id="LGv-0L-gN3">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="40" vertical="0.0"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="20" vertical="0.0"/>
                     </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jjT-lo-HOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -288,8 +318,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="mapTabSymbol" id="VF1-l7-xO7">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="-40" vertical="0.0"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-20" vertical="0.0"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="studentMap" destination="fB7-5y-atV" id="8gR-TC-2Di"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eWt-nm-MNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -313,7 +346,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drJ-Zj-2M4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1186" y="136"/>
+            <point key="canvasLocation" x="1113" y="135"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="gjl-Ps-seq">
@@ -396,7 +429,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a67-wL-k5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2164" y="135"/>
+            <point key="canvasLocation" x="171" y="474"/>
         </scene>
     </scenes>
     <resources>

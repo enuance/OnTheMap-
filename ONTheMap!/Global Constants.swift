@@ -184,9 +184,10 @@ struct ConvertObject{
 }
 
 extension String{
-    var isBlank: Bool{
-        return trimmingCharacters(in: .whitespaces).isEmpty
-    }
+    //Checks for blank space as well as Empty
+    var isBlank: Bool{return trimmingCharacters(in: .whitespaces).isEmpty}
+    //Adds an HTTP formated prefix if not already existing.
+    var prefixHTTP: String{return (self.hasPrefix("http") ? self : "http://\(self)")}
 }
 
 

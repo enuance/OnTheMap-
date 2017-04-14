@@ -7,19 +7,38 @@
 //
 
 import Foundation
+import MapKit
 
 class OnTheMap{
     let user = Student()
     var locations = [Student]()
+    var pins = [MKPointAnnotation]()
+    
     //Erase userName as soon as it has been used!
     var userName: String!
     //Erase userPassword as soon as it has been used!
     var userPassword: String!
-    
     //Checks if locations is full up to the max amount.
     var isFull: Bool{return (locations.count >= ParseCnst.maxLocations)}
-    //Emptys out the locations list.
-    class func clearLocations(){shared.locations = [Student]()}
+    //Makes Map Pins for the available Student Locations.
+    class func pinTheLocations(){
+        for location in shared.locations{
+            let latitude =  CLLocationDegrees(location.latitude)
+            let longitude = CLLocationDegrees(location.longitude)
+            let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            let aPin = MKPointAnnotation()
+            aPin.coordinate = coordinate
+            aPin.title = "\(location.firstName!) \(location.lastName!)"
+            aPin.subtitle = "\(location.mediaURL!)"
+            shared.pins.append(aPin)
+        }
+    }
+    
+    //Emptys out the locations & Pins list.
+    class func clearLocationsAndPins(){
+        shared.locations = [Student]()
+        shared.pins = [MKPointAnnotation]()
+    }
     //Shared URL Session for the App.
     let session = URLSession.shared
     //Singleton instance for the OnTheMap Class
