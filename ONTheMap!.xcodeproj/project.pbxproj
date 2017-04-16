@@ -12,9 +12,12 @@
 		203423391E9841B50083512F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203423381E9841B50083512F /* WebViewController.swift */; };
 		203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B28841E70D6CD00577D67 /* Authentication Client.swift */; };
 		203B288B1E70EBE500577D67 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B288A1E70EBE500577D67 /* Singleton.swift */; };
+		2045E5D01EA2DE6100DA5C21 /* StudentCallout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2045E5CF1EA2DE6100DA5C21 /* StudentCallout.xib */; };
+		2045E5D21EA2E8B300DA5C21 /* StudentCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2045E5D11EA2E8B300DA5C21 /* StudentCallout.swift */; };
 		205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B5BA21E7C61FA003EF1CC /* Student.swift */; };
 		2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */; };
 		2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069A32F1E7E23BE001B10C7 /* Error Handling.swift */; };
+		20CE68031EA34E7800FDFAFF /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CE68021EA34E7800FDFAFF /* AnnotationView.swift */; };
 		20D82BAC1E9D8FC5003F7A26 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D82BAB1E9D8FC5003F7A26 /* MapKit.framework */; };
 		20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73051E6A43E400C18090 /* AppDelegate.swift */; };
 		20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EA73071E6A43E400C18090 /* OTM Login Controller.swift */; };
@@ -52,9 +55,12 @@
 		203423381E9841B50083512F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		203B28841E70D6CD00577D67 /* Authentication Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Authentication Client.swift"; path = "../Authentication Client.swift"; sourceTree = "<group>"; };
 		203B288A1E70EBE500577D67 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		2045E5CF1EA2DE6100DA5C21 /* StudentCallout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentCallout.xib; sourceTree = "<group>"; };
+		2045E5D11EA2E8B300DA5C21 /* StudentCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCallout.swift; sourceTree = "<group>"; };
 		205B5BA21E7C61FA003EF1CC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Parse Client.swift"; sourceTree = "<group>"; };
 		2069A32F1E7E23BE001B10C7 /* Error Handling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error Handling.swift"; sourceTree = "<group>"; };
+		20CE68021EA34E7800FDFAFF /* AnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		20D82BAB1E9D8FC5003F7A26 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		20EA73021E6A43E400C18090 /* ONTheMap!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ONTheMap!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20EA73051E6A43E400C18090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +153,16 @@
 			name = Supporting;
 			sourceTree = "<group>";
 		};
+		2045E5CE1EA2DDC400DA5C21 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2045E5D11EA2E8B300DA5C21 /* StudentCallout.swift */,
+				20CE68021EA34E7800FDFAFF /* AnnotationView.swift */,
+				2045E5CF1EA2DE6100DA5C21 /* StudentCallout.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		20D82BAA1E9D8FC5003F7A26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				203B28861E70D6DB00577D67 /* Model */,
+				2045E5CE1EA2DDC400DA5C21 /* View */,
 				203B28871E70D72A00577D67 /* Controller */,
 				203B28891E70D7C800577D67 /* Supporting */,
 				20EA73051E6A43E400C18090 /* AppDelegate.swift */,
@@ -331,6 +348,7 @@
 			files = (
 				20EA73101E6A43E400C18090 /* LaunchScreen.storyboard in Resources */,
 				20EA730D1E6A43E400C18090 /* Assets.xcassets in Resources */,
+				2045E5D01EA2DE6100DA5C21 /* StudentCallout.xib in Resources */,
 				20EA730B1E6A43E400C18090 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,7 +379,9 @@
 				20EFBFA91E9EFE2200212548 /* TableViewController.swift in Sources */,
 				203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */,
 				200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */,
+				20CE68031EA34E7800FDFAFF /* AnnotationView.swift in Sources */,
 				203B288B1E70EBE500577D67 /* Singleton.swift in Sources */,
+				2045E5D21EA2E8B300DA5C21 /* StudentCallout.swift in Sources */,
 				20EA73061E6A43E400C18090 /* AppDelegate.swift in Sources */,
 				200A26D11E9C586400A594C4 /* Animations.swift in Sources */,
 				20EFBFAB1E9F093600212548 /* NavBarManagement.swift in Sources */,
