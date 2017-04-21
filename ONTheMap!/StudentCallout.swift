@@ -11,6 +11,4 @@ import UIKit
 class StudentCallout: UIView {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var mediaURL: UILabel!
-    
-        
 }

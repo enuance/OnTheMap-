@@ -49,6 +49,21 @@ enum NetworkError: LocalizedError{
     }
 }
 
+enum GeneralError: String{
+    case UIConnection = "User Interface ConnectionError"
+    case invalidURL = "Invalid URL"
+    
+    var description: String{
+        switch self{
+        case .UIConnection:
+            return "This Interface did not get connected properly and is unable to complete the assigned task."
+        case .invalidURL:
+            return "You have attempted to open an invalid URL"
+        }
+    }
+}
+
+
 class SendError{
     class func toDisplay(_ displayer: UIViewController, errorType: String, errorMessage: String, assignment: (() -> Void)?) {
         let errorColor = UIColor(red: CGFloat(0.007), green: CGFloat(0.537), blue: CGFloat(0.635), alpha: CGFloat(1))

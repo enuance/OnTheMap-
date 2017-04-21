@@ -12,12 +12,13 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate{
 
     @IBOutlet weak var studentMap: MKMapView!
+    @IBOutlet weak var redSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var blurEffect: UIVisualEffectView!
     
     var selectedURL: String!
     
     override func viewDidLoad() {super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
-        //Set up Nav Bar Here!!!
+        blurEffect.alpha = 0; blurEffect.effect = nil
         studentMap.addAnnotations(OnTheMap.shared.pins)
     }
 
@@ -42,6 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         guard let fullName = view.annotation?.title, let confirmedFullName = fullName else {return}
         guard let mediaURL = view.annotation?.subtitle, let confirmedMediaURL = mediaURL else {return}
         
+        //Store the URL in Class Property for accessability to other methods.
         selectedURL = confirmedMediaURL
         studentCalloutView.name.text = confirmedFullName
         studentCalloutView.mediaURL.text = confirmedMediaURL
@@ -70,23 +72,24 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         calloutButton.addTarget(self, action: #selector(loadMediaURLWithSafari), for: .touchUpInside)
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("pressed!!!")
-    }
-    
     func loadMediaURLWithSafari(){
-        print("loadMediaURL was called!")
         let app = UIApplication.shared
         if let selectURL = selectedURL {
-            app.open(URL(string: selectURL.prefixHTTP)!, options: [:], completionHandler: nil)
+            if let verifiedURL = URL(string: selectURL.prefixHTTP){
+                app.open(verifiedURL, options: [:], completionHandler: nil)
+            }else{
+                SendError.toDisplay(self,
+                                    errorType: GeneralError.invalidURL.rawValue,
+                                    errorMessage: GeneralError.invalidURL.description,
+                                    assignment: nil)
+            }
         }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        //Remove added Button
         view.subviews.first?.removeFromSuperview()
+        //Remove Custom Callout
         view.subviews.first?.removeFromSuperview()
     }
-    
-    
-    
 }
