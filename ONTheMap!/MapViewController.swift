@@ -20,6 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     override func viewDidLoad() {super.viewDidLoad()
         blurEffect.alpha = 0; blurEffect.effect = nil
         studentMap.addAnnotations(OnTheMap.shared.pins)
+        connectSisterVCOutlets()
     }
 
     override func viewDidAppear(_ animated: Bool) {super.viewDidAppear(true)
@@ -27,14 +28,21 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseId = "pin"
+        let reuseId = "studentPin"
         
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
         if pinView == nil {pinView = AnnotationView(annotation: annotation, reuseIdentifier: reuseId)}
         else {pinView?.annotation = annotation}
-        pinView?.image = UIImage(named:"studentPin")
-        pinView?.centerOffset.y = -22
-        return pinView
+        
+        //Returns a general student pin or a "You" pin based on a Unique Identifier/key
+        if let studentPinAnnotation = pinView?.annotation as? StudentAnnotation, let theUniqueIdentifier = studentPinAnnotation.uniqueIdentifier, let yourUniqueIdentifier = OnTheMap.shared.user.uniqueKey, theUniqueIdentifier == yourUniqueIdentifier{
+            pinView?.image = UIImage(named: "YouPin")
+            return pinView
+        }else{
+            pinView?.image = UIImage(named:"studentPin")
+            pinView?.centerOffset.y = -22
+            return pinView
+        }
     }
     
     
@@ -78,7 +86,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             if let verifiedURL = URL(string: selectURL.prefixHTTP){
                 app.open(verifiedURL, options: [:], completionHandler: nil)
             }else{
-                SendError.toDisplay(self,
+                SendToDisplay.error(self,
                                     errorType: GeneralError.invalidURL.rawValue,
                                     errorMessage: GeneralError.invalidURL.description,
                                     assignment: nil)
@@ -92,4 +100,13 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         //Remove Custom Callout
         view.subviews.first?.removeFromSuperview()
     }
+    
+    //The TableVC needs to be ready to go as soon as MapVC is ready.
+    func connectSisterVCOutlets(){
+        guard let TVController = self.tabBarController?.viewControllers?[1] as? TableViewController else {return}
+        //Forcibly connect the outlets if not already connected (connects when it appears) by sending the view signal to the Controller
+        _ = TVController.view
+    }
+    
+    
 }

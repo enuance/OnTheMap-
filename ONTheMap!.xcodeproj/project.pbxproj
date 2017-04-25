@@ -12,8 +12,10 @@
 		203423391E9841B50083512F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203423381E9841B50083512F /* WebViewController.swift */; };
 		203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B28841E70D6CD00577D67 /* Authentication Client.swift */; };
 		203B288B1E70EBE500577D67 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B288A1E70EBE500577D67 /* Singleton.swift */; };
+		203FC9291EAAD83D00FB6610 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203FC9281EAAD83D00FB6610 /* LocationViewController.swift */; };
 		2045E5D01EA2DE6100DA5C21 /* StudentCallout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2045E5CF1EA2DE6100DA5C21 /* StudentCallout.xib */; };
 		2045E5D21EA2E8B300DA5C21 /* StudentCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2045E5D11EA2E8B300DA5C21 /* StudentCallout.swift */; };
+		204C61F31EAE6DE700DFA66F /* StudentAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204C61F21EAE6DE700DFA66F /* StudentAnnotation.swift */; };
 		205B5BA31E7C61FA003EF1CC /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205B5BA21E7C61FA003EF1CC /* Student.swift */; };
 		2060DC381E7CA9C400C0A7F9 /* Parse Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */; };
 		2069A3301E7E23BE001B10C7 /* Error Handling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2069A32F1E7E23BE001B10C7 /* Error Handling.swift */; };
@@ -58,8 +60,10 @@
 		203423381E9841B50083512F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		203B28841E70D6CD00577D67 /* Authentication Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Authentication Client.swift"; path = "../Authentication Client.swift"; sourceTree = "<group>"; };
 		203B288A1E70EBE500577D67 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		203FC9281EAAD83D00FB6610 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		2045E5CF1EA2DE6100DA5C21 /* StudentCallout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentCallout.xib; sourceTree = "<group>"; };
 		2045E5D11EA2E8B300DA5C21 /* StudentCallout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCallout.swift; sourceTree = "<group>"; };
+		204C61F21EAE6DE700DFA66F /* StudentAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentAnnotation.swift; sourceTree = "<group>"; };
 		205B5BA21E7C61FA003EF1CC /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		2060DC371E7CA9C400C0A7F9 /* Parse Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Parse Client.swift"; sourceTree = "<group>"; };
 		2069A32F1E7E23BE001B10C7 /* Error Handling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error Handling.swift"; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 			children = (
 				20EFBFAC1E9F09B900212548 /* Managers */,
 				20721BEC1EA5592800EEABDB /* TabBarController.swift */,
+				203FC9281EAAD83D00FB6610 /* LocationViewController.swift */,
 				20EA73071E6A43E400C18090 /* OTM Login Controller.swift */,
 				20EFBFA61E9EFDB300212548 /* MapViewController.swift */,
 				20EFBFA81E9EFE2200212548 /* TableViewController.swift */,
@@ -166,6 +171,7 @@
 				206B5D391EA819550001E34A /* StudentCell.swift */,
 				206B5D3A1EA819550001E34A /* StudentCell.xib */,
 				2045E5D11EA2E8B300DA5C21 /* StudentCallout.swift */,
+				204C61F21EAE6DE700DFA66F /* StudentAnnotation.swift */,
 				20CE68021EA34E7800FDFAFF /* AnnotationView.swift */,
 				2045E5CF1EA2DE6100DA5C21 /* StudentCallout.xib */,
 			);
@@ -384,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				204C61F31EAE6DE700DFA66F /* StudentAnnotation.swift in Sources */,
 				20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */,
 				203423391E9841B50083512F /* WebViewController.swift in Sources */,
 				20EFBFA91E9EFE2200212548 /* TableViewController.swift in Sources */,
@@ -391,6 +398,7 @@
 				203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */,
 				200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */,
 				20CE68031EA34E7800FDFAFF /* AnnotationView.swift in Sources */,
+				203FC9291EAAD83D00FB6610 /* LocationViewController.swift in Sources */,
 				20721BED1EA5592800EEABDB /* TabBarController.swift in Sources */,
 				203B288B1E70EBE500577D67 /* Singleton.swift in Sources */,
 				2045E5D21EA2E8B300DA5C21 /* StudentCallout.swift in Sources */,

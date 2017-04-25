@@ -83,8 +83,6 @@ extension MapViewController{
     func animateReload(){
         //Handle for the other view in the Tab Bar Controller
         guard let TVController = self.tabBarController?.viewControllers?[1] as? TableViewController else {return}
-        //Forcibly connect the outlets if not already connected (connects when it appears) by sending the view signal to the Controller
-        _ = TVController.view
         let animateIn: TimeInterval = 0.5
         let animateOut: TimeInterval = 0.5
         
@@ -99,6 +97,10 @@ extension MapViewController{
             self.redSpinner.startAnimating()
             TVController.redSpinner.startAnimating()
             TVController.isReloadingOrLogout = true
+            //Disable the nav buttons so the methods are not called multiple times.
+            self.tabBarController?.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.tabBarController?.navigationItem.rightBarButtonItems?[0].isEnabled = false
+            self.tabBarController?.navigationItem.rightBarButtonItems?[1].isEnabled = false
             //Clear out annotations from UI
             self.studentMap.removeAnnotations(self.studentMap.annotations)
             //Clear out existing Locations/Pins from model.
@@ -109,8 +111,11 @@ extension MapViewController{
                     guard (error == nil) else{
                         self.redSpinner.stopAnimating()
                         TVController.redSpinner.stopAnimating()
-
-                        SendError.toDisplay(self.tabBarController!, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({
+                        SendToDisplay.error(self.tabBarController!, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({
+                            //Enable the nav buttons so the methods are accesible again.
+                            self.tabBarController?.navigationItem.leftBarButtonItem?.isEnabled = true
+                            self.tabBarController?.navigationItem.rightBarButtonItems?[0].isEnabled = true
+                            self.tabBarController?.navigationItem.rightBarButtonItems?[1].isEnabled = true
                             UIView.animate(withDuration: animateOut, animations: ({
                                 self.blurEffect.alpha = 0
                                 TVController.blurEffect.alpha = 0
@@ -130,13 +135,15 @@ extension MapViewController{
                     self.redSpinner.stopAnimating()
                     TVController.redSpinner.stopAnimating()
                     TVController.isReloadingOrLogout = false
+                    //Enable the nav buttons so the methods are accesible again.
+                    self.tabBarController?.navigationItem.leftBarButtonItem?.isEnabled = true
+                    self.tabBarController?.navigationItem.rightBarButtonItems?[0].isEnabled = true
+                    self.tabBarController?.navigationItem.rightBarButtonItems?[1].isEnabled = true
                     UIView.animate(withDuration: animateOut, animations: ({
                         self.blurEffect.alpha = 0
                         TVController.blurEffect.alpha = 0
-                        
                         self.blurEffect.effect = nil
                         TVController.blurEffect.effect = nil
-                        
                     }))
                 }
             }
@@ -146,8 +153,6 @@ extension MapViewController{
     func animateLogout(){
         //Handle for the other view in the Tab Bar Controller
         guard let TVController = self.tabBarController?.viewControllers?[1] as? TableViewController else {return}
-        //Forcibly connect the outlets if not already connected (connects when it appears) by sending the view signal to the Controller
-        _ = TVController.view
         let animateIn: TimeInterval = 0.5
         let animateOut: TimeInterval = 0.5
         
@@ -162,8 +167,10 @@ extension MapViewController{
             self.redSpinner.startAnimating()
             TVController.redSpinner.startAnimating()
             TVController.isReloadingOrLogout = true
-            //Disable the logoutButton so the method is not called multiple times.
+            //Disable the nav buttons so the methods are not called multiple times.
             self.tabBarController?.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.tabBarController?.navigationItem.rightBarButtonItems?[0].isEnabled = false
+            self.tabBarController?.navigationItem.rightBarButtonItems?[1].isEnabled = false
             //Clear out existing Locations/Pins from model.
             OnTheMap.clearLocationsAndPins()
             
@@ -172,9 +179,11 @@ extension MapViewController{
                     guard error == nil else{
                         self.redSpinner.stopAnimating()
                         TVController.redSpinner.stopAnimating()
-                        SendError.toDisplay(self.tabBarController!, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({
-                            //Enable the logoutButton so the method is accesible again.
+                        SendToDisplay.error(self.tabBarController!, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({
+                            //Enable the nav buttons so the methods are accesible again.
                             self.tabBarController?.navigationItem.leftBarButtonItem?.isEnabled = true
+                            self.tabBarController?.navigationItem.rightBarButtonItems?[0].isEnabled = true
+                            self.tabBarController?.navigationItem.rightBarButtonItems?[1].isEnabled = true
                             UIView.animate(withDuration: animateOut, animations: ({
                                 self.blurEffect.alpha = 0
                                 TVController.blurEffect.alpha = 0
@@ -207,6 +216,7 @@ extension TableViewController{
     //Fixes the background scroll effect during frame transition (iOS device turned).
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        guard (isReloadingOrLogout ?? false) == false else{return}
         coordinator.animate(alongsideTransition: ({_ in
             let newRatio = (self.studentTable.contentOffset.y/self.studentTable.contentSize.height)
             let newDistanceToMove = (self.backGroundImage.frame.height - size.height) * newRatio
@@ -215,3 +225,115 @@ extension TableViewController{
     }
     
 }
+
+extension TabBarController{
+    
+    func animateRedSpinners(_ on: Bool){
+        guard let MapController = self.viewControllers?[0] as? MapViewController else{return}
+        guard let TableController = self.viewControllers?[1] as? TableViewController else{return}
+        switch on{
+        case true: MapController.redSpinner.startAnimating(); TableController.redSpinner.startAnimating()
+        case false: MapController.redSpinner.stopAnimating(); TableController.redSpinner.stopAnimating()
+        }
+    }
+    
+    func animateStartActivity(completionHandler: (()-> Void)?){
+        guard let MapController = self.viewControllers?[0] as? MapViewController else{return}
+        guard let TableController = self.viewControllers?[1] as? TableViewController else{return}
+        navigationItem.leftBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItems?[0].isEnabled = false
+        navigationItem.rightBarButtonItems?[1].isEnabled = false
+        let animateIn: TimeInterval = 0.5
+        UIView.animate(withDuration: animateIn, animations: ({
+            MapController.blurEffect.alpha = 1 ; MapController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
+            TableController.blurEffect.alpha = 1; TableController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        })){
+            animationEnded in
+            self.animateRedSpinners(true)
+            if let handler = completionHandler{handler()}
+        }
+    }
+    
+    func animateEndActivity(completionHandler: (()-> Void)?){
+        guard let MapController = self.viewControllers?[0] as? MapViewController else{return}
+        guard let TableController = self.viewControllers?[1] as? TableViewController else{return}
+        animateRedSpinners(false)
+        if let handler = completionHandler{handler()}
+        let animateIn: TimeInterval = 0.5
+        UIView.animate(withDuration: animateIn, animations: ({
+            MapController.blurEffect.alpha = 0 ; MapController.blurEffect.effect = nil
+            TableController.blurEffect.alpha = 0; TableController.blurEffect.effect = nil
+        })){
+            animationEnded in
+            self.navigationItem.leftBarButtonItem?.isEnabled = true
+            self.navigationItem.rightBarButtonItems?[0].isEnabled = true
+            self.navigationItem.rightBarButtonItems?[1].isEnabled = true
+
+        }
+    }
+    
+
+    
+    func animateCheckForExisting(){
+        animateStartActivity(){
+            ParseClient.checkExistingUserLocation(user: OnTheMap.shared.user){ isExisting, theExistingUser, error in
+                DispatchQueue.main.async {
+                    guard (error == nil) else{
+                        self.animateRedSpinners(false)
+                        SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription,
+                                            assignment: ({self.animateEndActivity(completionHandler: nil)}))
+                        return
+                    }
+                    guard let isExisting = isExisting else{self.animateEndActivity(completionHandler: nil);return}
+                    //If No User is found then segue to create a new location
+                    if !isExisting{self.animateEndActivity(){self.performSegue(withIdentifier: "showLocationViewController", sender: self)}}
+                    //Otherwise Question the App User for a response
+                    else{ guard let foundUser = theExistingUser else{self.animateEndActivity(completionHandler: nil);return}
+                        let actions: [String : () -> (Void)] = [
+                            "Add": ({
+                                self.animateEndActivity(){
+                                    self.performSegue(withIdentifier: "showLocationViewController", sender: self)
+                                }
+                            }),
+                            "Overwrite":({
+                                self.animateEndActivity(){
+                                    self.userToPassToNextVC = foundUser
+                                    self.performSegue(withIdentifier: "showLocationViewController", sender: self)
+                                }
+                            }),
+                            "Delete":({
+                                self.animateRedSpinners(true)
+                                ParseClient.deleteUserLocation(user: foundUser){deletionCompleted, error in
+                                    DispatchQueue.main.async {
+                                        guard (error == nil) else{
+                                            self.animateRedSpinners(false)
+                                            SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription,
+                                                                assignment: ({self.animateEndActivity(completionHandler: nil)}))
+                                            return
+                                        }
+//..................................................................................................................................
+//                              Might be helpful to automate the reload from here!!!!
+//..................................................................................................................................
+                                        self.animateEndActivity(completionHandler: nil)
+                                    }
+                                }
+                            })
+                        ]
+                        self.animateRedSpinners(false)
+                        SendToDisplay.question(self,
+                                               QTitle: "Existing User Location",
+                                               QMessage: "You have an existing user location already OnTheMap! What would you like to do with it?",
+                                               assignments: actions)
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+}
+
+
+

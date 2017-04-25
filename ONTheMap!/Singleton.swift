@@ -12,7 +12,7 @@ import MapKit
 class OnTheMap{
     let user = Student()
     var locations = [Student]()
-    var pins = [MKPointAnnotation]()
+    var pins = [StudentAnnotation]()
     
     //Erase userName as soon as it has been used!
     var userName: String!
@@ -26,10 +26,9 @@ class OnTheMap{
             let latitude =  CLLocationDegrees(location.latitude)
             let longitude = CLLocationDegrees(location.longitude)
             let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-            let aPin = MKPointAnnotation()
-            aPin.coordinate = coordinate
-            aPin.title = "\(location.firstName!) \(location.lastName!)"
-            aPin.subtitle = "\(location.mediaURL!)"
+            let name = "\(location.firstName!) \(location.lastName!)"
+            let mediaURL = "\(location.mediaURL!)"
+            let aPin = StudentAnnotation(coordinate: coordinate, title: name, subtitle: mediaURL, uniqueIdentifier: location.uniqueKey)
             shared.pins.append(aPin)
         }
     }
@@ -37,7 +36,7 @@ class OnTheMap{
     //Emptys out the locations & Pins list.
     class func clearLocationsAndPins(){
         shared.locations = [Student]()
-        shared.pins = [MKPointAnnotation]()
+        shared.pins = [StudentAnnotation]()
     }
     //Shared URL Session for the App.
     let session = URLSession.shared

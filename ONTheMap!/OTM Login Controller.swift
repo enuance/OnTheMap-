@@ -61,13 +61,14 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
             DispatchQueue.main.async {
                 guard (error == nil)else {
                     self.redSpinner.stopAnimating()
-                    SendError.toDisplay(self, errorType: String(describing: error!), errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
+                    SendToDisplay.error(self, errorType: String(describing: error!), errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
                     return}
                 guard let accountID = accountID, let sessionID = sessionID else{
                     self.redSpinner.stopAnimating()
-                    SendError.toDisplay(self,errorType: "Network Error", errorMessage: "Unable to retrieve needed data from Udacity",assignment: ({self.animateHomeScreen()}))
+                    SendToDisplay.error(self,errorType: "Network Error", errorMessage: "Unable to retrieve needed data from Udacity",assignment: ({self.animateHomeScreen()}))
                     return}
                 print("Successful Login Attempt! The session ID is \(sessionID)")
+                print("Your Unique Identifier is \(accountID)")
                 OnTheMap.shared.user.setPropertyBy(StudentCnst.uniqueKey, with: accountID)
                 
                 //Start populating the students location and pins list.
@@ -75,7 +76,7 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
                     DispatchQueue.main.async {
                         guard (error == nil) else{
                             self.redSpinner.stopAnimating()
-                            SendError.toDisplay(self, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
+                            SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
                             return
                             }
                         OnTheMap.pinTheLocations()
@@ -88,11 +89,11 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
                 udaClient.getPublicUserInfo(userAcctID: accountID){ firstName, lastName, error in
                     guard (error == nil)else {DispatchQueue.main.async {
                         //May not be on the login VC by the time this is called / need to access the top VC!
-                        SendError.toDisplay((self.navigationController?.topViewController)!, errorType: String(describing: error!),errorMessage: "Unable to retrieve User info due to Netwrok Error. Description: \(error!.localizedDescription)",assignment: ({self.navigationController?.popToRootViewController(animated: true)}))
+                        SendToDisplay.error((self.navigationController?.topViewController)!, errorType: String(describing: error!),errorMessage: "Unable to retrieve User info due to Netwrok Error. Description: \(error!.localizedDescription)",assignment: ({self.navigationController?.popToRootViewController(animated: true)}))
                         }//End MainQueue work | Begin background work:
                         return}
                     guard let firstName = firstName, let lastName = lastName else{DispatchQueue.main.async {
-                            SendError.toDisplay((self.navigationController?.topViewController)!, errorType: "Unable to retrieve User info", errorMessage: "The User's first name or last name is not set!", assignment: ({self.navigationController?.popToRootViewController(animated: true)}))
+                            SendToDisplay.error((self.navigationController?.topViewController)!, errorType: "Unable to retrieve User info", errorMessage: "The User's first name or last name is not set!", assignment: ({self.navigationController?.popToRootViewController(animated: true)}))
                         }//End MainQueue work | Begin background work:
                         return}
                     OnTheMap.shared.user.setPropertyBy(StudentCnst.firstName, with: firstName)

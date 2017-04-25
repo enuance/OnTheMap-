@@ -47,3 +47,22 @@ extension TabBarController{
     }
 }
 
+extension LocationViewController{
+    func setUpNavBar(){
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.barStyle = .blackTranslucent
+        
+        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancel))
+        
+        navigationItem.title = "Enter Your Location"
+        navigationItem.leftBarButtonItem = cancel
+        
+        let navBarStyle: [String: Any] = [
+            NSForegroundColorAttributeName: UIColor.red,
+            NSFontAttributeName: UIFont(name: "Avenir Next Medium", size: CGFloat(16))!
+        ]
+        navigationController?.navigationBar.titleTextAttributes = navBarStyle
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes(navBarStyle, for: .normal)
+        navigationController?.navigationBar.tintColor = UIColor.red
+    }
+}

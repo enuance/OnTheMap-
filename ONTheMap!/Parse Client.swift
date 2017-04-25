@@ -115,6 +115,7 @@ class ParseClient{
     }
     
     ///MARK: Method Needs Testing!!!!.....................................................................................
+    //Updates a location by Object ID
     class func updateUserLocation(user: Student, completionHandler: @escaping(_ updated: Bool?, _ error: NetworkError?)-> Void ){
         let domainName = "updateUserLocation(:_)"
         guard user.isPostable && user.isValid
@@ -163,11 +164,12 @@ class ParseClient{
         task.resume()
     }
     
+    //You can delete any location/(Student) Type with an Object ID
     class func deleteUserLocation(user: Student, completionHandler: @escaping(_ deleted: Bool?, _ error: NetworkError?)-> Void ){
-        let domainName = "deleteUserLocation(:_)"
+        //let domainName = "deleteUserLocation(:_)"
         //Not absolutely necessary to check for validity/postability as all that is needed is object ID.
-        guard user.isPostable && user.isValid
-            else{return completionHandler( nil, NetworkError.invalidDeleteData(domain: domainName, data: "User Info"))}
+        //guard user.isPostable && user.isValid
+            //else{return completionHandler( nil, NetworkError.invalidDeleteData(domain: domainName, data: "User Info"))}
         let request = NSMutableURLRequest(url: URLCnst.fromParse(nil, user.objectId))
         let httpHeader = [
             ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
@@ -186,10 +188,12 @@ class ParseClient{
         task.resume()
     }
     
+    //Seraches by Unique Key to locate existing.
     class func checkExistingUserLocation(user: Student, completionHandler: @escaping(_ existing: Bool?, _ existingUser: Student?, _ error: NetworkError?)-> Void){
         let domainName = "checkExistingUserLocation(:_)"
-        guard user.isPostable
-            else{return completionHandler( nil, nil, NetworkError.invalidPostingData(domain: domainName, data: "User Info"))}
+        //This Guard is only needed if used outside of the architecture of this app (testing purposes).
+        /*guard user.isPostable
+            else{return completionHandler( nil, nil, NetworkError.invalidPostingData(domain: domainName, data: "User Info"))}*/
         let searchItems = [StudentCnst.uniqueKey : user.uniqueKey!]
         let request = NSMutableURLRequest(url: URLCnst.fromParse(searchItems))
         let httpHeader = [

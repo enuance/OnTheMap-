@@ -183,6 +183,7 @@ struct ConvertObject{
     
 }
 
+
 extension String{
     //Checks for blank space as well as Empty
     var isBlank: Bool{return trimmingCharacters(in: .whitespaces).isEmpty}

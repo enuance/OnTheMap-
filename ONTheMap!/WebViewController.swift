@@ -46,7 +46,7 @@ class WebViewController: UIViewController, UIWebViewDelegate{
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         redSpinner.stopAnimating()
-        SendError.toDisplay(self, errorType: "WebPage Failed to Load", errorMessage: error.localizedDescription, assignment: ({self.navigateBack()}))
+        SendToDisplay.error(self, errorType: "WebPage Failed to Load", errorMessage: error.localizedDescription, assignment: ({self.navigateBack()}))
     }
 }
 

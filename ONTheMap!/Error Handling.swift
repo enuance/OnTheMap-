@@ -63,9 +63,9 @@ enum GeneralError: String{
     }
 }
 
-
-class SendError{
-    class func toDisplay(_ displayer: UIViewController, errorType: String, errorMessage: String, assignment: (() -> Void)?) {
+//Allows a way to propogate Error Messages to the User throughout the app
+class SendToDisplay{
+    class func error(_ displayer: UIViewController, errorType: String, errorMessage: String, assignment: (() -> Void)?) {
         let errorColor = UIColor(red: CGFloat(0.007), green: CGFloat(0.537), blue: CGFloat(0.635), alpha: CGFloat(1))
         let errorTypeString = NSAttributedString(string: errorType, attributes: [
             NSFontAttributeName : UIFont(name: "Avenir Next Medium", size: CGFloat(16))!,
@@ -93,6 +93,38 @@ class SendError{
         
         errorAlert.view.tintColor = errorColor
         displayer.present(errorAlert, animated: true, completion: nil)
+    }
+
+//Allows a way to propogate Questions to the User and retrieve their Answeres throughout the app
+    class func question(_ displayer: UIViewController, QTitle: String, QMessage: String, assignments Answers: [String : () -> (Void)]){
+        let QAColor = UIColor(red: CGFloat(0.007), green: CGFloat(0.537), blue: CGFloat(0.635), alpha: CGFloat(1))
+        let QTitleString = NSAttributedString(string: QTitle, attributes: [
+            NSFontAttributeName : UIFont(name: "Avenir Next Medium", size: CGFloat(16))!,
+            NSForegroundColorAttributeName : QAColor
+            ])
+        let messageString = NSAttributedString(string: QMessage, attributes: [
+            NSFontAttributeName : UIFont(name: "Avenir Next", size: CGFloat(12))!,
+            NSForegroundColorAttributeName : UIColor.darkGray
+            ])
+        let questionAlert = UIAlertController(title: QTitle, message: QMessage, preferredStyle: .alert)
+        questionAlert.setValue(QTitleString, forKey: "attributedTitle")
+        questionAlert.setValue(messageString, forKey: "attributedMessage")
+        
+        for (key, value) in Answers{
+            let answerToQuestion = UIAlertAction(title: key, style: .default) { action in
+                questionAlert.dismiss(animated: true);value()
+            }
+            questionAlert.addAction(answerToQuestion)
+        }
+        
+        let subview = questionAlert.view.subviews.first! as UIView
+        let alertContentView = subview.subviews.first! as UIView
+        alertContentView.layer.cornerRadius = 10
+        alertContentView.layer.borderWidth = CGFloat(0.5)
+        alertContentView.layer.borderColor = QAColor.cgColor
+        
+        questionAlert.view.tintColor = QAColor
+        displayer.present(questionAlert, animated: true, completion: nil)
     }
     
 }

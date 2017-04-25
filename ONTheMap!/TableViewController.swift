@@ -64,7 +64,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 if let verifiedURL = URL(string: mediaURL.prefixHTTP){
                     app.open(verifiedURL, options: [:], completionHandler: nil)
                 }else{
-                        SendError.toDisplay(self,
+                        SendToDisplay.error(self,
                                             errorType: GeneralError.invalidURL.rawValue,
                                             errorMessage: GeneralError.invalidURL.description,
                                             assignment: nil)

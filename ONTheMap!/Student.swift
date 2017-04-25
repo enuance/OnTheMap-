@@ -64,7 +64,6 @@ class Student{
         return descriptionList.joined(separator: "\n")
     }
     
-    ///MARK: TO DO: Eventually you'll need to validate the mapString and mediaURL properties in the setPropBy Method!!!
     func setPropertyBy(_ key: String, with value: Any){
         guard (value as? String != nil) || (value as? Float != nil) || (value as? Int != nil) || (value as? Double != nil) else {
             print("Student property setter could not use invalid type of \(value)"); return}
@@ -80,12 +79,12 @@ class Student{
         case StudentCnst.latitude:
             let floatValue: Float
             switch value{
-            case let someNum as Int: floatValue = Float(someNum)
+            case let someNum as Float: floatValue = someNum
             case let someNum as Double: floatValue = Float(someNum)
+            case let someNum as Int: floatValue = Float(someNum)
             case let someNum as String: guard let number = Float(someNum)
                     else{print("\(value) is not convertable to the proper Latitude Type");return}
                 floatValue = number
-            case let someNum as Float: floatValue = someNum
             default: print("\(value) is not convertable to the proper Latitude Type"); return
             }
             guard (floatValue >= -90 && floatValue <= 90)
@@ -94,12 +93,12 @@ class Student{
         case StudentCnst.longitude:
             let floatValue: Float
             switch value{
-            case let someNum as Int: floatValue = Float(someNum)
+            case let someNum as Float: floatValue = someNum
             case let someNum as Double: floatValue = Float(someNum)
+            case let someNum as Int: floatValue = Float(someNum)
             case let someNum as String: guard let number = Float(someNum)
                     else{print("\(value) is not convertable to the proper Longitude Type");return}
                 floatValue = number
-            case let someNum as Float: floatValue = someNum
             default: print("\(value) is not convertable to the proper Longitude Type"); return
             }
             guard (floatValue >= -180 && floatValue <= 180)
