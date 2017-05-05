@@ -13,6 +13,7 @@ for Constant).
 
 import Foundation
 import CoreGraphics
+import UIKit
 
 //These Parse API Values are publically used by other Udacity Student and thus can be overwritten at any time.
 struct ParseCnst {
@@ -180,9 +181,16 @@ struct ConvertObject{
     static func toRadians(_ withDegrees: Double) -> CGFloat{
         return CGFloat(withDegrees * .pi / withDegrees)
     }
-    
 }
 
+struct OTMColor{
+    var teal: UIColor{get{return UIColor(red: decimal(3), green: decimal(139), blue: decimal(158), alpha: 1)}}
+    var lightTeal: UIColor{get{return UIColor(red: decimal(8), green: decimal(144), blue: decimal(163), alpha: 1)}}
+    var red: UIColor{get{return UIColor(red: decimal(245), green: decimal(23), blue: decimal(18), alpha: 1)}}
+    var white: UIColor{get{return UIColor(red: decimal(241), green: decimal(241), blue: decimal(241), alpha: 1)}}
+    var gray: UIColor{get{return UIColor.darkGray}}
+    private func decimal(_ rgbValue: Int) -> CGFloat{return CGFloat(rgbValue)/CGFloat(255)}
+}
 
 extension String{
     //Checks for blank space as well as Empty

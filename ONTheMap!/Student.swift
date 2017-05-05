@@ -25,7 +25,10 @@ class Student{
     private(set) var latitude: Float!
     //longitude: the longitude of the student location (ranges from -180 to 180)
     private(set) var longitude: Float!
-    //Property that checks if a Student is usable in our locations list.
+    
+    //Property that checks if a Student is usable in our locations list (incoming validator only/coming from the server).
+    //Student objects will not have an Object ID until it has been stored in the server & will be problematic to use this property
+    //as an outgoing validator.
     var isValid: Bool{
         if objectId != nil && !objectId.isBlank && firstName != nil && !firstName.isBlank &&
             lastName != nil && !lastName.isBlank && mapString != nil && !mapString.isBlank &&
@@ -34,7 +37,7 @@ class Student{
             return true}
         else{return false}
     }
-    //Property that checks if a user (Student) is postable onto the map.
+    //Property that checks if a user (Student) is postable onto the map (outgoing validator only/going to the server).
     var isPostable: Bool{
         if firstName != nil && !firstName.isBlank && lastName != nil && !lastName.isBlank &&
             mapString != nil && !mapString.isBlank && mediaURL != nil && !mediaURL.isBlank &&
@@ -64,11 +67,10 @@ class Student{
         return descriptionList.joined(separator: "\n")
     }
     
+    //Set of nested Switch Statements to provide an easy way for setting the student properties in the accepted formats for the App.
     func setPropertyBy(_ key: String, with value: Any){
-        guard (value as? String != nil) || (value as? Float != nil) || (value as? Int != nil) || (value as? Double != nil) else {
-            print("Student property setter could not use invalid type of \(value)"); return}
-        guard StudentCnst.check(property: key) else{
-            print("The \(key) key is not a valid Student property"); return}
+        guard (value as? String != nil) || (value as? Float != nil) || (value as? Int != nil) || (value as? Double != nil) else {return}
+        guard StudentCnst.check(property: key) else{return}
         switch key {
         case StudentCnst.objectId: objectId = value as? String
         case StudentCnst.uniqueKey: uniqueKey = value as? String
@@ -82,13 +84,12 @@ class Student{
             case let someNum as Float: floatValue = someNum
             case let someNum as Double: floatValue = Float(someNum)
             case let someNum as Int: floatValue = Float(someNum)
-            case let someNum as String: guard let number = Float(someNum)
-                    else{print("\(value) is not convertable to the proper Latitude Type");return}
-                floatValue = number
-            default: print("\(value) is not convertable to the proper Latitude Type"); return
+            case let someNum as String: guard let number = Float(someNum) else{return}
+            floatValue = number
+            default: return
             }
             guard (floatValue >= -90 && floatValue <= 90)
-                else{print("Latitude Must be within range -90 to 90");return}
+                else{return}
             latitude = floatValue
         case StudentCnst.longitude:
             let floatValue: Float
@@ -96,16 +97,13 @@ class Student{
             case let someNum as Float: floatValue = someNum
             case let someNum as Double: floatValue = Float(someNum)
             case let someNum as Int: floatValue = Float(someNum)
-            case let someNum as String: guard let number = Float(someNum)
-                    else{print("\(value) is not convertable to the proper Longitude Type");return}
-                floatValue = number
-            default: print("\(value) is not convertable to the proper Longitude Type"); return
+            case let someNum as String: guard let number = Float(someNum) else{return}
+            floatValue = number
+            default: return
             }
-            guard (floatValue >= -180 && floatValue <= 180)
-                else{print("Longitude Must be within range -180 to 180");return}
+            guard (floatValue >= -180 && floatValue <= 180) else{return}
             longitude = floatValue
-        default:
-            break
+        default: break
         }
     }
     

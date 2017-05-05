@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		200A26D11E9C586400A594C4 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200A26D01E9C586400A594C4 /* Animations.swift */; };
 		200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */; };
+		202174EC1EB2A707000AA937 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202174EB1EB2A707000AA937 /* PostViewController.swift */; };
 		203423391E9841B50083512F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203423381E9841B50083512F /* WebViewController.swift */; };
 		203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B28841E70D6CD00577D67 /* Authentication Client.swift */; };
 		203B288B1E70EBE500577D67 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B288A1E70EBE500577D67 /* Singleton.swift */; };
@@ -57,6 +58,7 @@
 /* Begin PBXFileReference section */
 		200A26D01E9C586400A594C4 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardManagement.swift; sourceTree = "<group>"; };
+		202174EB1EB2A707000AA937 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		203423381E9841B50083512F /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		203B28841E70D6CD00577D67 /* Authentication Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Authentication Client.swift"; path = "../Authentication Client.swift"; sourceTree = "<group>"; };
 		203B288A1E70EBE500577D67 /* Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
@@ -134,11 +136,12 @@
 			isa = PBXGroup;
 			children = (
 				20EFBFAC1E9F09B900212548 /* Managers */,
-				20721BEC1EA5592800EEABDB /* TabBarController.swift */,
-				203FC9281EAAD83D00FB6610 /* LocationViewController.swift */,
 				20EA73071E6A43E400C18090 /* OTM Login Controller.swift */,
+				20721BEC1EA5592800EEABDB /* TabBarController.swift */,
 				20EFBFA61E9EFDB300212548 /* MapViewController.swift */,
 				20EFBFA81E9EFE2200212548 /* TableViewController.swift */,
+				203FC9281EAAD83D00FB6610 /* LocationViewController.swift */,
+				202174EB1EB2A707000AA937 /* PostViewController.swift */,
 				203423381E9841B50083512F /* WebViewController.swift */,
 			);
 			name = Controller;
@@ -399,6 +402,7 @@
 				200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */,
 				20CE68031EA34E7800FDFAFF /* AnnotationView.swift in Sources */,
 				203FC9291EAAD83D00FB6610 /* LocationViewController.swift in Sources */,
+				202174EC1EB2A707000AA937 /* PostViewController.swift in Sources */,
 				20721BED1EA5592800EEABDB /* TabBarController.swift in Sources */,
 				203B288B1E70EBE500577D67 /* Singleton.swift in Sources */,
 				2045E5D21EA2E8B300DA5C21 /* StudentCallout.swift in Sources */,

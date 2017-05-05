@@ -15,6 +15,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var blurEffect: UIVisualEffectView!
     @IBOutlet weak var redSpinner: UIActivityIndicatorView!
     
+    //Property for tracking distance Travelled Down the Table over the Total Height. Needed for Animation methods.
+    var distanceRatio: CGFloat = 0
+    
     //This property prevents the tableView from attempting to access the model while it is being cleared
     //and reset, which results in an index out of range (fatal error).
     var isReloadingOrLogout: Bool! {
@@ -31,8 +34,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
-    
-    var distanceRatio: CGFloat = 0
     
     override func viewDidLoad() {super.viewDidLoad()
         blurEffect.alpha = 0; blurEffect.effect = nil

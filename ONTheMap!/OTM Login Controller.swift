@@ -13,14 +13,11 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var OTMPin: UIImageView!
     @IBOutlet weak var OTMLogo: UIImageView!
     @IBOutlet weak var redSpinner: UIActivityIndicatorView!
-    
     @IBOutlet weak var loginTray: UIView!
     @IBOutlet weak var loginButton: UIButton!
-    
     @IBOutlet var udacityLogin: UIView!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    
     @IBOutlet weak var visualEffect: UIVisualEffectView!
     
     override func viewDidLoad() { super.viewDidLoad()
@@ -63,12 +60,11 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
                     self.redSpinner.stopAnimating()
                     SendToDisplay.error(self, errorType: String(describing: error!), errorMessage: error!.localizedDescription, assignment: ({self.animateHomeScreen()}))
                     return}
-                guard let accountID = accountID, let sessionID = sessionID else{
+                guard let accountID = accountID, let _ = sessionID else{
                     self.redSpinner.stopAnimating()
                     SendToDisplay.error(self,errorType: "Network Error", errorMessage: "Unable to retrieve needed data from Udacity",assignment: ({self.animateHomeScreen()}))
                     return}
-                print("Successful Login Attempt! The session ID is \(sessionID)")
-                print("Your Unique Identifier is \(accountID)")
+
                 OnTheMap.shared.user.setPropertyBy(StudentCnst.uniqueKey, with: accountID)
                 
                 //Start populating the students location and pins list.
@@ -81,7 +77,6 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
                             }
                         OnTheMap.pinTheLocations()
                         self.redSpinner.stopAnimating()
-                        //No prepare needed. Using shared data from singleton
                         self.performSegue(withIdentifier: "showTabBarController", sender: self)
                     }
                 }

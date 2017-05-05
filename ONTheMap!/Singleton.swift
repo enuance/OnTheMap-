@@ -38,6 +38,20 @@ class OnTheMap{
         shared.locations = [Student]()
         shared.pins = [StudentAnnotation]()
     }
+    
+    class func clearUserPostingInfo(){
+        let clearedInfo: [String : Any] = [
+            StudentCnst.objectId : "",
+            StudentCnst.mediaURL : "",
+            StudentCnst.mapString : "",
+            StudentCnst.latitude : 0,
+            StudentCnst.longitude : 0
+        ]
+        for (key, value) in clearedInfo{
+            shared.user.setPropertyBy(key, with: value)
+        }
+    }
+    
     //Shared URL Session for the App.
     let session = URLSession.shared
     //Singleton instance for the OnTheMap Class
