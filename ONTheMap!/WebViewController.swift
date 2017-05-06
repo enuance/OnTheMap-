@@ -5,11 +5,11 @@
 //  Created by Stephen Martinez on 4/7/17.
 //  Copyright © 2017 Stephen Martinez. All rights reserved.
 //
-
-import UIKit
 /*
  The sole pupose of This WebViewController is for Signing up for a new account
  */
+
+import UIKit
 
 class WebViewController: UIViewController, UIWebViewDelegate{
 

@@ -6,7 +6,6 @@
 //  Copyright © 2017 Stephen Martinez. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 enum NetworkError: LocalizedError{
@@ -69,62 +68,51 @@ class SendToDisplay{
         let errorColor = OTMColor().teal
         let errorTypeString = NSAttributedString(string: errorType, attributes: [
             NSFontAttributeName : UIFont(name: "Avenir Next Medium", size: CGFloat(16))!,
-            NSForegroundColorAttributeName : errorColor
-            ])
+            NSForegroundColorAttributeName : errorColor])
         let messageString = NSAttributedString(string: errorMessage, attributes: [
             NSFontAttributeName : UIFont(name: "Avenir Next", size: CGFloat(12))!,
-            NSForegroundColorAttributeName : UIColor.darkGray
-            ])
+            NSForegroundColorAttributeName : UIColor.darkGray])
         let errorAlert = UIAlertController(title: errorType, message: errorMessage, preferredStyle: .alert)
         errorAlert.setValue(errorTypeString, forKey: "attributedTitle")
         errorAlert.setValue(messageString, forKey: "attributedMessage")
-        
         let dismissError = UIAlertAction(title: "Dismiss", style: .default) { action in
             errorAlert.dismiss(animated: true)
-            if let assignment = assignment{assignment()}
-        }
+            if let assignment = assignment{assignment()}}
         errorAlert.addAction(dismissError)
-        
         let subview = errorAlert.view.subviews.first! as UIView
         let alertContentView = subview.subviews.first! as UIView
         alertContentView.layer.cornerRadius = 10
         alertContentView.layer.borderWidth = CGFloat(0.6)
         alertContentView.layer.borderColor = errorColor.cgColor
-        
         errorAlert.view.tintColor = errorColor
         displayer.present(errorAlert, animated: true, completion: nil)
     }
 
-//Allows a way to propogate Questions to the User and retrieve their Answers throughout the app
+//Allows a way to propogate Questions to the User and retrieve their Answers throughout the app. Something to keep in mind is that
+//the assignements parameter accepts a dictionary and so the responses/Answers to the user is displayed in a random order each time the method
+//is called.
     class func question(_ displayer: UIViewController, QTitle: String, QMessage: String, assignments Answers: [String : () -> (Void)]){
         let QAColor = OTMColor().teal
         let QTitleString = NSAttributedString(string: QTitle, attributes: [
             NSFontAttributeName : UIFont(name: "Avenir Next Medium", size: CGFloat(16))!,
-            NSForegroundColorAttributeName : QAColor
-            ])
+            NSForegroundColorAttributeName : QAColor])
         let messageString = NSAttributedString(string: QMessage, attributes: [
             NSFontAttributeName : UIFont(name: "Avenir Next", size: CGFloat(12))!,
-            NSForegroundColorAttributeName : OTMColor().gray
-            ])
+            NSForegroundColorAttributeName : OTMColor().gray])
         let questionAlert = UIAlertController(title: QTitle, message: QMessage, preferredStyle: .alert)
         questionAlert.setValue(QTitleString, forKey: "attributedTitle")
         questionAlert.setValue(messageString, forKey: "attributedMessage")
-        
         for (key, value) in Answers{
             let answerToQuestion = UIAlertAction(title: key, style: .default) { action in
-                questionAlert.dismiss(animated: true);value()
-            }
+                questionAlert.dismiss(animated: true);value()}
             questionAlert.addAction(answerToQuestion)
         }
-        
         let subview = questionAlert.view.subviews.first! as UIView
         let alertContentView = subview.subviews.first! as UIView
         alertContentView.layer.cornerRadius = 10
         alertContentView.layer.borderWidth = CGFloat(0.6)
         alertContentView.layer.borderColor = QAColor.cgColor
-        
         questionAlert.view.tintColor = QAColor
         displayer.present(questionAlert, animated: true, completion: nil)
     }
-    
 }

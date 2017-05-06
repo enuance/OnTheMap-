@@ -10,15 +10,15 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class LocationViewController: UIViewController, UITextFieldDelegate {
-
-    var userToUpdate: Student!
-    let OTMLocator = CLGeocoder()
-    let redSpinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+class LocationViewController: UIViewController{
     
     @IBOutlet var locateButton: UIButton!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var messageView: UIView!
+    
+    var userToUpdate: Student!
+    let OTMLocator = CLGeocoder()
+    let redSpinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
     var MyTabBarController: TabBarController!{
         get{if let TBController = navigationController?.viewControllers[1] as? TabBarController{return TBController}else{return nil}}
@@ -28,19 +28,6 @@ class LocationViewController: UIViewController, UITextFieldDelegate {
         setUpNavBar()
         subscribeToKeyboardNotifications()
         locationTextField.delegate = self
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let entry = textField.text ?? ""
-        if entry.isBlank{
-            textField.resignFirstResponder()
-            SendToDisplay.error(self, errorType: "Text Field is Blank", errorMessage: "Please enter a location for us to search.", assignment: nil)
-            return true
-        }else{
-            geoCodeEntry(entry: entry)
-            textField.resignFirstResponder()
-            return true
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {super.prepare(for: segue, sender: sender)
@@ -83,32 +70,24 @@ class LocationViewController: UIViewController, UITextFieldDelegate {
                 let address = (locationInfo.subThoroughfare != nil ? "\(locationInfo.subThoroughfare!) " : "") + (locationInfo.thoroughfare != nil ? "\(locationInfo.thoroughfare!), " : "")
                 let cityState = (locationInfo.locality != nil ? "\(locationInfo.locality!) ":"") + (locationInfo.administrativeArea != nil ? "\(locationInfo.administrativeArea!)" : "")
                 let locationString = address + cityState
-                
                 if let userToUpdate = self.userToUpdate{
                     let updateData: [String: Any] = [
                         StudentCnst.firstName : OnTheMap.shared.user.firstName,
                         StudentCnst.lastName : OnTheMap.shared.user.lastName,
                         StudentCnst.mapString : locationString,
                         StudentCnst.latitude : latitude,
-                        StudentCnst.longitude : longitude
-                    ]
-                    for (key, value) in updateData{
-                        userToUpdate.setPropertyBy(key, with: value)
-                    }
+                        StudentCnst.longitude : longitude]
+                    for (key, value) in updateData{userToUpdate.setPropertyBy(key, with: value)}
                 }else{
                     let updateData: [String:Any] = [
                         StudentCnst.mapString : locationString,
                         StudentCnst.latitude : latitude,
-                        StudentCnst.longitude : longitude
-                    ]
-                    for (key, value) in updateData{
-                        OnTheMap.shared.user.setPropertyBy(key, with: value)
-                    }
+                        StudentCnst.longitude : longitude]
+                    for (key, value) in updateData{ OnTheMap.shared.user.setPropertyBy(key, with: value)}
                 }
                 self.redSpinner.stopAnimating()
                 self.animateLocateButton()
             }
         }
     }
-    
 }

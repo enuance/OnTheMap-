@@ -5,12 +5,13 @@
 //  Created by Stephen Martinez on 3/8/17.
 //  Copyright © 2017 Stephen Martinez. All rights reserved.
 //
+/*
+ This File contains the Networking methods for the Udacity API. These Methods allow us to Authenticate the user, pull basic user information, and logout of the app. All of these methods work asyncronously and the completion handlers do not return data onto the main thread.
+ */
 
 import Foundation
 
-//Caveat: The completion handlers in these methods are not returned onto the main thread!
 class udaClient{
-    
     class func authenticate(userName: String, passWord: String, completionHandler: @escaping (_ userAcctID: String?, _ sessionID: String?, _ error: NetworkError?) -> Void){
         let domainName = "udaClient.authenticate(:_)"
         let request = NSMutableURLRequest(url: URLCnst.fromUdacity())
@@ -18,7 +19,6 @@ class udaClient{
         let httpBody = ["udacity":["username": userName, "password": passWord]]
         let httpBodyData = ConvertObject.toJSON(with: httpBody as AnyObject)
         guard let httpJSONBody = httpBodyData.JSONObject else {return completionHandler(nil, nil, httpBodyData.error!)}
-        
         request.httpMethod = MethodType.post
         request.allHTTPHeaderFields = httpHeader
         request.httpBody = httpJSONBody
@@ -37,7 +37,6 @@ class udaClient{
             let authObject = ConvertObject.toSwift(with: authData)
             //Exit the method if the conversion returns a conversion error
             guard let swiftAuthObj = authObject.swiftObject else {return completionHandler(nil, nil, authObject.error)}
-            
             //Otherwise navigate through the object and extract data through the completion handler
             guard let authDictionary = swiftAuthObj as? [String : AnyObject],
                 let accntInfo = authDictionary[UdacityCnst.accntDictName] as? [String : AnyObject],
@@ -45,7 +44,6 @@ class udaClient{
                 let sessionInfo = authDictionary[UdacityCnst.sessionDictName] as? [String : AnyObject],
                 let sessionNumber = sessionInfo[UdacityCnst.sessionIDKey] as? String
                 else{return completionHandler(nil, nil, NetworkError.invalidAPIPath(domain: domainName))}
-            
             return completionHandler(userID, sessionNumber, nil)
         }
         task.resume()
@@ -68,14 +66,12 @@ class udaClient{
             let userObject = ConvertObject.toSwift(with: userData)
             //Exit the method if the conversion returns a conversion error
             guard let swiftUserObj = userObject.swiftObject else {return completionHandler(nil, nil, userObject.error)}
-            
             //Otherwise navigate through the object and extract data through the completion handler
             guard let userDictionary = swiftUserObj as? [String : AnyObject],
                 let userInfo = userDictionary[UdacityCnst.user] as? [String : AnyObject],
                 let userFirstName = userInfo[UdacityCnst.firstName] as? String,
                 let userLastName = userInfo[UdacityCnst.lastName] as? String
                 else{return completionHandler(nil, nil, NetworkError.invalidAPIPath(domain: domainName))}
-            
             return completionHandler(userFirstName, userLastName, nil)
         }
         task.resume()
@@ -102,13 +98,11 @@ class udaClient{
             let logoutObject = ConvertObject.toSwift(with: logoutData)
             //Exit the method if the conversion returns a conversion error
             guard let swiftLogObj = logoutObject.swiftObject else {return completionHandler(nil, nil, logoutObject.error)}
-            
             //Otherwise navigate through the object and extract data through the completion handler
             guard let logoutDictionary = swiftLogObj as? [String : AnyObject],
                 let logoutInfo = logoutDictionary[UdacityCnst.sessionDictName] as? [String : AnyObject],
                 let logoutNumber = logoutInfo[UdacityCnst.sessionIDKey] as? String
                 else{return completionHandler(nil, nil, NetworkError.invalidAPIPath(domain: domainName))}
-            
             return completionHandler(true, logoutNumber, nil)
         }
         task.resume()

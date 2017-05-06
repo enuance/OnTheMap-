@@ -5,16 +5,17 @@
 //  Created by Stephen Martinez on 4/10/17.
 //  Copyright © 2017 Stephen Martinez. All rights reserved.
 //
+/*
+ This file contains all the animation related methods for the app and extends many of the View Controllers throughout the app. Many of the client methods
+ are closely intertwined with the animations throughout the app and thus the implementations of some of those methods can be found here.
+ */
 
-import Foundation
 import UIKit
 import MapKit
 
-/*
- This file contains all the animation related methods for the app and extends many of the View Controllers throughout the app.
- */
-
-//Animation related methods for OTMLoginController
+//........................................................................................................
+//                              Animations For The Login Controller
+//........................................................................................................
 extension OTMLoginController{
     func animateHomeScreen(){
         UIView.animate(withDuration: 0.7, animations: ({
@@ -80,22 +81,113 @@ extension OTMLoginController{
     }
 }
 
-extension MapViewController{
+//........................................................................................................
+//                              Animations For The Tab Bar Controller
+//........................................................................................................
+extension TabBarController{
+    func animateRedSpinners(_ on: Bool){
+        switch on{
+        case true: MapController.redSpinner.startAnimating(); TableController.redSpinner.startAnimating()
+        case false: MapController.redSpinner.stopAnimating(); TableController.redSpinner.stopAnimating()
+        }
+    }
     
+    func animateStartActivity(completionHandler: (()-> Void)?){
+        self.navigationButtons(enabled: false)
+        let animateIn: TimeInterval = 0.5
+        UIView.animate(withDuration: animateIn, animations: ({
+            self.MapController.blurEffect.alpha = 1 ; self.MapController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
+            self.TableController.blurEffect.alpha = 1; self.TableController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        })){
+            animationEnded in
+            self.animateRedSpinners(true)
+            if let handler = completionHandler{handler()}
+        }
+    }
+    
+    func animateEndActivity(completionHandler: (()-> Void)?){
+        animateRedSpinners(false)
+        if let handler = completionHandler{handler()}
+        let animateIn: TimeInterval = 0.5
+        UIView.animate(withDuration: animateIn, animations: ({
+            self.MapController.blurEffect.alpha = 0 ; self.MapController.blurEffect.effect = nil
+            self.TableController.blurEffect.alpha = 0; self.TableController.blurEffect.effect = nil
+        })){
+            animationEnded in self.navigationButtons(enabled: true)
+        }
+    }
+    
+    func animateCheckForExisting(){
+        animateStartActivity(){
+            ParseClient.checkExistingUserLocation(user: OnTheMap.shared.user){ isExisting, theExistingUser, error in
+                DispatchQueue.main.async {
+                    guard (error == nil) else{
+                        self.animateRedSpinners(false)
+                        SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription,
+                                            assignment: ({self.animateEndActivity(completionHandler: nil)}))
+                        return
+                    }
+                    guard let isExisting = isExisting else{self.animateEndActivity(completionHandler: nil);return}
+                    //If No User is found then segue to create a new location
+                    if !isExisting{self.animateEndActivity(){self.performSegue(withIdentifier: "showLocationViewController", sender: self)}}
+                        //Otherwise Question the App User for a response
+                    else{ guard let foundUser = theExistingUser else{self.animateEndActivity(completionHandler: nil);return}
+                        let actions: [String : () -> (Void)] = [
+                            "Add New Location": ({
+                                self.animateEndActivity(){
+                                    self.performSegue(withIdentifier: "showLocationViewController", sender: self)
+                                }
+                            }),
+                            "Update Location":({
+                                self.animateEndActivity(){
+                                    self.userToPassToNextVC = foundUser
+                                    self.performSegue(withIdentifier: "showLocationViewController", sender: self)
+                                }
+                            }),
+                            "Delete Location":({
+                                self.animateRedSpinners(true)
+                                ParseClient.deleteUserLocation(user: foundUser){deletionCompleted, error in
+                                    DispatchQueue.main.async {
+                                        guard (error == nil) else{
+                                            self.animateRedSpinners(false)
+                                            SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription,
+                                                                assignment: ({self.animateEndActivity(completionHandler: nil)}))
+                                            return
+                                        }
+                                        //Refresh the Map & Table.
+                                        self.MapController.animateReload()
+                                    }
+                                }
+                            })
+                        ]
+                        self.animateRedSpinners(false)
+                        SendToDisplay.question(self,
+                                               QTitle: "Existing User Location",
+                                               QMessage: "You have an existing user location already OnTheMap! What would you like to do?",
+                                               assignments: actions)
+                    }
+                }
+            }
+        }
+    }
+}
+
+//........................................................................................................
+//                      Animations For The MapView Controller (Embedding in Tab Bar Controller)
+//........................................................................................................
+extension MapViewController{
     func animateReload(andZoomIn: Bool = false){
         //Handle for the Tab Bar Controller and other view in the Tab Bar Controller
         guard let TVController = self.tabBarController?.viewControllers?[1] as? TableViewController else {return}
         guard let TabController = self.tabBarController as? TabBarController else {return}
         let animateIn: TimeInterval = 0.5
         let animateOut: TimeInterval = 0.5
-        
         UIView.animate(withDuration: animateIn, animations: ({
             self.blurEffect.alpha = 1
             TVController.blurEffect.alpha = 1
             self.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
             TVController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
         }), completion: ({successfullCompletion in
-            
             //Start spinner to indicate activity
             self.redSpinner.startAnimating()
             TVController.redSpinner.startAnimating()
@@ -106,7 +198,6 @@ extension MapViewController{
             self.studentMap.removeAnnotations(self.studentMap.annotations)
             //Clear out existing Locations/Pins from model.
             OnTheMap.clearLocationsAndPins()
-            
             ParseClient.populateLocations(){ locationsCount, error in
                 DispatchQueue.main.async {
                     guard (error == nil) else{
@@ -153,14 +244,12 @@ extension MapViewController{
         guard let TabController = self.tabBarController as? TabBarController else {return}
         let animateIn: TimeInterval = 0.5
         let animateOut: TimeInterval = 0.5
-        
         UIView.animate(withDuration: animateIn, animations: ({
             self.blurEffect.alpha = 1
             TVController.blurEffect.alpha = 1
             self.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
             TVController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
         }), completion: ({successfullCompletion in
-            
             //Start spinner to indicate activity
             self.redSpinner.startAnimating()
             TVController.redSpinner.startAnimating()
@@ -169,7 +258,6 @@ extension MapViewController{
             TabController.navigationButtons(enabled: false)
             //Clear out existing Locations/Pins from model.
             OnTheMap.clearLocationsAndPins()
-            
             udaClient.logout(){success, logoutID, error in
                 DispatchQueue.main.async {
                     guard error == nil else{
@@ -193,9 +281,11 @@ extension MapViewController{
             }
         }))
     }
-
 }
 
+//........................................................................................................
+//                      Animations For The TableView Controller (Embedding in Tab Bar Controller)
+//........................................................................................................
 extension TableViewController{
     //Controls The Background Scroll Effect
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -216,9 +306,11 @@ extension TableViewController{
             self.backGroundImage.transform = CGAffineTransform(translationX: 0, y: -newDistanceToMove)
         }))
     }
-    
 }
 
+//........................................................................................................
+//                      Animations For The Student Cell (Embedding in TableView Controller)
+//........................................................................................................
 extension StudentCell{
     func animateSelection(completionHandler: @escaping () -> Void){
         UIView.animate(withDuration: 0.2, animations: ({
@@ -235,97 +327,9 @@ extension StudentCell{
     }
 }
 
-
-extension TabBarController{
-    
-    func animateRedSpinners(_ on: Bool){
-        switch on{
-        case true: MapController.redSpinner.startAnimating(); TableController.redSpinner.startAnimating()
-        case false: MapController.redSpinner.stopAnimating(); TableController.redSpinner.stopAnimating()
-        }
-    }
-    
-    func animateStartActivity(completionHandler: (()-> Void)?){
-        self.navigationButtons(enabled: false)
-        let animateIn: TimeInterval = 0.5
-        UIView.animate(withDuration: animateIn, animations: ({
-            self.MapController.blurEffect.alpha = 1 ; self.MapController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
-            self.TableController.blurEffect.alpha = 1; self.TableController.blurEffect.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
-        })){
-            animationEnded in
-            self.animateRedSpinners(true)
-            if let handler = completionHandler{handler()}
-        }
-    }
-    
-    func animateEndActivity(completionHandler: (()-> Void)?){
-        animateRedSpinners(false)
-        if let handler = completionHandler{handler()}
-        let animateIn: TimeInterval = 0.5
-        UIView.animate(withDuration: animateIn, animations: ({
-            self.MapController.blurEffect.alpha = 0 ; self.MapController.blurEffect.effect = nil
-            self.TableController.blurEffect.alpha = 0; self.TableController.blurEffect.effect = nil
-        })){
-            animationEnded in self.navigationButtons(enabled: true)
-        }
-    }
-    
-    func animateCheckForExisting(){
-        animateStartActivity(){
-            ParseClient.checkExistingUserLocation(user: OnTheMap.shared.user){ isExisting, theExistingUser, error in
-                DispatchQueue.main.async {
-                    guard (error == nil) else{
-                        self.animateRedSpinners(false)
-                        SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription,
-                                            assignment: ({self.animateEndActivity(completionHandler: nil)}))
-                        return
-                    }
-                    guard let isExisting = isExisting else{self.animateEndActivity(completionHandler: nil);return}
-                    //If No User is found then segue to create a new location
-                    if !isExisting{self.animateEndActivity(){self.performSegue(withIdentifier: "showLocationViewController", sender: self)}}
-                    //Otherwise Question the App User for a response
-                    else{ guard let foundUser = theExistingUser else{self.animateEndActivity(completionHandler: nil);return}
-                        let actions: [String : () -> (Void)] = [
-                            "Add New Location": ({
-                                self.animateEndActivity(){
-                                    self.performSegue(withIdentifier: "showLocationViewController", sender: self)
-                                }
-                            }),
-                            "Update Location":({
-                                self.animateEndActivity(){
-                                    self.userToPassToNextVC = foundUser
-                                    self.performSegue(withIdentifier: "showLocationViewController", sender: self)
-                                }
-                            }),
-                            "Delete Location":({
-                                self.animateRedSpinners(true)
-                                ParseClient.deleteUserLocation(user: foundUser){deletionCompleted, error in
-                                    DispatchQueue.main.async {
-                                        guard (error == nil) else{
-                                            self.animateRedSpinners(false)
-                                            SendToDisplay.error(self, errorType: "Network Error", errorMessage: error!.localizedDescription,
-                                                                assignment: ({self.animateEndActivity(completionHandler: nil)}))
-                                            return
-                                        }
-                                        //Refresh the Map & Table.
-                                        self.MapController.animateReload()
-                                    }
-                                }
-                            })
-                        ]
-                        self.animateRedSpinners(false)
-                        SendToDisplay.question(self,
-                                               QTitle: "Existing User Location",
-                                               QMessage: "You have an existing user location already OnTheMap! What would you like to do?",
-                                               assignments: actions)
-                    }
-                }
-            }
-        }
-    }
-    
-}
-
+//........................................................................................................
+//                              Animations For The Location View Controller
+//........................................................................................................
 extension LocationViewController{
     func animateLocateButton(){
         locateButton.translatesAutoresizingMaskIntoConstraints = true
@@ -335,8 +339,7 @@ extension LocationViewController{
             UIViewAutoresizing.flexibleLeftMargin,
             UIViewAutoresizing.flexibleRightMargin,
             UIViewAutoresizing.flexibleTopMargin,
-            UIViewAutoresizing.flexibleBottomMargin
-        ]
+            UIViewAutoresizing.flexibleBottomMargin]
         UIView.animate(withDuration: 0.5, animations: ({
             self.messageView.alpha = 0
         }), completion: ({completed in
@@ -348,6 +351,9 @@ extension LocationViewController{
     }
 }
 
+//........................................................................................................
+//                              Animations For The Post View Controller
+//........................................................................................................
 extension PostViewController{
     func animatePostItButton(){
         UIView.animate(withDuration: 0.5, animations: ({
@@ -360,8 +366,7 @@ extension PostViewController{
                 UIViewAutoresizing.flexibleLeftMargin,
                 UIViewAutoresizing.flexibleRightMargin,
                 UIViewAutoresizing.flexibleTopMargin,
-                UIViewAutoresizing.flexibleBottomMargin
-            ]
+                UIViewAutoresizing.flexibleBottomMargin]
             UIView.animate(withDuration: 0.5, animations: ({
                 self.postButton.alpha = 1
                 self.postButton.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)

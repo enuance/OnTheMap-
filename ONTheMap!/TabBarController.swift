@@ -12,12 +12,10 @@ class TabBarController: UITabBarController {
 
     var userToPassToNextVC: Student!
     
-    //Provides an easy handle for the MapView Controller within this class
     var MapController: MapViewController!{
         get{guard let MVController = viewControllers?[0] as? MapViewController else{return nil};return MVController}
     }
     
-    //Provides an easy handle for the TableView Controller within this class
     var TableController: TableViewController!{
         get{guard let TVController = viewControllers?[1] as? TableViewController else{return nil};return TVController}
     }

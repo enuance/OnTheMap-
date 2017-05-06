@@ -13,13 +13,11 @@ class OnTheMap{
     let user = Student()
     var locations = [Student]()
     var pins = [StudentAnnotation]()
-    
-    //Erase userName as soon as it has been used!
     var userName: String!
-    //Erase userPassword as soon as it has been used!
     var userPassword: String!
     //Checks if locations is full up to the max amount.
     var isFull: Bool{return (locations.count >= ParseCnst.maxLocations)}
+    
     //Makes Map Pins for the available Student Locations.
     class func pinTheLocations(){
         for location in shared.locations{
@@ -39,22 +37,21 @@ class OnTheMap{
         shared.pins = [StudentAnnotation]()
     }
     
+    //Emptys out the User's posting info
     class func clearUserPostingInfo(){
         let clearedInfo: [String : Any] = [
             StudentCnst.objectId : "",
             StudentCnst.mediaURL : "",
             StudentCnst.mapString : "",
             StudentCnst.latitude : 0,
-            StudentCnst.longitude : 0
-        ]
-        for (key, value) in clearedInfo{
-            shared.user.setPropertyBy(key, with: value)
-        }
+            StudentCnst.longitude : 0]
+        for (key, value) in clearedInfo{shared.user.setPropertyBy(key, with: value)}
     }
     
     //Shared URL Session for the App.
     let session = URLSession.shared
     //Singleton instance for the OnTheMap Class
     static let shared = OnTheMap()
+    //Prevents outside initialization
     private init(){}
 }

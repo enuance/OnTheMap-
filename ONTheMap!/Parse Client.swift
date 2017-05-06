@@ -5,6 +5,10 @@
 //  Created by Stephen Martinez on 3/17/17.
 //  Copyright © 2017 Stephen Martinez. All rights reserved.
 //
+/*
+ This File contains the Networking methods for the Parse API. These Methods allow us to store and manipulate Studen/User data located on the
+ parse servers. All of these methods work asyncronously and the completion handlers do not return data onto the main thread.
+ */
 
 import Foundation
 
@@ -55,7 +59,6 @@ class ParseClient{
                 else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
             //Validate that the array that has been recieved actually contains something
             guard studentsList.isEmpty == false else{return completionHandler(nil, NetworkError.emptyObject(domain: domainName))}
-            
             //Start inputing valid student info into local array and extract through the completion handler
             var validatedList = [Student]()
             for students in studentsList{
@@ -86,7 +89,6 @@ class ParseClient{
             StudentCnst.latitude : user.latitude]
         let httpBodyData = ConvertObject.toJSON(with: httpBody as AnyObject)
          guard let httpJSONBody = httpBodyData.JSONObject else {return completionHandler(nil, httpBodyData.error!)}
-        
         request.httpMethod = MethodType.post
         request.allHTTPHeaderFields = httpHeader
         request.httpBody = httpJSONBody
@@ -102,12 +104,10 @@ class ParseClient{
             let results = ConvertObject.toSwift(with: data)
             //Exit the method if the conversion returns a conversion error
             guard let resultsObject = results.swiftObject else {return completionHandler(nil, results.error)}
-            
             //Validate the expected object to be recieved as a dictionary and that it contains an objectID String
             guard let responseDictionary = resultsObject as? [String:Any],
             let objectId = responseDictionary[StudentCnst.objectId] as? String
                 else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
-            
             //Extract the objectID through the completion handler.
             return completionHandler(objectId, nil)
         }
@@ -134,7 +134,6 @@ class ParseClient{
             StudentCnst.latitude : user.latitude]
         let httpBodyData = ConvertObject.toJSON(with: httpBody as AnyObject)
         guard let httpJSONBody = httpBodyData.JSONObject else {return completionHandler(nil, httpBodyData.error!)}
-        
         request.httpMethod = MethodType.put
         request.allHTTPHeaderFields = httpHeader
         request.httpBody = httpJSONBody
@@ -150,13 +149,11 @@ class ParseClient{
             let results = ConvertObject.toSwift(with: data)
             //Exit the method if the conversion returns a conversion error
             guard let resultsObject = results.swiftObject else {return completionHandler(nil, results.error)}
-            
             //Validate the expected object to be recieved as a dictionary and that it contains an objectID String
             guard let updatedResponse = resultsObject as? [String:Any],
                 let updateDate = updatedResponse[ParseCnst.updated] as? String
                 else {return completionHandler(nil, NetworkError.invalidAPIPath(domain: domainName))}
             let updateSuccess = !updateDate.isBlank
-            
             //Extract the objectID through the completion handler.
             return completionHandler(updateSuccess, nil)
         }
@@ -166,31 +163,25 @@ class ParseClient{
     //You can delete any location/(Student) Type with an Object ID
     class func deleteUserLocation(user: Student, completionHandler: @escaping(_ deleted: Bool?, _ error: NetworkError?)-> Void ){
         let request = NSMutableURLRequest(url: URLCnst.fromParse(nil, user.objectId))
-        let httpHeader = [
-            ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
-            ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue]
+        let httpHeader = [ParseCnst.headerAPIKey:ParseCnst.headerAPIValue, ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue]
         request.httpMethod = MethodType.delete
         request.allHTTPHeaderFields = httpHeader
         
         let task = OnTheMap.shared.session.dataTask(with: request as URLRequest){ data, response, error in
             guard (error == nil) else{ return completionHandler(nil, NetworkError.general)}
-            //Allow only OK Status to continue
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299
                 else{ return completionHandler(nil, NetworkError.nonOKHTTP(status: (response as! HTTPURLResponse).statusCode))}
-            //No data is returned from this method. Making it this far means successful deletion.
             return completionHandler(true, nil)
         }
         task.resume()
     }
     
-    //Seraches by Unique Key to locate existing.
+    //Searches for a Student by Unique Key to locate if it exists in the Data base.
     class func checkExistingUserLocation(user: Student, completionHandler: @escaping(_ existing: Bool?, _ existingUser: Student?, _ error: NetworkError?)-> Void){
         let domainName = "checkExistingUserLocation(:_)"
         let searchItems = [StudentCnst.uniqueKey : user.uniqueKey!]
         let request = NSMutableURLRequest(url: URLCnst.fromParse(searchItems))
-        let httpHeader = [
-            ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,
-            ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue]
+        let httpHeader = [ParseCnst.headerAPIKey : ParseCnst.headerAPIValue,ParseCnst.headerAppIDKey:ParseCnst.headerAppIDValue]
         request.httpMethod = MethodType.get
         request.allHTTPHeaderFields = httpHeader
         
@@ -210,7 +201,6 @@ class ParseClient{
                 else {return completionHandler(nil, nil, NetworkError.invalidAPIPath(domain: domainName))}
             //Validate that the array that has been recieved actually contains something
             guard studentsList.isEmpty == false else{return completionHandler(false, nil, nil)}
-            
             //Start inputing valid student info into local array and extract through the completion handler
             var validatedList = [Student]()
             for students in studentsList{
@@ -218,7 +208,6 @@ class ParseClient{
                 for (key, value) in students{ aStudent.setPropertyBy(key, with: value)}
                 if aStudent.isValid && aStudent.isPostable{validatedList.append(aStudent)}
             }
-            
             guard (validatedList.count >= 1) else{return completionHandler(false, nil, nil)}
             //returns the first user that meets the unique key criteria.
             let recentExistingUser = validatedList[0]

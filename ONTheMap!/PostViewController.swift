@@ -9,31 +9,23 @@
 import UIKit
 import MapKit
 
-class PostViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate {
+class PostViewController: UIViewController, MKMapViewDelegate {
 
-    var userToUpdate: Student!
-    private weak var animationTimer: Timer?
-    let redSpinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-    var mediaLinkToShare: String!
-    
     @IBOutlet var postButton: UIButton!
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var locatingMap: MKMapView!
     @IBOutlet weak var linkAndPostView: UIView!
     @IBOutlet weak var entryView: UIView!
     
+    var userToUpdate: Student!
+    var mediaLinkToShare: String!
+    let redSpinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private weak var animationTimer: Timer?
+    
     var MyTabBarController: TabBarController!{
         get{if let TBController = navigationController?.viewControllers[1] as? TabBarController{return TBController}else{return nil}}
     }
     
-    override func viewDidLoad() {super.viewDidLoad()
-        linkTextField.delegate = self
-        locatingMap.layer.cornerRadius = 12
-        locatingMap.addAnnotation(locationToView)
-        setUpNavBar()
-        subscribeToKeyboardNotifications()
-    }
-
     var locationToView: MKAnnotation!{
         get{
             let mapPoint = MKPointAnnotation()
@@ -53,27 +45,15 @@ class PostViewController: UIViewController, UITextFieldDelegate, MKMapViewDelega
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let entryText = textField.text ?? ""
-        if entryText.isBlank{
-            textField.resignFirstResponder()
-            SendToDisplay.error(self, errorType: "Text Field is Blank", errorMessage: "Please enter a web link for us to share.", assignment: nil)
-            return true
-        }
-        let formatedEntry = entryText.prefixHTTP
-        if let formattedEntry = URL(string: formatedEntry){
-            mediaLinkToShare = formattedEntry.absoluteString
-            textField.resignFirstResponder()
-            animatePostItButton()
-            return true
-        }else{
-            textField.resignFirstResponder()
-            textField.text = ""
-            SendToDisplay.error(self, errorType: "Invalid URL Format", errorMessage: "You have attempted to share an improperly formatted URL", assignment: nil)
-            return true
-        }
+    override func viewDidLoad() {super.viewDidLoad()
+        linkTextField.delegate = self
+        locatingMap.layer.cornerRadius = 12
+        locatingMap.addAnnotation(locationToView)
+        setUpNavBar()
+        subscribeToKeyboardNotifications()
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {super.viewDidAppear(animated); zoomInOnLocation()}
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "YouPin"
@@ -85,7 +65,6 @@ class PostViewController: UIViewController, UITextFieldDelegate, MKMapViewDelega
         pinView?.canShowCallout = true
         return pinView
     }
-    
     
     func zoomInOnLocation(_ spanDist: Double = 0.5, timeInt: Double = 0.5){
         animationTimer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: false){ timerHandle in
@@ -100,7 +79,13 @@ class PostViewController: UIViewController, UITextFieldDelegate, MKMapViewDelega
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {super.viewDidAppear(animated); zoomInOnLocation()}
+    func cancel(){
+        if let MyTabBarController = MyTabBarController{
+            MyTabBarController.userToPassToNextVC = nil
+            OnTheMap.clearUserPostingInfo()
+            navigationController?.popToViewController(MyTabBarController, animated: true)
+        }
+    }
     
     @IBAction func postIt(_ sender: UIButton) {
         guard let mediaLink = mediaLinkToShare else {return}
@@ -138,14 +123,6 @@ class PostViewController: UIViewController, UITextFieldDelegate, MKMapViewDelega
                     self.goToMapWithLocation(location: self.locationToView.coordinate)
                 }
             }
-        }
-    }
-    
-    func cancel(){
-        if let MyTabBarController = MyTabBarController{
-            MyTabBarController.userToPassToNextVC = nil
-            OnTheMap.clearUserPostingInfo()
-            navigationController?.popToViewController(MyTabBarController, animated: true)
         }
     }
     

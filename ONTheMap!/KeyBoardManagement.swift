@@ -5,15 +5,15 @@
 //  Created by Stephen Martinez on 4/10/17.
 //  Copyright © 2017 Stephen Martinez. All rights reserved.
 //
-
-import Foundation
-import UIKit
 /*
  This Keyboard Management File Contains extensions that hold the Keyboard Notification Subscription methods for various Controllers
  throughout the app. The notable difference between the Keyboard Will Show methods are the Scaler/Buffer values wich have been
  chosen in order to clear high profile elements within their View Controller so that they remain visible and give the user context
  while typing.
  */
+
+import UIKit
+
 extension OTMLoginController{
     func keyboardWillShow(_ notification: Notification){
         guard let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{return}

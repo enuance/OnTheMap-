@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OTMLoginController: UIViewController, UITextFieldDelegate {
+class OTMLoginController: UIViewController{
 
     @IBOutlet weak var OTMPin: UIImageView!
     @IBOutlet weak var OTMLogo: UIImageView!
@@ -37,20 +37,12 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func showUdacityLoginView(_ sender: UIButton) {animateLoginView()}
+    
     @IBAction func removeUdacityLoginView(_ sender: UIButton) {animateRemovingLoginView()}
+    
     @IBAction func createAccount(_ sender: UIButton) {animateAccountCreation()}
 
     func loginAnimationSetUpCompleted(){loginAndPopulateOTM()}
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if userNameField.text == nil || userNameField.text!.isBlank{userNameField.becomeFirstResponder() ;return false}
-        if passwordField.text == nil || passwordField.text!.isBlank{passwordField.becomeFirstResponder() ;return false}
-        OnTheMap.shared.userName = userNameField.text!; OnTheMap.shared.userPassword = passwordField.text!
-        textField.resignFirstResponder()
-        userNameField.text = ""; passwordField.text = ""
-        showPendingLoginTask()
-        return true
-    }
     
     func loginAndPopulateOTM(){
         udaClient.authenticate(userName: (OnTheMap.shared.userName ?? ""), passWord: (OnTheMap.shared.userPassword ?? "")){ accountID, sessionID, error in
@@ -64,9 +56,7 @@ class OTMLoginController: UIViewController, UITextFieldDelegate {
                     self.redSpinner.stopAnimating()
                     SendToDisplay.error(self,errorType: "Network Error", errorMessage: "Unable to retrieve needed data from Udacity",assignment: ({self.animateHomeScreen()}))
                     return}
-
                 OnTheMap.shared.user.setPropertyBy(StudentCnst.uniqueKey, with: accountID)
-                
                 //Start populating the students location and pins list.
                 ParseClient.populateLocations(){ locationsCount, error in
                     DispatchQueue.main.async {

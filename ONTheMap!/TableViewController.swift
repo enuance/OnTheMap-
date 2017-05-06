@@ -15,21 +15,16 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var blurEffect: UIVisualEffectView!
     @IBOutlet weak var redSpinner: UIActivityIndicatorView!
     
-    //Property for tracking distance Travelled Down the Table over the Total Height. Needed for Animation methods.
     var distanceRatio: CGFloat = 0
     
-    //This property prevents the tableView from attempting to access the model while it is being cleared
-    //and reset, which results in an index out of range (fatal error).
     var isReloadingOrLogout: Bool! {
         willSet{
             guard let newValue = newValue else{return}
             switch newValue{
-            case true:
-                if studentTable.isDecelerating{
-                    let paths = studentTable.indexPathsForVisibleRows
-                    studentTable.scrollToRow(at: paths![0], at: .top, animated: false)
-                    studentTable.isScrollEnabled = false
-                }
+            case true: if studentTable.isDecelerating{
+                let paths = studentTable.indexPathsForVisibleRows
+                studentTable.scrollToRow(at: paths![0], at: .top, animated: false)
+                studentTable.isScrollEnabled = false}
             case false: studentTable.isScrollEnabled = true
             }
         }
@@ -46,6 +41,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return OnTheMap.shared.locations.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let studentCellHeight: CGFloat = 100; return studentCellHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,9 +72,4 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let studentCellHeight: CGFloat = 100; return studentCellHeight
-    }
-    
 }

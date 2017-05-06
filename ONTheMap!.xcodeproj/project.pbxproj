@@ -36,6 +36,7 @@
 		20EFBFA71E9EFDB300212548 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFBFA61E9EFDB300212548 /* MapViewController.swift */; };
 		20EFBFA91E9EFE2200212548 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFBFA81E9EFE2200212548 /* TableViewController.swift */; };
 		20EFBFAB1E9F093600212548 /* NavBarManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EFBFAA1E9F093600212548 /* NavBarManagement.swift */; };
+		20FE00311EBD4B7D005C7286 /* TextFieldManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE00301EBD4B7D005C7286 /* TextFieldManagement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		20EFBFA61E9EFDB300212548 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		20EFBFA81E9EFE2200212548 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		20EFBFAA1E9F093600212548 /* NavBarManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarManagement.swift; sourceTree = "<group>"; };
+		20FE00301EBD4B7D005C7286 /* TextFieldManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldManagement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +247,7 @@
 				200A26D01E9C586400A594C4 /* Animations.swift */,
 				200A26D41E9C599600A594C4 /* KeyBoardManagement.swift */,
 				20EFBFAA1E9F093600212548 /* NavBarManagement.swift */,
+				20FE00301EBD4B7D005C7286 /* TextFieldManagement.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				20EA73081E6A43E400C18090 /* OTM Login Controller.swift in Sources */,
 				203423391E9841B50083512F /* WebViewController.swift in Sources */,
 				20EFBFA91E9EFE2200212548 /* TableViewController.swift in Sources */,
+				20FE00311EBD4B7D005C7286 /* TextFieldManagement.swift in Sources */,
 				206B5D3B1EA819550001E34A /* StudentCell.swift in Sources */,
 				203B28851E70D6CD00577D67 /* Authentication Client.swift in Sources */,
 				200A26D51E9C599600A594C4 /* KeyBoardManagement.swift in Sources */,

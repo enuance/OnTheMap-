@@ -48,31 +48,24 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         guard let studentCalloutView = Bundle.main.loadNibNamed("StudentCallout", owner: self, options: nil)?.first as? StudentCallout else{return}
         guard let fullName = view.annotation?.title, let confirmedFullName = fullName else {return}
         guard let mediaURL = view.annotation?.subtitle, let confirmedMediaURL = mediaURL else {return}
-        //Store the URL in Class Property for accessability to other methods.
         selectedURL = confirmedMediaURL
         studentCalloutView.name.text = confirmedFullName
         studentCalloutView.mediaURL.text = confirmedMediaURL
         studentCalloutView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(studentCalloutView)
-
         NSLayoutConstraint.activate([
             studentCalloutView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 5),
             studentCalloutView.widthAnchor.constraint(equalToConstant: 210),
             studentCalloutView.heightAnchor.constraint(equalToConstant: 73),
-            studentCalloutView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 73)
-            ])
-        
+            studentCalloutView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 73)])
         let calloutButton = UIButton(type: .custom)
         calloutButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(calloutButton)
-        
         NSLayoutConstraint.activate([
             calloutButton.topAnchor.constraint(equalTo: studentCalloutView.topAnchor),
             calloutButton.bottomAnchor.constraint(equalTo: studentCalloutView.bottomAnchor),
             calloutButton.leadingAnchor.constraint(equalTo: studentCalloutView.leadingAnchor),
-            calloutButton.trailingAnchor.constraint(equalTo: studentCalloutView.trailingAnchor)
-            ])
-        
+            calloutButton.trailingAnchor.constraint(equalTo: studentCalloutView.trailingAnchor)])
         calloutButton.addTarget(self, action: #selector(loadMediaURLWithSafari), for: .touchUpInside)
     }
     
@@ -106,9 +99,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        //Remove added Button
+        //Remove added Button and then the callout
         view.subviews.first?.removeFromSuperview()
-        //Remove Custom Callout
         view.subviews.first?.removeFromSuperview()
     }
     

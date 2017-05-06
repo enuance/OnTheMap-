@@ -11,7 +11,6 @@ access and referencing as well as to avoid Magic Numbers. All Structs and Object
 for Constant).
 */
 
-import Foundation
 import CoreGraphics
 import UIKit
 
@@ -39,31 +38,6 @@ struct ParseCnst {
     static let returnedResults = "results"
     //Maximum amount of locations to fill the locations array in the OnTheMapSingleton
     static let maxLocations = 100
-}
-
-struct StudentCnst{
-    static let objectId = "objectId"
-    static let uniqueKey = "uniqueKey"
-    static let firstName = "firstName"
-    static let lastName = "lastName"
-    static let mapString = "mapString"
-    static let mediaURL = "mediaURL"
-    static let latitude = "latitude"
-    static let longitude = "longitude"
-    
-    static func check(property: String) -> Bool{
-        switch property{
-        case StudentCnst.objectId: return true
-        case StudentCnst.uniqueKey: return true
-        case StudentCnst.firstName: return true
-        case StudentCnst.lastName: return true
-        case StudentCnst.mapString: return true
-        case StudentCnst.mediaURL: return true
-        case StudentCnst.latitude: return true
-        case StudentCnst.longitude: return true
-        default: return false
-        }
-    }
 }
 
 struct UdacityCnst{
@@ -102,10 +76,7 @@ struct PostHeader {
 }
 
 struct URLCnst {
-    //parseURL produces a Websafe String to be used as a URL
-    //The search query parameter is expects a single key value pair for searching for students by that criteria
-    //The Object ID is for use with the PUT type request when updating a students location
-    //Both parameters are optional and default to nil, so that they can be ommited if not needed
+    
     static func fromParse(_ searchQuery: [String : Any]? = nil, _ objectID: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
@@ -127,7 +98,6 @@ struct URLCnst {
         components.host = ParseCnst.apiHostURL
         components.path = ParseCnst.apiPath + ParseCnst.methdStudentLocation
         components.queryItems = [URLQueryItem]()
-        
         for (key, value) in parameters{
             let queryItem = URLQueryItem(name: "\(key)", value: "\(value)")
             components.queryItems!.append(queryItem)
@@ -154,9 +124,7 @@ struct ConvertObject{
     static func toJSON(with object: AnyObject) -> (JSONObject: Data?, error: NetworkError?){
         var wouldBeJSON: Data? = nil
         do{ wouldBeJSON = try JSONSerialization.data(withJSONObject: object, options: .prettyPrinted)}
-        //Conversion failed, return nil with NetworkError.
         catch{return (wouldBeJSON, NetworkError.JSONToData)}
-        //Conversion Succeeded, return JSONObject with no NetworkError
         return (wouldBeJSON, nil)
     }
     
@@ -164,14 +132,13 @@ struct ConvertObject{
     static func toSwift(with JSON: Data) -> (swiftObject: AnyObject?, error: NetworkError?){
         var wouldBeSwift: AnyObject? = nil
         do{ wouldBeSwift = try JSONSerialization.jsonObject(with: JSON, options: .allowFragments) as AnyObject}
-        //Conversion failed, return nil with NetworkError.
         catch{return (wouldBeSwift, NetworkError.DataToJSON)}
-        //Conversion Succeeded, return Swift Object with no NetworkError
         return (wouldBeSwift, nil)
     }
     
+    //The method that allows our data to comply with Udacity's security protocol
     static func toUdacitySecured(_ data: Data) -> Data?{
-        guard (data.count > 5) else{print("Data does not meet Udacity's security protocol!");return nil}
+        guard (data.count > 5) else{return nil}
         let range = Range(uncheckedBounds: (5, data.count))
         let securedData = data.subdata(in: range)
         return securedData
@@ -183,6 +150,32 @@ struct ConvertObject{
     }
 }
 
+struct StudentCnst{
+    static let objectId = "objectId"
+    static let uniqueKey = "uniqueKey"
+    static let firstName = "firstName"
+    static let lastName = "lastName"
+    static let mapString = "mapString"
+    static let mediaURL = "mediaURL"
+    static let latitude = "latitude"
+    static let longitude = "longitude"
+    
+    static func check(property: String) -> Bool{
+        switch property{
+        case StudentCnst.objectId: return true
+        case StudentCnst.uniqueKey: return true
+        case StudentCnst.firstName: return true
+        case StudentCnst.lastName: return true
+        case StudentCnst.mapString: return true
+        case StudentCnst.mediaURL: return true
+        case StudentCnst.latitude: return true
+        case StudentCnst.longitude: return true
+        default: return false
+        }
+    }
+}
+
+//Color Pallet for the App
 struct OTMColor{
     var teal: UIColor{get{return UIColor(red: decimal(3), green: decimal(139), blue: decimal(158), alpha: 1)}}
     var lightTeal: UIColor{get{return UIColor(red: decimal(8), green: decimal(144), blue: decimal(163), alpha: 1)}}
@@ -192,10 +185,9 @@ struct OTMColor{
     private func decimal(_ rgbValue: Int) -> CGFloat{return CGFloat(rgbValue)/CGFloat(255)}
 }
 
+//Adds Computed properties on the String Struct that checks for Blank/White Space and http prefix.
 extension String{
-    //Checks for blank space as well as Empty
     var isBlank: Bool{return trimmingCharacters(in: .whitespaces).isEmpty}
-    //Adds an HTTP formated prefix if not already existing.
     var prefixHTTP: String{return (self.hasPrefix("http") ? self : "http://\(self)")}
 }
 
