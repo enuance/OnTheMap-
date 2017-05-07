@@ -70,14 +70,14 @@ class LocationViewController: UIViewController{
                 let address = (locationInfo.subThoroughfare != nil ? "\(locationInfo.subThoroughfare!) " : "") + (locationInfo.thoroughfare != nil ? "\(locationInfo.thoroughfare!), " : "")
                 let cityState = (locationInfo.locality != nil ? "\(locationInfo.locality!) ":"") + (locationInfo.administrativeArea != nil ? "\(locationInfo.administrativeArea!)" : "")
                 let locationString = address + cityState
-                if let userToUpdate = self.userToUpdate{
+                if let _ = self.userToUpdate{
                     let updateData: [String: Any] = [
                         StudentCnst.firstName : OnTheMap.shared.user.firstName,
                         StudentCnst.lastName : OnTheMap.shared.user.lastName,
                         StudentCnst.mapString : locationString,
                         StudentCnst.latitude : latitude,
                         StudentCnst.longitude : longitude]
-                    for (key, value) in updateData{userToUpdate.setPropertyBy(key, with: value)}
+                    for (key, value) in updateData{self.userToUpdate.setPropertyBy(key, with: value)}
                 }else{
                     let updateData: [String:Any] = [
                         StudentCnst.mapString : locationString,

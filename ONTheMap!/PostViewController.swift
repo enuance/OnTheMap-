@@ -92,7 +92,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         navigationButtons(enabled: false)
         postButton.isEnabled = false
         redSpinner.startAnimating()
-        if let userToUpdate = userToUpdate{
+        if let _ = userToUpdate{
             userToUpdate.setPropertyBy(StudentCnst.mediaURL, with: mediaLink)
             ParseClient.updateUserLocation(user: userToUpdate){updated, error in
                 DispatchQueue.main.async {

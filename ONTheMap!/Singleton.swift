@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 class OnTheMap{
-    let user = Student()
+    var user = Student()
     var locations = [Student]()
     var pins = [StudentAnnotation]()
     var userName: String!

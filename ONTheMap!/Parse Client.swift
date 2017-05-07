@@ -62,7 +62,7 @@ class ParseClient{
             //Start inputing valid student info into local array and extract through the completion handler
             var validatedList = [Student]()
             for students in studentsList{
-                let aStudent = Student()
+                var aStudent = Student()
                 for (key, value) in students{ aStudent.setPropertyBy(key, with: value)}
                 if aStudent.isValid{validatedList.append(aStudent)}
             }
@@ -204,7 +204,7 @@ class ParseClient{
             //Start inputing valid student info into local array and extract through the completion handler
             var validatedList = [Student]()
             for students in studentsList{
-                let aStudent = Student()
+                var aStudent = Student()
                 for (key, value) in students{ aStudent.setPropertyBy(key, with: value)}
                 if aStudent.isValid && aStudent.isPostable{validatedList.append(aStudent)}
             }
