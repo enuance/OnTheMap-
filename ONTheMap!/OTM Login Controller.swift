@@ -42,6 +42,16 @@ class OTMLoginController: UIViewController{
     
     @IBAction func createAccount(_ sender: UIButton) {animateAccountCreation()}
 
+    @IBAction func loginButton(_ sender: UIButton) {
+        guard let userNameText = userNameField.text, !userNameText.isBlank, let passwordText = passwordField.text, !passwordText.isBlank else {
+            SendToDisplay.error(self, errorType: "Username or Password is Blank", errorMessage: "Please enter the Username & Password for your account.", assignment: nil); return}
+        OnTheMap.shared.userName = userNameText; OnTheMap.shared.userPassword = passwordText
+        if userNameField.isFirstResponder{userNameField.resignFirstResponder()}
+        if passwordField.isFirstResponder{passwordField.resignFirstResponder()}
+        userNameField.text = ""; passwordField.text = ""
+        showPendingLoginTask()
+    }
+    
     func loginAnimationSetUpCompleted(){loginAndPopulateOTM()}
     
     func loginAndPopulateOTM(){
